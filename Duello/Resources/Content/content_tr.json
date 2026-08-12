@@ -287,6 +287,150 @@
           "choices": ["Money Heist", "Elite", "Narcos", "Sacred Games"]
         }
       ]
+    },
+    {
+      "id": "basketballer-guess-1",
+      "mode": "prediction",
+      "title": "Basketbolcuyu Tahmin Et",
+      "coverImage": "cover_basketball_guess",
+      "questions": [
+        {
+          "id": "q1",
+          "prompt": "NBA tarihinin en çok sayı atan oyuncusu, Lakers'ta oynuyor, 'King James' lakaplı",
+          "answer": "LeBron James",
+          "answerImage": "lebron",
+          "timerSeconds": 6,
+          "choices": ["LeBron James", "Kevin Durant", "Kawhi Leonard", "James Harden"]
+        },
+        {
+          "id": "q2",
+          "prompt": "Golden State Warriors'ın üç sayılık atışlarıyla basketbolu değiştiren oyun kurucusu",
+          "answer": "Stephen Curry",
+          "answerImage": "curry",
+          "timerSeconds": 6,
+          "choices": ["Stephen Curry", "Klay Thompson", "Damian Lillard", "Trae Young"]
+        },
+        {
+          "id": "q3",
+          "prompt": "Milwaukee Bucks'ın Yunan yıldızı, 'Yunan Ucubesi' lakaplı",
+          "answer": "Giannis Antetokounmpo",
+          "answerImage": "giannis",
+          "timerSeconds": 6,
+          "choices": ["Giannis Antetokounmpo", "Joel Embiid", "Rudy Gobert", "Bam Adebayo"]
+        },
+        {
+          "id": "q4",
+          "prompt": "Phoenix Suns'ta oynayan, uzun boyu ve pürüzsüz atış tekniğiyle bilinen forvet",
+          "answer": "Kevin Durant",
+          "answerImage": "durant",
+          "timerSeconds": 6,
+          "choices": ["Kevin Durant", "LeBron James", "Kawhi Leonard", "Paul George"]
+        },
+        {
+          "id": "q5",
+          "prompt": "Dallas Mavericks'in Sloven yıldızı, genç yaşta çoklu triple-double rekoru kırdı",
+          "answer": "Luka Dončić",
+          "answerImage": "doncic",
+          "timerSeconds": 6,
+          "choices": ["Luka Dončić", "Nikola Jokić", "Devin Booker", "Ja Morant"]
+        },
+        {
+          "id": "q6",
+          "prompt": "Denver Nuggets'ı şampiyon yapan Sırp pivot, 'Joker' lakaplı",
+          "answer": "Nikola Jokić",
+          "answerImage": "jokic",
+          "timerSeconds": 6,
+          "choices": ["Nikola Jokić", "Joel Embiid", "Giannis Antetokounmpo", "Domantas Sabonis"]
+        },
+        {
+          "id": "q7",
+          "prompt": "Chicago Bulls ile 6 şampiyonluk kazanan, tüm zamanların en iyisi sayılan efsane",
+          "answer": "Michael Jordan",
+          "answerImage": "jordan",
+          "timerSeconds": 6,
+          "choices": ["Michael Jordan", "Magic Johnson", "Larry Bird", "Scottie Pippen"]
+        },
+        {
+          "id": "q8",
+          "prompt": "Lakers'ta 20 sezon oynayan, 'Black Mamba' lakaplı, erken yaşta hayatını kaybeden efsane",
+          "answer": "Kobe Bryant",
+          "answerImage": "kobe",
+          "timerSeconds": 6,
+          "choices": ["Kobe Bryant", "Michael Jordan", "Allen Iverson", "Tracy McGrady"]
+        }
+      ]
+    },
+    {
+      "id": "country-guess-1",
+      "mode": "prediction",
+      "title": "Ülkeyi Tahmin Et",
+      "coverImage": "cover_country_guess",
+      "questions": [
+        {
+          "id": "q1",
+          "prompt": "Başkenti Tokyo, bayrağında ortada kırmızı bir güneş bulunan ada ülkesi",
+          "answer": "Japonya",
+          "answerImage": "japan",
+          "timerSeconds": 6,
+          "choices": ["Japonya", "Güney Kore", "Çin", "Tayland"]
+        },
+        {
+          "id": "q2",
+          "prompt": "Amazon ormanlarının çoğunluğuna ev sahipliği yapan, futbolla özdeşleşmiş Güney Amerika ülkesi",
+          "answer": "Brezilya",
+          "answerImage": "brazil",
+          "timerSeconds": 6,
+          "choices": ["Brezilya", "Arjantin", "Kolombiya", "Meksika"]
+        },
+        {
+          "id": "q3",
+          "prompt": "Piramitleri ve Nil Nehri'yle bilinen, Afrika ile Asya arasında köprü olan ülke",
+          "answer": "Mısır",
+          "answerImage": "egypt",
+          "timerSeconds": 6,
+          "choices": ["Mısır", "Fas", "Türkiye", "Ürdün"]
+        },
+        {
+          "id": "q4",
+          "prompt": "Eyfel Kulesi'nin bulunduğu, başkenti Paris olan Avrupa ülkesi",
+          "answer": "Fransa",
+          "answerImage": "france",
+          "timerSeconds": 6,
+          "choices": ["Fransa", "İtalya", "İspanya", "Almanya"]
+        },
+        {
+          "id": "q5",
+          "prompt": "Hem kıta hem ülke olan, kangurularıyla bilinen Okyanusya ülkesi",
+          "answer": "Avustralya",
+          "answerImage": "australia",
+          "timerSeconds": 6,
+          "choices": ["Avustralya", "Yeni Zelanda", "Endonezya", "Filipinler"]
+        },
+        {
+          "id": "q6",
+          "prompt": "Tac Mahal'e ev sahipliği yapan, dünyanın en kalabalık ikinci ülkesi",
+          "answer": "Hindistan",
+          "answerImage": "india",
+          "timerSeconds": 6,
+          "choices": ["Hindistan", "Pakistan", "Bangladeş", "Nepal"]
+        },
+        {
+          "id": "q7",
+          "prompt": "Çizme şeklindeki, başkenti Roma olan, pizza ve makarnanın anavatanı ülke",
+          "answer": "İtalya",
+          "answerImage": "italy",
+          "timerSeconds": 6,
+          "choices": ["İtalya", "Fransa", "Yunanistan", "İspanya"]
+        },
+        {
+          "id": "q8",
+          "prompt": "Bayrağında kırmızı bir akçaağaç yaprağı bulunan, Kuzey Amerika'nın en büyük ikinci ülkesi",
+          "answer": "Kanada",
+          "answerImage": "canada",
+          "timerSeconds": 6,
+          "choices": ["Kanada", "Amerika Birleşik Devletleri", "Norveç", "İsveç"]
+        }
+      ]
     }
   ],
   "draftPacks": [
@@ -357,6 +501,29 @@
         { "id": "dzi11", "name": "The Mandalorian", "cost": 4, "image": "mandalorian" },
         { "id": "dzi12", "name": "Grey's Anatomy", "cost": 3, "image": "greys_anatomy" },
         { "id": "dzi13", "name": "Simpsonlar", "cost": 2, "image": "simpsons" }
+      ]
+    },
+    {
+      "id": "basketball-draft-1",
+      "mode": "draft",
+      "title": "Basketbolcu Draftı",
+      "coverImage": "cover_basketball_draft",
+      "budget": 20,
+      "rosterSize": 5,
+      "pool": [
+        { "id": "bkt1", "name": "LeBron James", "cost": 9, "image": "lebron" },
+        { "id": "bkt2", "name": "Michael Jordan", "cost": 9, "image": "jordan" },
+        { "id": "bkt3", "name": "Stephen Curry", "cost": 8, "image": "curry" },
+        { "id": "bkt4", "name": "Giannis Antetokounmpo", "cost": 8, "image": "giannis" },
+        { "id": "bkt5", "name": "Kevin Durant", "cost": 6, "image": "durant" },
+        { "id": "bkt6", "name": "Luka Dončić", "cost": 6, "image": "doncic" },
+        { "id": "bkt7", "name": "Nikola Jokić", "cost": 6, "image": "jokic" },
+        { "id": "bkt8", "name": "Kobe Bryant", "cost": 6, "image": "kobe" },
+        { "id": "bkt9", "name": "Magic Johnson", "cost": 5, "image": "magic_johnson" },
+        { "id": "bkt10", "name": "Kawhi Leonard", "cost": 5, "image": "kawhi" },
+        { "id": "bkt11", "name": "Ja Morant", "cost": 4, "image": "morant" },
+        { "id": "bkt12", "name": "Devin Booker", "cost": 3, "image": "booker" },
+        { "id": "bkt13", "name": "Trae Young", "cost": 2, "image": "trae_young" }
       ]
     }
   ]

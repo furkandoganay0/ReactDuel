@@ -287,6 +287,150 @@
           "choices": ["Money Heist", "Elite", "Narcos", "Sacred Games"]
         }
       ]
+    },
+    {
+      "id": "basketballer-guess-1",
+      "mode": "prediction",
+      "title": "Guess the Basketball Player",
+      "coverImage": "cover_basketball_guess",
+      "questions": [
+        {
+          "id": "q1",
+          "prompt": "NBA's all-time leading scorer, plays for the Lakers, nicknamed 'King James'",
+          "answer": "LeBron James",
+          "answerImage": "lebron",
+          "timerSeconds": 6,
+          "choices": ["LeBron James", "Kevin Durant", "Kawhi Leonard", "James Harden"]
+        },
+        {
+          "id": "q2",
+          "prompt": "Golden State Warriors point guard who revolutionized basketball with three-point shooting",
+          "answer": "Stephen Curry",
+          "answerImage": "curry",
+          "timerSeconds": 6,
+          "choices": ["Stephen Curry", "Klay Thompson", "Damian Lillard", "Trae Young"]
+        },
+        {
+          "id": "q3",
+          "prompt": "Milwaukee Bucks' Greek star, nicknamed the 'Greek Freak'",
+          "answer": "Giannis Antetokounmpo",
+          "answerImage": "giannis",
+          "timerSeconds": 6,
+          "choices": ["Giannis Antetokounmpo", "Joel Embiid", "Rudy Gobert", "Bam Adebayo"]
+        },
+        {
+          "id": "q4",
+          "prompt": "Phoenix Suns forward known for his height and smooth shooting technique",
+          "answer": "Kevin Durant",
+          "answerImage": "durant",
+          "timerSeconds": 6,
+          "choices": ["Kevin Durant", "LeBron James", "Kawhi Leonard", "Paul George"]
+        },
+        {
+          "id": "q5",
+          "prompt": "Dallas Mavericks' Slovenian star, set multiple triple-double records at a young age",
+          "answer": "Luka Dončić",
+          "answerImage": "doncic",
+          "timerSeconds": 6,
+          "choices": ["Luka Dončić", "Nikola Jokić", "Devin Booker", "Ja Morant"]
+        },
+        {
+          "id": "q6",
+          "prompt": "Serbian center who led the Denver Nuggets to a championship, nicknamed 'The Joker'",
+          "answer": "Nikola Jokić",
+          "answerImage": "jokic",
+          "timerSeconds": 6,
+          "choices": ["Nikola Jokić", "Joel Embiid", "Giannis Antetokounmpo", "Domantas Sabonis"]
+        },
+        {
+          "id": "q7",
+          "prompt": "Legend who won 6 championships with the Chicago Bulls, often considered the greatest of all time",
+          "answer": "Michael Jordan",
+          "answerImage": "jordan",
+          "timerSeconds": 6,
+          "choices": ["Michael Jordan", "Magic Johnson", "Larry Bird", "Scottie Pippen"]
+        },
+        {
+          "id": "q8",
+          "prompt": "Played 20 seasons for the Lakers, nicknamed 'Black Mamba', passed away tragically at a young age",
+          "answer": "Kobe Bryant",
+          "answerImage": "kobe",
+          "timerSeconds": 6,
+          "choices": ["Kobe Bryant", "Michael Jordan", "Allen Iverson", "Tracy McGrady"]
+        }
+      ]
+    },
+    {
+      "id": "country-guess-1",
+      "mode": "prediction",
+      "title": "Guess the Country",
+      "coverImage": "cover_country_guess",
+      "questions": [
+        {
+          "id": "q1",
+          "prompt": "Capital is Tokyo, an island nation whose flag features a red sun in the center",
+          "answer": "Japan",
+          "answerImage": "japan",
+          "timerSeconds": 6,
+          "choices": ["Japan", "South Korea", "China", "Thailand"]
+        },
+        {
+          "id": "q2",
+          "prompt": "South American country home to most of the Amazon rainforest, synonymous with football",
+          "answer": "Brazil",
+          "answerImage": "brazil",
+          "timerSeconds": 6,
+          "choices": ["Brazil", "Argentina", "Colombia", "Mexico"]
+        },
+        {
+          "id": "q3",
+          "prompt": "Known for its pyramids and the Nile River, this country bridges Africa and Asia",
+          "answer": "Egypt",
+          "answerImage": "egypt",
+          "timerSeconds": 6,
+          "choices": ["Egypt", "Morocco", "Turkey", "Jordan"]
+        },
+        {
+          "id": "q4",
+          "prompt": "European country home to the Eiffel Tower, capital Paris",
+          "answer": "France",
+          "answerImage": "france",
+          "timerSeconds": 6,
+          "choices": ["France", "Italy", "Spain", "Germany"]
+        },
+        {
+          "id": "q5",
+          "prompt": "Both a continent and a country, known for kangaroos, in Oceania",
+          "answer": "Australia",
+          "answerImage": "australia",
+          "timerSeconds": 6,
+          "choices": ["Australia", "New Zealand", "Indonesia", "Philippines"]
+        },
+        {
+          "id": "q6",
+          "prompt": "Home to the Taj Mahal, the world's second most populous country",
+          "answer": "India",
+          "answerImage": "india",
+          "timerSeconds": 6,
+          "choices": ["India", "Pakistan", "Bangladesh", "Nepal"]
+        },
+        {
+          "id": "q7",
+          "prompt": "Boot-shaped country with Rome as its capital, birthplace of pizza and pasta",
+          "answer": "Italy",
+          "answerImage": "italy",
+          "timerSeconds": 6,
+          "choices": ["Italy", "France", "Greece", "Spain"]
+        },
+        {
+          "id": "q8",
+          "prompt": "North America's second-largest country, its flag features a red maple leaf",
+          "answer": "Canada",
+          "answerImage": "canada",
+          "timerSeconds": 6,
+          "choices": ["Canada", "United States", "Norway", "Sweden"]
+        }
+      ]
     }
   ],
   "draftPacks": [
@@ -357,6 +501,29 @@
         { "id": "dzi11", "name": "The Mandalorian", "cost": 4, "image": "mandalorian" },
         { "id": "dzi12", "name": "Grey's Anatomy", "cost": 3, "image": "greys_anatomy" },
         { "id": "dzi13", "name": "The Simpsons", "cost": 2, "image": "simpsons" }
+      ]
+    },
+    {
+      "id": "basketball-draft-1",
+      "mode": "draft",
+      "title": "Basketball Draft",
+      "coverImage": "cover_basketball_draft",
+      "budget": 20,
+      "rosterSize": 5,
+      "pool": [
+        { "id": "bkt1", "name": "LeBron James", "cost": 9, "image": "lebron" },
+        { "id": "bkt2", "name": "Michael Jordan", "cost": 9, "image": "jordan" },
+        { "id": "bkt3", "name": "Stephen Curry", "cost": 8, "image": "curry" },
+        { "id": "bkt4", "name": "Giannis Antetokounmpo", "cost": 8, "image": "giannis" },
+        { "id": "bkt5", "name": "Kevin Durant", "cost": 6, "image": "durant" },
+        { "id": "bkt6", "name": "Luka Dončić", "cost": 6, "image": "doncic" },
+        { "id": "bkt7", "name": "Nikola Jokić", "cost": 6, "image": "jokic" },
+        { "id": "bkt8", "name": "Kobe Bryant", "cost": 6, "image": "kobe" },
+        { "id": "bkt9", "name": "Magic Johnson", "cost": 5, "image": "magic_johnson" },
+        { "id": "bkt10", "name": "Kawhi Leonard", "cost": 5, "image": "kawhi" },
+        { "id": "bkt11", "name": "Ja Morant", "cost": 4, "image": "morant" },
+        { "id": "bkt12", "name": "Devin Booker", "cost": 3, "image": "booker" },
+        { "id": "bkt13", "name": "Trae Young", "cost": 2, "image": "trae_young" }
       ]
     }
   ]
