@@ -47,10 +47,52 @@ enum DraftStateMachine {
         newState.availablePool.removeAll { $0.id == item.id }
 
         let bothFull = newState.rosterA.count >= template.rosterSize && newState.rosterB.count >= template.rosterSize
-        newState.isFinished = bothFull
-        if !bothFull {
-            newState.currentPlayer = state.currentPlayer == .playerA ? .playerB : .playerA
+        if bothFull {
+            newState.isFinished = true
+            return newState
         }
+
+        let otherPlayer: DraftPlayer = state.currentPlayer == .playerA ? .playerB : .playerA
+        return advanceToNextActionablePlayer(otherPlayer, state: newState, template: template)
+    }
+
+    /// Bir oyuncunun havuzdaki hiçbir item'ı (kalan bütçesi yetmediği ya da
+    /// rosterı zaten dolu olduğu için) alamıyor olması, önceden hiç ele
+    /// alınmıyordu — sıra otomatik diğer oyuncuya geçse de o da tıkanmışsa
+    /// (ya da rosterı zaten doluysa) kullanıcı hiçbir şey seçemeyen, kapatılamayan
+    /// bir ekranda kalıyordu. `pick` bu kontrolü her el değişiminde uygular.
+    static func canPlayerAct(_ player: DraftPlayer, state: DraftState, template: DraftTemplate) -> Bool {
+        let roster = state.roster(for: player)
+        guard roster.count < template.rosterSize else { return false }
+        return state.availablePool.contains { candidate in
+            BudgetValidator.canPick(
+                candidate,
+                currentRoster: roster,
+                budget: template.budget,
+                rosterSize: template.rosterSize
+            ) == .allowed
+        }
+    }
+
+    /// `player`den başlayarak hamle yapabilecek ilk oyuncuya geçer. `player` hamle
+    /// yapamıyorsa diğer oyuncuya bakar; o da yapamıyorsa (kimse için ne bütçe ne
+    /// roster yeri kalmamışsa) draft'ı mevcut rosterlarla bitmiş sayar.
+    private static func advanceToNextActionablePlayer(
+        _ player: DraftPlayer,
+        state: DraftState,
+        template: DraftTemplate
+    ) -> DraftState {
+        var newState = state
+        if canPlayerAct(player, state: state, template: template) {
+            newState.currentPlayer = player
+            return newState
+        }
+        let other: DraftPlayer = player == .playerA ? .playerB : .playerA
+        if canPlayerAct(other, state: state, template: template) {
+            newState.currentPlayer = other
+            return newState
+        }
+        newState.isFinished = true
         return newState
     }
 }
