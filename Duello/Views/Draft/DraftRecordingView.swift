@@ -77,9 +77,13 @@ struct DraftRecordingView: View {
                         .foregroundStyle(.white)
                 }
             }
+
+            RecordingExitButton(hasActiveRecording: hasActiveRecording) {
+                path.removeLast()
+            }
         }
-        .navigationBarBackButtonHidden(lifecycle != .preparingCamera)
-        .toolbar(lifecycle == .preparingCamera ? .visible : .hidden, for: .navigationBar)
+        .navigationBarBackButtonHidden(true)
+        .toolbar(.hidden, for: .navigationBar)
         .onAppear { cameraController.prepare() }
         .onChange(of: cameraController.isReady) { ready in
             if ready, lifecycle == .preparingCamera {
@@ -92,25 +96,73 @@ struct DraftRecordingView: View {
 
     private var isPickModalShown: Bool { pendingPick != nil }
 
+    private var hasActiveRecording: Bool {
+        switch lifecycle {
+        case .picking, .showingResult: return true
+        case .preparingCamera, .countdown, .done: return false
+        }
+    }
+
+    private var currentRoster: [DraftPoolItem] {
+        draftState.roster(for: draftState.currentPlayer)
+    }
+
     private var topTurnBar: some View {
         VStack {
-            HStack {
-                Text(L10n.playerLabel(draftState.currentPlayer, locale: locale))
-                    .font(.headline)
-                Spacer()
-                Text(L10n.remainingBudgetLabel(
-                    draftState.remainingBudget(for: draftState.currentPlayer, template: template),
-                    locale: locale
-                ))
-                    .font(.headline)
+            VStack(spacing: 10) {
+                HStack {
+                    Text(L10n.playerLabel(draftState.currentPlayer, locale: locale))
+                        .font(.headline)
+                    Spacer()
+                    Text(L10n.rosterProgressLabel(
+                        picked: currentRoster.count, rosterSize: template.rosterSize, locale: locale
+                    ))
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.white.opacity(0.75))
+                    Text(L10n.remainingBudgetLabel(
+                        draftState.remainingBudget(for: draftState.currentPlayer, template: template),
+                        locale: locale
+                    ))
+                        .font(.headline)
+                }
+                .foregroundStyle(.white)
+
+                if !currentRoster.isEmpty {
+                    rosterChipRow
+                        .transition(.opacity)
+                }
             }
-            .foregroundStyle(.white)
             .padding(14)
             .background(Color.black.opacity(0.6))
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .padding(.horizontal, 16)
             .padding(.top, 12)
+            .animation(.easeInOut(duration: 0.2), value: currentRoster.count)
             Spacer()
+        }
+    }
+
+    /// Şu ana kadar seçilen item'ları canlı gösteren şerit — önceden bütçeyle
+    /// seçim yaparken kendi rosterını görebilmenin tek yolu kaydın sonunu
+    /// beklemekti (`DraftResultView`). Artık her seçim anında burada birikiyor.
+    private var rosterChipRow: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 8) {
+                ForEach(currentRoster) { item in
+                    HStack(spacing: 6) {
+                        PlaceholderCoverView(imageName: item.image, label: item.name)
+                            .frame(width: 26, height: 26)
+                        Text(item.name)
+                            .font(.caption2.weight(.semibold))
+                            .foregroundStyle(.white)
+                            .lineLimit(1)
+                    }
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 5)
+                    .background(Color.white.opacity(0.15))
+                    .clipShape(Capsule())
+                }
+            }
         }
     }
 
@@ -185,9 +237,7 @@ struct DraftRecordingView: View {
         lifecycle = .picking
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         cameraController.recorder.startRecording()
-        cameraController.recorder.logOverlayEvent(
-            .showTurn(playerLabel: L10n.playerLabel(draftState.currentPlayer, locale: locale), budgetRemaining: template.budget)
-        )
+        cameraController.recorder.logOverlayEvent(.showTurn(text: turnOverlayText(for: draftState.currentPlayer, budgetRemaining: template.budget)))
     }
 
     private func confirmPick(_ item: DraftPoolItem) {
@@ -196,22 +246,26 @@ struct DraftRecordingView: View {
         pendingPick = nil
 
         cameraController.recorder.logOverlayEvent(
-            .showPick(playerLabel: L10n.playerLabel(playerBeforePick, locale: locale), itemName: item.name)
+            .showPick(text: "\(L10n.playerLabel(playerBeforePick, locale: locale)): \(item.name)")
         )
 
         if draftState.isFinished {
             let result = DraftScoreCalculator.winner(rosterA: draftState.rosterA, rosterB: draftState.rosterB)
-            cameraController.recorder.logOverlayEvent(.showResult(winnerLabel: L10n.resultLabel(result, locale: locale)))
+            cameraController.recorder.logOverlayEvent(.showResult(text: L10n.resultLabel(result, locale: locale)))
             UINotificationFeedbackGenerator().notificationOccurred(.success)
             lifecycle = .showingResult(secondsLeft: resultDisplaySeconds)
         } else {
             cameraController.recorder.logOverlayEvent(
-                .showTurn(
-                    playerLabel: L10n.playerLabel(draftState.currentPlayer, locale: locale),
+                .showTurn(text: turnOverlayText(
+                    for: draftState.currentPlayer,
                     budgetRemaining: draftState.remainingBudget(for: draftState.currentPlayer, template: template)
-                )
+                ))
             )
         }
+    }
+
+    private func turnOverlayText(for player: DraftPlayer, budgetRemaining: Int) -> String {
+        "\(L10n.playerLabel(player, locale: locale)) • \(L10n.remainingBudgetLabel(budgetRemaining, locale: locale))"
     }
 
     private func finishRecording() {

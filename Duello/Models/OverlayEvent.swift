@@ -10,11 +10,14 @@ struct OverlayEvent: Equatable {
     let kind: OverlayEventKind
 }
 
+/// Tüm case'ler zaten tam yerelleştirilmiş metin taşır — export zamanı (`OverlayCompositionBuilder`)
+/// hiçbir `Locale`/environment erişimi olmadığı için formatlama (örn. "Kalan bütçe: %d")
+/// burada DEĞİL, event kaydedilirken (view katmanında, `L10n` ile) yapılmalı.
 enum OverlayEventKind: Equatable {
     case showPrompt(text: String)
     case showAnswer(text: String)
-    case showTurn(playerLabel: String, budgetRemaining: Int)
-    case showPick(playerLabel: String, itemName: String)
-    case showResult(winnerLabel: String)
+    case showTurn(text: String)
+    case showPick(text: String)
+    case showResult(text: String)
     case hideAll
 }

@@ -62,6 +62,10 @@ enum L10n {
         isTurkish(locale) ? "Toplam: \(cost)" : "Total: \(cost)"
     }
 
+    static func rosterProgressLabel(picked: Int, rosterSize: Int, locale: Locale) -> String {
+        isTurkish(locale) ? "\(picked)/\(rosterSize) seçildi" : "\(picked)/\(rosterSize) picked"
+    }
+
     static func remainingBudgetLabel(_ amount: Int, locale: Locale) -> String {
         isTurkish(locale) ? "Kalan bütçe: \(amount)" : "Remaining budget: \(amount)"
     }
@@ -85,15 +89,18 @@ enum L10n {
         }
     }
 
+    /// Videoya yakılan reveal kartı için: durum ve cevap ayrı satırlarda —
+    /// tek satıra sıkıştırılmış uzun bir cümle yerine iki satırlı, daha okunur
+    /// bir kart (bkz. `OverlayCompositionBuilder`).
     static func answerFeedback(selectedCorrect: Bool?, correctAnswer: String, locale: Locale) -> String {
         let turkish = isTurkish(locale)
         switch selectedCorrect {
         case .none:
-            return turkish ? "⏱️ Süre doldu — Doğru cevap: \(correctAnswer)" : "⏱️ Time's up — Correct answer: \(correctAnswer)"
+            return turkish ? "⏱️ Süre doldu\n\(correctAnswer)" : "⏱️ Time's up\n\(correctAnswer)"
         case .some(true):
-            return turkish ? "✅ Doğru! \(correctAnswer)" : "✅ Correct! \(correctAnswer)"
+            return turkish ? "✅ Doğru!\n\(correctAnswer)" : "✅ Correct!\n\(correctAnswer)"
         case .some(false):
-            return turkish ? "❌ Yanlış — Doğru cevap: \(correctAnswer)" : "❌ Wrong — Correct answer: \(correctAnswer)"
+            return turkish ? "❌ Yanlış\n\(correctAnswer)" : "❌ Wrong\n\(correctAnswer)"
         }
     }
 

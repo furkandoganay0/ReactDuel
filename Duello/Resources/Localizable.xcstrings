@@ -278,6 +278,54 @@
         }
       }
     },
+    "Kaydı Bırak" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Discard Recording"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaydı Bırak"
+          }
+        }
+      }
+    },
+    "Kaydı bırakmak istediğine emin misin?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to discard this recording?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaydı bırakmak istediğine emin misin?"
+          }
+        }
+      }
+    },
+    "Şu ana kadar kaydettiğin video kaybolacak." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The video you've recorded so far will be lost."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şu ana kadar kaydettiğin video kaybolacak."
+          }
+        }
+      }
+    },
     "Kayıtsız Devam Et" : {
       "localizations" : {
         "en" : {

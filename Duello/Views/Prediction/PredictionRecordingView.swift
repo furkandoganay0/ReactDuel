@@ -79,9 +79,13 @@ struct PredictionRecordingView: View {
                         .foregroundStyle(.white)
                 }
             }
+
+            RecordingExitButton(hasActiveRecording: lifecycle == .recording) {
+                path.removeLast()
+            }
         }
-        .navigationBarBackButtonHidden(lifecycle != .preparingCamera)
-        .toolbar(lifecycle == .preparingCamera ? .visible : .hidden, for: .navigationBar)
+        .navigationBarBackButtonHidden(true)
+        .toolbar(.hidden, for: .navigationBar)
         .onAppear {
             if recordingEnabled {
                 cameraController.prepare()

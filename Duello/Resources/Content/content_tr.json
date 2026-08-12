@@ -45,6 +45,30 @@
           "answerImage": "vinicius",
           "timerSeconds": 6,
           "choices": ["Vinícius Júnior", "Rodrygo", "Neymar", "Raphinha"]
+        },
+        {
+          "id": "q6",
+          "prompt": "Portekiz'in kaptanı, 5 kez Ballon d'Or kazandı, kariyerinin son döneminde Suudi Arabistan'da oynadı",
+          "answer": "Cristiano Ronaldo",
+          "answerImage": "ronaldo",
+          "timerSeconds": 6,
+          "choices": ["Cristiano Ronaldo", "Neymar", "Karim Benzema", "Zlatan Ibrahimović"]
+        },
+        {
+          "id": "q7",
+          "prompt": "Real Madrid'in İngiliz orta sahası, 2023'te Borussia Dortmund'dan transfer oldu",
+          "answer": "Jude Bellingham",
+          "answerImage": "bellingham",
+          "timerSeconds": 6,
+          "choices": ["Jude Bellingham", "Declan Rice", "Phil Foden", "Bukayo Saka"]
+        },
+        {
+          "id": "q8",
+          "prompt": "Manchester City'nin Belçikalı orta sahası, asist kralı olarak bilinir",
+          "answer": "Kevin De Bruyne",
+          "answerImage": "de_bruyne",
+          "timerSeconds": 6,
+          "choices": ["Kevin De Bruyne", "Toni Kroos", "Luka Modrić", "Martin Ødegaard"]
         }
       ]
     },
@@ -93,6 +117,174 @@
           "answerImage": "pulp_fiction",
           "timerSeconds": 6,
           "choices": ["Ucuz Roman", "Rezervuar Köpekleri", "Kill Bill", "Bastırılmış Öfke"]
+        },
+        {
+          "id": "q6",
+          "prompt": "Christopher Nolan'ın, Joker'i Heath Ledger'ın oynadığı Batman üçlemesinin ikinci filmi",
+          "answer": "Kara Şövalye",
+          "answerImage": "dark_knight",
+          "timerSeconds": 6,
+          "choices": ["Kara Şövalye", "Batman Begins", "Kara Şövalye Yükseliyor", "Başlangıç"]
+        },
+        {
+          "id": "q7",
+          "prompt": "Christopher Nolan'ın, rüya içinde rüya kavramını işlediği, Leonardo DiCaprio'lu filmi",
+          "answer": "Başlangıç",
+          "answerImage": "inception",
+          "timerSeconds": 6,
+          "choices": ["Başlangıç", "Interstellar", "Matrix", "Kara Şövalye"]
+        },
+        {
+          "id": "q8",
+          "prompt": "Brad Pitt ve Edward Norton'ın başrollerini paylaştığı, gizli bir yeraltı dövüş kulübünü konu alan film",
+          "answer": "Dövüş Kulübü",
+          "answerImage": "fight_club",
+          "timerSeconds": 6,
+          "choices": ["Dövüş Kulübü", "Se7en", "Gladyatör", "American History X"]
+        }
+      ]
+    },
+    {
+      "id": "singer-guess-1",
+      "mode": "prediction",
+      "title": "Şarkıcıyı Tahmin Et",
+      "coverImage": "cover_singer_guess",
+      "questions": [
+        {
+          "id": "q1",
+          "prompt": "1989, Fearless ve Lover albümleriyle tanınan, country'den pop'a geçiş yapan Amerikalı şarkıcı",
+          "answer": "Taylor Swift",
+          "answerImage": "taylor_swift",
+          "timerSeconds": 6,
+          "choices": ["Taylor Swift", "Katy Perry", "Ariana Grande", "Dua Lipa"]
+        },
+        {
+          "id": "q2",
+          "prompt": "Destiny's Child'ın eski üyesi, 'Halo' ve 'Single Ladies' şarkılarıyla tanınan sanatçı",
+          "answer": "Beyoncé",
+          "answerImage": "beyonce",
+          "timerSeconds": 6,
+          "choices": ["Beyoncé", "Rihanna", "Alicia Keys", "Jennifer Lopez"]
+        },
+        {
+          "id": "q3",
+          "prompt": "'Shape of You' ve 'Perfect' şarkılarının İngiliz söz yazarı ve şarkıcısı",
+          "answer": "Ed Sheeran",
+          "answerImage": "ed_sheeran",
+          "timerSeconds": 6,
+          "choices": ["Ed Sheeran", "Shawn Mendes", "Justin Bieber", "Sam Smith"]
+        },
+        {
+          "id": "q4",
+          "prompt": "'Rolling in the Deep' ve 'Someone Like You' şarkılarıyla tanınan, güçlü vokaliyle bilinen İngiliz şarkıcı",
+          "answer": "Adele",
+          "answerImage": "adele",
+          "timerSeconds": 6,
+          "choices": ["Adele", "Sam Smith", "Amy Winehouse", "Dua Lipa"]
+        },
+        {
+          "id": "q5",
+          "prompt": "'Umbrella' ve 'Diamonds' şarkılarıyla tanınan, Barbados doğumlu şarkıcı ve girişimci",
+          "answer": "Rihanna",
+          "answerImage": "rihanna",
+          "timerSeconds": 6,
+          "choices": ["Rihanna", "Beyoncé", "Nicki Minaj", "Cardi B"]
+        },
+        {
+          "id": "q6",
+          "prompt": "'Uptown Funk' ve 'Just the Way You Are' şarkılarıyla tanınan Amerikalı şarkıcı",
+          "answer": "Bruno Mars",
+          "answerImage": "bruno_mars",
+          "timerSeconds": 6,
+          "choices": ["Bruno Mars", "The Weeknd", "Justin Timberlake", "Usher"]
+        },
+        {
+          "id": "q7",
+          "prompt": "'Bad Guy' şarkısıyla tanınan, fısıltılı vokal tarzıyla bilinen genç Amerikalı şarkıcı",
+          "answer": "Billie Eilish",
+          "answerImage": "billie_eilish",
+          "timerSeconds": 6,
+          "choices": ["Billie Eilish", "Olivia Rodrigo", "Ariana Grande", "Dua Lipa"]
+        },
+        {
+          "id": "q8",
+          "prompt": "'Blinding Lights' şarkısıyla tanınan Kanadalı R&B sanatçısı",
+          "answer": "The Weeknd",
+          "answerImage": "the_weeknd",
+          "timerSeconds": 6,
+          "choices": ["The Weeknd", "Bruno Mars", "Drake", "Post Malone"]
+        }
+      ]
+    },
+    {
+      "id": "tvshow-guess-1",
+      "mode": "prediction",
+      "title": "Diziyi Tahmin Et",
+      "coverImage": "cover_tv_guess",
+      "questions": [
+        {
+          "id": "q1",
+          "prompt": "Kimya öğretmeninin uyuşturucu imalatçısına dönüştüğü, Bryan Cranston'lı dizi",
+          "answer": "Breaking Bad",
+          "answerImage": "breaking_bad",
+          "timerSeconds": 6,
+          "choices": ["Breaking Bad", "Better Call Saul", "Ozark", "Narcos"]
+        },
+        {
+          "id": "q2",
+          "prompt": "Yedi Krallık için taht mücadelesini anlatan, George R.R. Martin kitaplarına dayanan dizi",
+          "answer": "Taht Oyunları",
+          "answerImage": "got",
+          "timerSeconds": 6,
+          "choices": ["Taht Oyunları", "Vikings", "The Witcher", "House of the Dragon"]
+        },
+        {
+          "id": "q3",
+          "prompt": "1980'lerde geçen, 'Upside Down' adlı paralel boyutu konu alan Netflix dizisi",
+          "answer": "Stranger Things",
+          "answerImage": "stranger_things",
+          "timerSeconds": 6,
+          "choices": ["Stranger Things", "Dark", "The Umbrella Academy", "Wednesday"]
+        },
+        {
+          "id": "q4",
+          "prompt": "Altı arkadaşın New York'taki hayatını anlatan, 90'ların klasik komedi dizisi",
+          "answer": "Friends",
+          "answerImage": "friends",
+          "timerSeconds": 6,
+          "choices": ["Friends", "How I Met Your Mother", "Seinfeld", "The Big Bang Theory"]
+        },
+        {
+          "id": "q5",
+          "prompt": "Kağıt şirketi Dunder Mifflin'de geçen, sahte belgesel tarzı komedi dizisi",
+          "answer": "The Office",
+          "answerImage": "the_office",
+          "timerSeconds": 6,
+          "choices": ["The Office", "Parks and Recreation", "Brooklyn Nine-Nine", "Community"]
+        },
+        {
+          "id": "q6",
+          "prompt": "İngiliz kraliyet ailesinin tarihini anlatan Netflix dizisi",
+          "answer": "The Crown",
+          "answerImage": "the_crown",
+          "timerSeconds": 6,
+          "choices": ["The Crown", "Downton Abbey", "Bridgerton", "The Tudors"]
+        },
+        {
+          "id": "q7",
+          "prompt": "Springfield'da yaşayan sarı tenli bir aileyi konu alan, uzun soluklu animasyon dizisi",
+          "answer": "Simpsonlar",
+          "answerImage": "simpsons",
+          "timerSeconds": 6,
+          "choices": ["Simpsonlar", "Family Guy", "South Park", "Bob's Burgers"]
+        },
+        {
+          "id": "q8",
+          "prompt": "İspanyol bir soygun dizisi, karakterlerin şehir isimlerini kod adı olarak kullandığı",
+          "answer": "Money Heist",
+          "answerImage": "money_heist",
+          "timerSeconds": 6,
+          "choices": ["Money Heist", "Elite", "Narcos", "Sacred Games"]
         }
       ]
     }
@@ -142,6 +334,29 @@
         { "id": "ftb11", "name": "Marcus Rashford", "cost": 3, "image": "rashford" },
         { "id": "ftb12", "name": "Declan Rice", "cost": 3, "image": "rice" },
         { "id": "ftb13", "name": "Alphonso Davies", "cost": 2, "image": "davies" }
+      ]
+    },
+    {
+      "id": "tv-draft-1",
+      "mode": "draft",
+      "title": "Dizi Draftı",
+      "coverImage": "cover_tv_draft",
+      "budget": 20,
+      "rosterSize": 5,
+      "pool": [
+        { "id": "dzi1", "name": "Breaking Bad", "cost": 9, "image": "breaking_bad" },
+        { "id": "dzi2", "name": "Taht Oyunları", "cost": 9, "image": "got" },
+        { "id": "dzi3", "name": "Stranger Things", "cost": 8, "image": "stranger_things" },
+        { "id": "dzi4", "name": "The Wire", "cost": 8, "image": "the_wire" },
+        { "id": "dzi5", "name": "Sherlock", "cost": 6, "image": "sherlock" },
+        { "id": "dzi6", "name": "Peaky Blinders", "cost": 6, "image": "peaky_blinders" },
+        { "id": "dzi7", "name": "Friends", "cost": 6, "image": "friends" },
+        { "id": "dzi8", "name": "The Office", "cost": 6, "image": "the_office" },
+        { "id": "dzi9", "name": "The Crown", "cost": 5, "image": "the_crown" },
+        { "id": "dzi10", "name": "Money Heist", "cost": 5, "image": "money_heist" },
+        { "id": "dzi11", "name": "The Mandalorian", "cost": 4, "image": "mandalorian" },
+        { "id": "dzi12", "name": "Grey's Anatomy", "cost": 3, "image": "greys_anatomy" },
+        { "id": "dzi13", "name": "Simpsonlar", "cost": 2, "image": "simpsons" }
       ]
     }
   ]

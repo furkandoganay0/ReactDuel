@@ -45,55 +45,87 @@ enum OverlayCompositionBuilder {
             overlayLayer.addSublayer(card)
         }
 
+        overlayLayer.addSublayer(makeWatermarkLayer(renderSize: renderSize))
+
         return overlayLayer
     }
 
-    /// `start`/`duration` aralığında opaklığı 0→1→0 yapan, export'un MUTLAK zaman
-    /// modeline (`AVCoreAnimationBeginTimeAtZero` ofseti) bağlı bir animasyon uygular.
-    /// Bu ofseti unutmak, Core Animation'ın canlı-UI zaman modeliyle export zaman
-    /// modelinin senkronize OLMAMASININ en yaygın sebebidir.
+    /// `start`/`duration` aralığında opaklık 0→1→0 ve hafif bir "pop" (0.85→1 ölçek)
+    /// uygulayan, export'un MUTLAK zaman modeline (`AVCoreAnimationBeginTimeAtZero`
+    /// ofseti) bağlı bir animasyon. Bu ofseti unutmak, Core Animation'ın canlı-UI
+    /// zaman modeliyle export zaman modelinin senkronize OLMAMASININ en yaygın sebebidir.
     private static func applyVisibility(to layer: CALayer, start: TimeInterval, duration: TimeInterval) {
         layer.opacity = 0
+        layer.transform = CATransform3DMakeScale(0.85, 0.85, 1)
 
-        let appearDuration = min(0.25, duration / 2)
+        let appearDuration = min(0.28, duration / 2)
         let disappearDuration = min(0.2, duration / 2)
+        let popTiming = CAMediaTimingFunction(name: .easeOut)
 
-        let appear = CABasicAnimation(keyPath: "opacity")
-        appear.fromValue = 0
-        appear.toValue = 1
-        appear.duration = appearDuration
-        appear.beginTime = AVCoreAnimationBeginTimeAtZero + start
-        appear.fillMode = .forwards
-        appear.isRemovedOnCompletion = false
+        let appearOpacity = CABasicAnimation(keyPath: "opacity")
+        appearOpacity.fromValue = 0
+        appearOpacity.toValue = 1
+        appearOpacity.duration = appearDuration
+        appearOpacity.beginTime = AVCoreAnimationBeginTimeAtZero + start
+        appearOpacity.fillMode = .forwards
+        appearOpacity.isRemovedOnCompletion = false
 
-        let disappear = CABasicAnimation(keyPath: "opacity")
-        disappear.fromValue = 1
-        disappear.toValue = 0
-        disappear.duration = disappearDuration
-        disappear.beginTime = AVCoreAnimationBeginTimeAtZero + start + duration - disappearDuration
-        disappear.fillMode = .forwards
-        disappear.isRemovedOnCompletion = false
+        let appearScale = CABasicAnimation(keyPath: "transform.scale")
+        appearScale.fromValue = 0.85
+        appearScale.toValue = 1.0
+        appearScale.duration = appearDuration
+        appearScale.timingFunction = popTiming
+        appearScale.beginTime = AVCoreAnimationBeginTimeAtZero + start
+        appearScale.fillMode = .forwards
+        appearScale.isRemovedOnCompletion = false
 
-        layer.add(appear, forKey: "appear")
-        layer.add(disappear, forKey: "disappear")
+        let disappearOpacity = CABasicAnimation(keyPath: "opacity")
+        disappearOpacity.fromValue = 1
+        disappearOpacity.toValue = 0
+        disappearOpacity.duration = disappearDuration
+        disappearOpacity.beginTime = AVCoreAnimationBeginTimeAtZero + start + duration - disappearDuration
+        disappearOpacity.fillMode = .forwards
+        disappearOpacity.isRemovedOnCompletion = false
+
+        layer.add(appearOpacity, forKey: "appearOpacity")
+        layer.add(appearScale, forKey: "appearScale")
+        layer.add(disappearOpacity, forKey: "disappear")
     }
 
     private static func makeCardLayer(content: OverlayContent, renderSize: CGSize) -> CALayer {
         let container = CALayer()
-        let width = renderSize.width * 0.86
-        let cardHeight: CGFloat = renderSize.height * 0.11
+        let width = renderSize.width * 0.88
+        let cardHeight: CGFloat = renderSize.height * content.heightRatio
         container.frame = CGRect(
             x: (renderSize.width - width) / 2,
             y: content.verticalAnchor.yOrigin(renderSize: renderSize, cardHeight: cardHeight),
             width: width,
             height: cardHeight
         )
+        container.shadowColor = UIColor.black.cgColor
+        container.shadowOpacity = 0.32
+        container.shadowRadius = 18
+        container.shadowOffset = CGSize(width: 0, height: 10)
 
-        let background = CAShapeLayer()
-        background.frame = container.bounds
-        background.path = UIBezierPath(roundedRect: container.bounds, cornerRadius: 20).cgPath
-        background.fillColor = content.backgroundColor.cgColor
-        container.addSublayer(background)
+        let shape = CAShapeLayer()
+        shape.frame = container.bounds
+        shape.path = UIBezierPath(roundedRect: container.bounds, cornerRadius: 28).cgPath
+
+        let gradient = CAGradientLayer()
+        gradient.frame = container.bounds
+        gradient.colors = content.gradientColors.map(\.cgColor)
+        gradient.startPoint = CGPoint(x: 0, y: 0)
+        gradient.endPoint = CGPoint(x: 1, y: 1)
+        gradient.mask = shape
+        container.addSublayer(gradient)
+
+        let border = CAShapeLayer()
+        border.frame = container.bounds
+        border.path = UIBezierPath(roundedRect: container.bounds.insetBy(dx: 0.75, dy: 0.75), cornerRadius: 28).cgPath
+        border.fillColor = UIColor.clear.cgColor
+        border.strokeColor = UIColor.white.withAlphaComponent(0.28).cgColor
+        border.lineWidth = 1.5
+        container.addSublayer(border)
 
         let text = CATextLayer()
         // CATextLayer dikeyde kendiliğinden ortalamıyor (UIKit'in NSAttributedString
@@ -101,7 +133,7 @@ enum OverlayCompositionBuilder {
         // gerçek yüksekliğine göre biraz büyük tutup, insetBy ile görsel olarak
         // ortalamaya yakın bir yerleşim hedefliyoruz. Tam dikey merkezleme
         // gerekiyorsa font yüksekliğine göre dinamik inset hesaplanabilir (v2).
-        text.frame = container.bounds.insetBy(dx: 20, dy: cardHeight * 0.22)
+        text.frame = container.bounds.insetBy(dx: 26, dy: cardHeight * 0.14)
         text.string = content.text
         text.foregroundColor = content.textColor.cgColor
         text.alignmentMode = .center
@@ -110,6 +142,46 @@ enum OverlayCompositionBuilder {
         text.contentsScale = UIScreen.main.scale
         text.font = CTFontCreateWithName("HelveticaNeue-Bold" as CFString, 0, nil)
         text.fontSize = content.fontSize
+        text.shadowColor = UIColor.black.cgColor
+        text.shadowOpacity = 0.25
+        text.shadowRadius = 3
+        text.shadowOffset = CGSize(width: 0, height: 1)
+        container.addSublayer(text)
+
+        return container
+    }
+
+    /// Videonun tamamında sabit kalan, küçük ve göze batmayan marka rozeti —
+    /// paylaşılan videonun nereden geldiğini belli eder (organik keşif/viral döngü).
+    private static func makeWatermarkLayer(renderSize: CGSize) -> CALayer {
+        let width: CGFloat = renderSize.width * 0.32
+        let height: CGFloat = renderSize.height * 0.032
+        let container = CALayer()
+        container.frame = CGRect(
+            x: renderSize.width - width - renderSize.width * 0.04,
+            y: renderSize.height - height - renderSize.height * 0.045,
+            width: width,
+            height: height
+        )
+        container.opacity = 0.85
+
+        let background = CAShapeLayer()
+        background.frame = container.bounds
+        background.path = UIBezierPath(roundedRect: container.bounds, cornerRadius: container.bounds.height / 2).cgPath
+        background.fillColor = UIColor.black.withAlphaComponent(0.4).cgColor
+        container.addSublayer(background)
+
+        // Marka adı kasıtlı olarak çevrilmiyor (logotype gibi davranıyor) — export
+        // zamanının hiç `Locale` erişimi olmadığını hatırlatalım: burada dile göre
+        // metin seçmeye kalkışmak sessizce yanlış dilde bir watermark üretebilirdi.
+        let text = CATextLayer()
+        text.frame = container.bounds
+        text.string = "⚡ Duello"
+        text.foregroundColor = UIColor.white.withAlphaComponent(0.9).cgColor
+        text.alignmentMode = .center
+        text.contentsScale = UIScreen.main.scale
+        text.font = CTFontCreateWithName("HelveticaNeue-Semibold" as CFString, 0, nil)
+        text.fontSize = height * 0.42
         container.addSublayer(text)
 
         return container
@@ -119,9 +191,10 @@ enum OverlayCompositionBuilder {
 /// Bir `OverlayEventKind`'ı ekranda gösterilecek metne/renge/konuma çevirir.
 private struct OverlayContent {
     let text: String
-    let backgroundColor: UIColor
+    let gradientColors: [UIColor]
     let textColor: UIColor
     let fontSize: CGFloat
+    let heightRatio: CGFloat
     let verticalAnchor: VerticalAnchor
 
     enum VerticalAnchor {
@@ -129,7 +202,7 @@ private struct OverlayContent {
 
         func yOrigin(renderSize: CGSize, cardHeight: CGFloat) -> CGFloat {
             switch self {
-            case .top: return renderSize.height * 0.10
+            case .top: return renderSize.height * 0.09
             case .center: return (renderSize.height - cardHeight) / 2
             case .bottom: return renderSize.height * 0.80 - cardHeight
             }
@@ -140,33 +213,38 @@ private struct OverlayContent {
         switch kind {
         case .showPrompt(let promptText):
             text = promptText
-            backgroundColor = UIColor.black.withAlphaComponent(0.72)
+            gradientColors = [UIColor.black.withAlphaComponent(0.82), UIColor.black.withAlphaComponent(0.62)]
             textColor = .white
-            fontSize = 34
+            fontSize = 38
+            heightRatio = 0.15
             verticalAnchor = .top
         case .showAnswer(let answerText):
             text = answerText
-            backgroundColor = UIColor.systemGreen.withAlphaComponent(0.9)
+            gradientColors = [UIColor.systemGreen, UIColor(red: 0.05, green: 0.55, blue: 0.35, alpha: 1)]
             textColor = .white
-            fontSize = 40
+            fontSize = 46
+            heightRatio = 0.21
             verticalAnchor = .center
-        case .showTurn(let playerLabel, let budgetRemaining):
-            text = "\(playerLabel) • Kalan bütçe: \(budgetRemaining)"
-            backgroundColor = UIColor.black.withAlphaComponent(0.72)
+        case .showTurn(let turnText):
+            text = turnText
+            gradientColors = [UIColor.black.withAlphaComponent(0.82), UIColor.black.withAlphaComponent(0.62)]
             textColor = .white
-            fontSize = 28
+            fontSize = 29
+            heightRatio = 0.10
             verticalAnchor = .top
-        case .showPick(let playerLabel, let itemName):
-            text = "\(playerLabel): \(itemName)"
-            backgroundColor = UIColor.systemBlue.withAlphaComponent(0.88)
+        case .showPick(let pickText):
+            text = pickText
+            gradientColors = [UIColor.systemBlue, UIColor(red: 0.25, green: 0.35, blue: 0.9, alpha: 1)]
             textColor = .white
-            fontSize = 30
+            fontSize = 32
+            heightRatio = 0.12
             verticalAnchor = .bottom
-        case .showResult(let winnerLabel):
-            text = winnerLabel
-            backgroundColor = UIColor.systemOrange.withAlphaComponent(0.92)
+        case .showResult(let resultText):
+            text = resultText
+            gradientColors = [UIColor.systemOrange, UIColor(red: 0.85, green: 0.25, blue: 0.35, alpha: 1)]
             textColor = .white
-            fontSize = 42
+            fontSize = 50
+            heightRatio = 0.20
             verticalAnchor = .center
         case .hideAll:
             return nil

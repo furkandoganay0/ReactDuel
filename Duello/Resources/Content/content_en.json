@@ -45,6 +45,30 @@
           "answerImage": "vinicius",
           "timerSeconds": 6,
           "choices": ["Vinícius Júnior", "Rodrygo", "Neymar", "Raphinha"]
+        },
+        {
+          "id": "q6",
+          "prompt": "Portugal's captain, won the Ballon d'Or 5 times, played out the twilight of his career in Saudi Arabia",
+          "answer": "Cristiano Ronaldo",
+          "answerImage": "ronaldo",
+          "timerSeconds": 6,
+          "choices": ["Cristiano Ronaldo", "Neymar", "Karim Benzema", "Zlatan Ibrahimović"]
+        },
+        {
+          "id": "q7",
+          "prompt": "Real Madrid's English midfielder, transferred from Borussia Dortmund in 2023",
+          "answer": "Jude Bellingham",
+          "answerImage": "bellingham",
+          "timerSeconds": 6,
+          "choices": ["Jude Bellingham", "Declan Rice", "Phil Foden", "Bukayo Saka"]
+        },
+        {
+          "id": "q8",
+          "prompt": "Manchester City's Belgian midfielder, known as an assist king",
+          "answer": "Kevin De Bruyne",
+          "answerImage": "de_bruyne",
+          "timerSeconds": 6,
+          "choices": ["Kevin De Bruyne", "Toni Kroos", "Luka Modrić", "Martin Ødegaard"]
         }
       ]
     },
@@ -93,6 +117,174 @@
           "answerImage": "pulp_fiction",
           "timerSeconds": 6,
           "choices": ["Pulp Fiction", "Reservoir Dogs", "Kill Bill", "Django Unchained"]
+        },
+        {
+          "id": "q6",
+          "prompt": "Christopher Nolan's Batman sequel where Heath Ledger played the Joker",
+          "answer": "The Dark Knight",
+          "answerImage": "dark_knight",
+          "timerSeconds": 6,
+          "choices": ["The Dark Knight", "Batman Begins", "The Dark Knight Rises", "Inception"]
+        },
+        {
+          "id": "q7",
+          "prompt": "Christopher Nolan film about dreams within dreams, starring Leonardo DiCaprio",
+          "answer": "Inception",
+          "answerImage": "inception",
+          "timerSeconds": 6,
+          "choices": ["Inception", "Interstellar", "The Matrix", "The Dark Knight"]
+        },
+        {
+          "id": "q8",
+          "prompt": "Brad Pitt and Edward Norton star in this film about an underground fight club",
+          "answer": "Fight Club",
+          "answerImage": "fight_club",
+          "timerSeconds": 6,
+          "choices": ["Fight Club", "Se7en", "Gladiator", "American History X"]
+        }
+      ]
+    },
+    {
+      "id": "singer-guess-1",
+      "mode": "prediction",
+      "title": "Guess the Singer",
+      "coverImage": "cover_singer_guess",
+      "questions": [
+        {
+          "id": "q1",
+          "prompt": "American singer known for albums like 1989, Fearless, and Lover, who transitioned from country to pop",
+          "answer": "Taylor Swift",
+          "answerImage": "taylor_swift",
+          "timerSeconds": 6,
+          "choices": ["Taylor Swift", "Katy Perry", "Ariana Grande", "Dua Lipa"]
+        },
+        {
+          "id": "q2",
+          "prompt": "Former Destiny's Child member known for 'Halo' and 'Single Ladies'",
+          "answer": "Beyoncé",
+          "answerImage": "beyonce",
+          "timerSeconds": 6,
+          "choices": ["Beyoncé", "Rihanna", "Alicia Keys", "Jennifer Lopez"]
+        },
+        {
+          "id": "q3",
+          "prompt": "British singer-songwriter behind 'Shape of You' and 'Perfect'",
+          "answer": "Ed Sheeran",
+          "answerImage": "ed_sheeran",
+          "timerSeconds": 6,
+          "choices": ["Ed Sheeran", "Shawn Mendes", "Justin Bieber", "Sam Smith"]
+        },
+        {
+          "id": "q4",
+          "prompt": "English singer known for powerhouse vocals on 'Rolling in the Deep' and 'Someone Like You'",
+          "answer": "Adele",
+          "answerImage": "adele",
+          "timerSeconds": 6,
+          "choices": ["Adele", "Sam Smith", "Amy Winehouse", "Dua Lipa"]
+        },
+        {
+          "id": "q5",
+          "prompt": "Barbados-born singer and entrepreneur known for 'Umbrella' and 'Diamonds'",
+          "answer": "Rihanna",
+          "answerImage": "rihanna",
+          "timerSeconds": 6,
+          "choices": ["Rihanna", "Beyoncé", "Nicki Minaj", "Cardi B"]
+        },
+        {
+          "id": "q6",
+          "prompt": "American singer known for 'Uptown Funk' and 'Just the Way You Are'",
+          "answer": "Bruno Mars",
+          "answerImage": "bruno_mars",
+          "timerSeconds": 6,
+          "choices": ["Bruno Mars", "The Weeknd", "Justin Timberlake", "Usher"]
+        },
+        {
+          "id": "q7",
+          "prompt": "Young American singer known for 'Bad Guy' and her signature whisper vocals",
+          "answer": "Billie Eilish",
+          "answerImage": "billie_eilish",
+          "timerSeconds": 6,
+          "choices": ["Billie Eilish", "Olivia Rodrigo", "Ariana Grande", "Dua Lipa"]
+        },
+        {
+          "id": "q8",
+          "prompt": "Canadian R&B artist known for 'Blinding Lights'",
+          "answer": "The Weeknd",
+          "answerImage": "the_weeknd",
+          "timerSeconds": 6,
+          "choices": ["The Weeknd", "Bruno Mars", "Drake", "Post Malone"]
+        }
+      ]
+    },
+    {
+      "id": "tvshow-guess-1",
+      "mode": "prediction",
+      "title": "Guess the TV Show",
+      "coverImage": "cover_tv_guess",
+      "questions": [
+        {
+          "id": "q1",
+          "prompt": "A chemistry teacher turns into a drug manufacturer in this Bryan Cranston series",
+          "answer": "Breaking Bad",
+          "answerImage": "breaking_bad",
+          "timerSeconds": 6,
+          "choices": ["Breaking Bad", "Better Call Saul", "Ozark", "Narcos"]
+        },
+        {
+          "id": "q2",
+          "prompt": "A struggle for the Iron Throne across Seven Kingdoms, based on George R.R. Martin's novels",
+          "answer": "Game of Thrones",
+          "answerImage": "got",
+          "timerSeconds": 6,
+          "choices": ["Game of Thrones", "Vikings", "The Witcher", "House of the Dragon"]
+        },
+        {
+          "id": "q3",
+          "prompt": "Set in the 1980s, this Netflix show revolves around a parallel dimension called the Upside Down",
+          "answer": "Stranger Things",
+          "answerImage": "stranger_things",
+          "timerSeconds": 6,
+          "choices": ["Stranger Things", "Dark", "The Umbrella Academy", "Wednesday"]
+        },
+        {
+          "id": "q4",
+          "prompt": "Six friends navigate life in New York in this classic '90s sitcom",
+          "answer": "Friends",
+          "answerImage": "friends",
+          "timerSeconds": 6,
+          "choices": ["Friends", "How I Met Your Mother", "Seinfeld", "The Big Bang Theory"]
+        },
+        {
+          "id": "q5",
+          "prompt": "A mockumentary-style sitcom set at the paper company Dunder Mifflin",
+          "answer": "The Office",
+          "answerImage": "the_office",
+          "timerSeconds": 6,
+          "choices": ["The Office", "Parks and Recreation", "Brooklyn Nine-Nine", "Community"]
+        },
+        {
+          "id": "q6",
+          "prompt": "A Netflix series chronicling the history of the British royal family",
+          "answer": "The Crown",
+          "answerImage": "the_crown",
+          "timerSeconds": 6,
+          "choices": ["The Crown", "Downton Abbey", "Bridgerton", "The Tudors"]
+        },
+        {
+          "id": "q7",
+          "prompt": "A long-running animated series about a yellow-skinned family living in Springfield",
+          "answer": "The Simpsons",
+          "answerImage": "simpsons",
+          "timerSeconds": 6,
+          "choices": ["The Simpsons", "Family Guy", "South Park", "Bob's Burgers"]
+        },
+        {
+          "id": "q8",
+          "prompt": "A Spanish heist show where the characters use city names as code names",
+          "answer": "Money Heist",
+          "answerImage": "money_heist",
+          "timerSeconds": 6,
+          "choices": ["Money Heist", "Elite", "Narcos", "Sacred Games"]
         }
       ]
     }
@@ -142,6 +334,29 @@
         { "id": "ftb11", "name": "Marcus Rashford", "cost": 3, "image": "rashford" },
         { "id": "ftb12", "name": "Declan Rice", "cost": 3, "image": "rice" },
         { "id": "ftb13", "name": "Alphonso Davies", "cost": 2, "image": "davies" }
+      ]
+    },
+    {
+      "id": "tv-draft-1",
+      "mode": "draft",
+      "title": "TV Series Draft",
+      "coverImage": "cover_tv_draft",
+      "budget": 20,
+      "rosterSize": 5,
+      "pool": [
+        { "id": "dzi1", "name": "Breaking Bad", "cost": 9, "image": "breaking_bad" },
+        { "id": "dzi2", "name": "Game of Thrones", "cost": 9, "image": "got" },
+        { "id": "dzi3", "name": "Stranger Things", "cost": 8, "image": "stranger_things" },
+        { "id": "dzi4", "name": "The Wire", "cost": 8, "image": "the_wire" },
+        { "id": "dzi5", "name": "Sherlock", "cost": 6, "image": "sherlock" },
+        { "id": "dzi6", "name": "Peaky Blinders", "cost": 6, "image": "peaky_blinders" },
+        { "id": "dzi7", "name": "Friends", "cost": 6, "image": "friends" },
+        { "id": "dzi8", "name": "The Office", "cost": 6, "image": "the_office" },
+        { "id": "dzi9", "name": "The Crown", "cost": 5, "image": "the_crown" },
+        { "id": "dzi10", "name": "Money Heist", "cost": 5, "image": "money_heist" },
+        { "id": "dzi11", "name": "The Mandalorian", "cost": 4, "image": "mandalorian" },
+        { "id": "dzi12", "name": "Grey's Anatomy", "cost": 3, "image": "greys_anatomy" },
+        { "id": "dzi13", "name": "The Simpsons", "cost": 2, "image": "simpsons" }
       ]
     }
   ]
