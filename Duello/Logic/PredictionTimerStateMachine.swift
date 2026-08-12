@@ -15,8 +15,9 @@ struct PredictionState: Equatable {
     /// Kullanıcının seçtiği şıkkın `shuffledChoices` içindeki index'i. `nil` ise
     /// süre dolana kadar cevaplanmadı demektir.
     var selectedAnswerIndex: Int?
-    /// Oturum boyunca doğru bilinen soru sayısı.
-    var score: Int = 0
+    /// Oyuncu başına doğru bilinen soru sayısı. Tek kişilik oturumda tek elemanlı
+    /// (`[skor]`); iki kişilikte `[oyuncu1Skoru, oyuncu2Skoru]`.
+    var scoreByPlayer: [Int] = [0]
 }
 
 /// Tahmin Et modunun soru → geri sayım → reveal → sıradaki soru akışı.
@@ -24,20 +25,35 @@ struct PredictionState: Equatable {
 /// `tick(state:template:)` çağırır, dönen yeni state'i gösterir. Bu ayrım
 /// sayesinde tüm geçişler kamera/kayıt hiç başlamadan Swift Testing ile
 /// doğrulanabiliyor (playbook Bölüm 2 — saf mantığı ayır).
+///
+/// Çoklu oyuncu (`playerCount == 2`): sorular oyuncular arasında sırayla
+/// paylaşılır — `currentPlayerIndex(questionIndex:playerCount:)` bunu
+/// `questionIndex`'ten türetir, ayrı bir "sıradaki oyuncu" state'i tutmaya
+/// gerek yok.
 enum PredictionTimerStateMachine {
     static func initialState(
         for template: PredictionTemplate,
+        playerCount: Int = 1,
         shuffle: ([String]) -> [String] = { $0.shuffled() }
     ) -> PredictionState {
+        let scores = Array(repeating: 0, count: max(playerCount, 1))
         guard let first = template.questions.first else {
-            return PredictionState(questionIndex: 0, phase: .finished, secondsRemaining: 0)
+            return PredictionState(questionIndex: 0, phase: .finished, secondsRemaining: 0, scoreByPlayer: scores)
         }
         return PredictionState(
             questionIndex: 0,
             phase: .prompt,
             secondsRemaining: first.timerSeconds,
-            shuffledChoices: shuffle(first.choices)
+            shuffledChoices: shuffle(first.choices),
+            scoreByPlayer: scores
         )
+    }
+
+    /// Verilen soru index'inde sırası gelen oyuncunun (0 tabanlı) index'i.
+    /// Tek kişilik oturumda her zaman 0.
+    static func currentPlayerIndex(questionIndex: Int, playerCount: Int) -> Int {
+        guard playerCount > 1 else { return 0 }
+        return questionIndex % playerCount
     }
 
     /// Bir saniye ilerlet. `revealDurationSeconds`: cevabın ekranda kalma süresi.
@@ -77,7 +93,7 @@ enum PredictionTimerStateMachine {
                     secondsRemaining: 0,
                     shuffledChoices: [],
                     selectedAnswerIndex: nil,
-                    score: state.score
+                    scoreByPlayer: state.scoreByPlayer
                 )
             }
             let nextQuestion = template.questions[nextIndex]
@@ -87,17 +103,18 @@ enum PredictionTimerStateMachine {
                 secondsRemaining: nextQuestion.timerSeconds,
                 shuffledChoices: shuffle(nextQuestion.choices),
                 selectedAnswerIndex: nil,
-                score: state.score
+                scoreByPlayer: state.scoreByPlayer
             )
         }
     }
 
     /// Kullanıcı bir şıkka dokunduğunda çağrılır — anında reveal fazına geçer
-    /// (süre dolmasını beklemez), doğruysa skoru artırır.
+    /// (süre dolmasını beklemez), doğruysa o anki sorunun sahibi oyuncunun skorunu artırır.
     static func select(
         answerIndex: Int,
         state: PredictionState,
         template: PredictionTemplate,
+        playerCount: Int = 1,
         revealDurationSeconds: Int = 3
     ) -> PredictionState {
         guard state.phase == .prompt,
@@ -113,7 +130,12 @@ enum PredictionTimerStateMachine {
         next.phase = .reveal
         next.secondsRemaining = revealDurationSeconds
         next.selectedAnswerIndex = answerIndex
-        next.score = state.score + (isCorrect ? 1 : 0)
+        if isCorrect {
+            let playerIndex = currentPlayerIndex(questionIndex: state.questionIndex, playerCount: playerCount)
+            if next.scoreByPlayer.indices.contains(playerIndex) {
+                next.scoreByPlayer[playerIndex] += 1
+            }
+        }
         return next
     }
 

@@ -6,8 +6,8 @@ import Foundation
 /// gerektirmiyor.
 enum AppRoute: Hashable {
     case categorySelection(GameMode)
-    case predictionRecording(PredictionTemplate, recordingEnabled: Bool)
-    case predictionResult(template: PredictionTemplate, score: Int)
+    case predictionRecording(PredictionTemplate, recordingEnabled: Bool, playerCount: Int)
+    case predictionResult(template: PredictionTemplate, scoreByPlayer: [Int])
     case draftRecording(DraftTemplate)
     case processing
     case preview

@@ -80,6 +80,50 @@ enum L10n {
         isTurkish(locale) ? "Soru \(current)/\(total)" : "Question \(current)/\(total)"
     }
 
+    /// Tahmin Et modunda `playerIndex` 0/1 içindir (sadece tek/iki kişilik oturum
+    /// destekleniyor) — `Draft`'ın `DraftPlayer` enum'ından kasıtlı olarak ayrı,
+    /// çünkü bu mod ayrı bir ekran/state machine'de yaşıyor.
+    static func playerName(_ playerIndex: Int, locale: Locale) -> String {
+        let turkish = isTurkish(locale)
+        switch playerIndex {
+        case 0: return turkish ? "Oyuncu 1" : "Player 1"
+        default: return turkish ? "Oyuncu 2" : "Player 2"
+        }
+    }
+
+    static func playerTurnLabel(_ playerIndex: Int, locale: Locale) -> String {
+        let turkish = isTurkish(locale)
+        switch playerIndex {
+        case 0: return turkish ? "Oyuncu 1'in Sırası" : "Player 1's Turn"
+        default: return turkish ? "Oyuncu 2'nin Sırası" : "Player 2's Turn"
+        }
+    }
+
+    /// İki kişilik bir Tahmin Et oturumunun sonunda kazananı/beraberliği anons eder.
+    /// `scoreByPlayer.count < 2` ise (tek kişilik oturum) boş string döner.
+    static func predictionWinnerText(scoreByPlayer: [Int], locale: Locale) -> String {
+        guard scoreByPlayer.count >= 2 else { return "" }
+        let turkish = isTurkish(locale)
+        if scoreByPlayer[0] == scoreByPlayer[1] {
+            return turkish ? "🤝 Berabere!" : "🤝 It's a Tie!"
+        }
+        let winnerIndex = scoreByPlayer[0] > scoreByPlayer[1] ? 0 : 1
+        let name = playerName(winnerIndex, locale: locale)
+        return turkish ? "🏆 \(name) Kazandı!" : "🏆 \(name) Won!"
+    }
+
+    /// Videoya yakılan bitiş kartı için tek/iki kişilik oturuma göre skor özeti.
+    static func predictionResultOverlayText(scoreByPlayer: [Int], total: Int, locale: Locale) -> String {
+        guard scoreByPlayer.count >= 2 else {
+            return scoreSummary(score: scoreByPlayer.first ?? 0, total: total, locale: locale)
+        }
+        let turkish = isTurkish(locale)
+        let scoresLine = turkish
+            ? "Oyuncu 1: \(scoreByPlayer[0])/\(total) • Oyuncu 2: \(scoreByPlayer[1])/\(total)"
+            : "Player 1: \(scoreByPlayer[0])/\(total) • Player 2: \(scoreByPlayer[1])/\(total)"
+        return "\(scoresLine)\n\(predictionWinnerText(scoreByPlayer: scoreByPlayer, locale: locale))"
+    }
+
     static func feedbackTitle(selectedCorrect: Bool?, locale: Locale) -> String {
         let turkish = isTurkish(locale)
         switch selectedCorrect {

@@ -278,6 +278,54 @@
         }
       }
     },
+    "Kaç kişi oynayacak?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How many players?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaç kişi oynayacak?"
+          }
+        }
+      }
+    },
+    "Tek Kişi" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tek Kişi"
+          }
+        }
+      }
+    },
+    "İki Kişi" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Two Players"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İki Kişi"
+          }
+        }
+      }
+    },
     "Kaydı Bırak" : {
       "localizations" : {
         "en" : {

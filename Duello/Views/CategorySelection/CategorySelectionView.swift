@@ -7,6 +7,7 @@ struct CategorySelectionView: View {
     @EnvironmentObject private var appState: AppState
     @Environment(\.locale) private var locale
     @State private var recordingEnabled = true
+    @State private var playerCount = 1
 
     private var title: LocalizedStringKey {
         mode == .prediction ? "Tahmin Et" : "Bütçeli Draft"
@@ -15,6 +16,7 @@ struct CategorySelectionView: View {
     var body: some View {
         ScrollView {
             if mode == .prediction {
+                playerCountPicker
                 recordingToggle
             }
 
@@ -23,7 +25,7 @@ struct CategorySelectionView: View {
                 case .prediction:
                     ForEach(appState.catalog.predictionPacks) { pack in
                         Button {
-                            path.append(.predictionRecording(pack, recordingEnabled: recordingEnabled))
+                            path.append(.predictionRecording(pack, recordingEnabled: recordingEnabled, playerCount: playerCount))
                         } label: {
                             CategoryCard(
                                 imageName: pack.coverImage,
@@ -54,6 +56,21 @@ struct CategorySelectionView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 
+    private var playerCountPicker: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Kaç kişi oynayacak?")
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
+            Picker("", selection: $playerCount) {
+                Text("Tek Kişi").tag(1)
+                Text("İki Kişi").tag(2)
+            }
+            .pickerStyle(.segmented)
+        }
+        .padding(.horizontal, 16)
+        .padding(.top, 16)
+    }
+
     private var recordingToggle: some View {
         Toggle(isOn: $recordingEnabled) {
             Label("Videolu kaydet ve paylaş", systemImage: "video.fill")
@@ -63,7 +80,7 @@ struct CategorySelectionView: View {
         .background(Color.primary.opacity(0.06))
         .clipShape(RoundedRectangle(cornerRadius: 14))
         .padding(.horizontal, 16)
-        .padding(.top, 16)
+        .padding(.top, 10)
     }
 }
 

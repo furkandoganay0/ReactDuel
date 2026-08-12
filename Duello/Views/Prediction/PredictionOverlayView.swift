@@ -14,13 +14,30 @@ struct PredictionOverlayView: View {
     let totalQuestions: Int
     let secondsRemaining: Int
     let selectedAnswerIndex: Int?
+    /// 1 ise tek kişilik oturum — oyuncu sırası hiç gösterilmez, şıklar nötr renkte kalır.
+    let playerCount: Int
+    let currentPlayerIndex: Int
     let onSelect: (Int) -> Void
 
     @Environment(\.locale) private var locale
 
+    private var isMultiplayer: Bool { playerCount > 1 }
+
+    /// İki kişilik oturumda sırası gelen oyuncuyu anında ayırt etmek için —
+    /// önceden ikinci oyuncunun sırası hiç belli olmuyordu, tek bir renksiz akış vardı.
+    private var currentPlayerColor: Color {
+        currentPlayerIndex == 0 ? .indigo : .orange
+    }
+
     var body: some View {
         VStack(spacing: 14) {
-            progressBadge
+            HStack {
+                progressBadge
+                if isMultiplayer {
+                    Spacer()
+                    turnBanner
+                }
+            }
 
             if let question, phase == .prompt {
                 promptCard(question: question)
@@ -33,6 +50,7 @@ struct PredictionOverlayView: View {
         .padding(.top, 60)
         .padding(.horizontal, 20)
         .animation(.easeInOut(duration: 0.2), value: phase)
+        .animation(.easeInOut(duration: 0.2), value: currentPlayerIndex)
     }
 
     private var progressBadge: some View {
@@ -43,6 +61,25 @@ struct PredictionOverlayView: View {
             .padding(.vertical, 6)
             .background(Color.black.opacity(0.6))
             .clipShape(Capsule())
+    }
+
+    private var turnBanner: some View {
+        HStack(spacing: 6) {
+            Text("\(currentPlayerIndex + 1)")
+                .font(.caption.weight(.black))
+                .foregroundStyle(.white)
+                .frame(width: 18, height: 18)
+                .background(Circle().fill(.white.opacity(0.28)))
+            Text(L10n.playerTurnLabel(currentPlayerIndex, locale: locale))
+                .font(.caption.weight(.bold))
+                .foregroundStyle(.white)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 7)
+        .background(currentPlayerColor.gradient)
+        .clipShape(Capsule())
+        .shadow(color: currentPlayerColor.opacity(0.5), radius: 8, y: 3)
+        .transition(.opacity.combined(with: .scale(scale: 0.9)))
     }
 
     private func promptCard(question: PredictionQuestion) -> some View {
@@ -62,6 +99,10 @@ struct PredictionOverlayView: View {
         .frame(maxWidth: .infinity)
         .background(Color.black.opacity(0.72))
         .clipShape(RoundedRectangle(cornerRadius: 20))
+        .overlay(
+            RoundedRectangle(cornerRadius: 20)
+                .strokeBorder(isMultiplayer ? currentPlayerColor : .clear, lineWidth: 3)
+        )
         .transition(.opacity)
     }
 
@@ -79,7 +120,7 @@ struct PredictionOverlayView: View {
                         .foregroundStyle(.white)
                         .frame(maxWidth: .infinity, minHeight: 56)
                         .padding(.horizontal, 10)
-                        .background(Color.blue.opacity(0.85))
+                        .background((isMultiplayer ? currentPlayerColor : Color.blue).opacity(0.85))
                         .clipShape(RoundedRectangle(cornerRadius: 14))
                 }
                 .buttonStyle(PressableButtonStyle())
@@ -91,6 +132,15 @@ struct PredictionOverlayView: View {
 
     private func answerCard(question: PredictionQuestion) -> some View {
         VStack(spacing: 6) {
+            if isMultiplayer {
+                Text(L10n.playerName(currentPlayerIndex, locale: locale))
+                    .font(.caption.weight(.bold))
+                    .foregroundStyle(.white.opacity(0.9))
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 4)
+                    .background(currentPlayerColor.opacity(0.9))
+                    .clipShape(Capsule())
+            }
             Text(L10n.feedbackTitle(selectedCorrect: selectedCorrect, locale: locale))
                 .font(.title3.weight(.bold))
             Text(question.answer)
@@ -137,6 +187,8 @@ private struct PressableButtonStyle: ButtonStyle {
             totalQuestions: 5,
             secondsRemaining: 4,
             selectedAnswerIndex: nil,
+            playerCount: 2,
+            currentPlayerIndex: 1,
             onSelect: { _ in }
         )
     }

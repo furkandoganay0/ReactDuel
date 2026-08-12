@@ -29,6 +29,7 @@ struct PredictionTimerStateMachineTests {
         #expect(state.questionIndex == 0)
         #expect(state.phase == .prompt)
         #expect(state.secondsRemaining == 6)
+        #expect(state.scoreByPlayer == [0])
     }
 
     @Test("Sorusu olmayan şablon direkt finished döner")
@@ -36,6 +37,13 @@ struct PredictionTimerStateMachineTests {
         let t = template([])
         let state = PredictionTimerStateMachine.initialState(for: t)
         #expect(state.phase == .finished)
+    }
+
+    @Test("İki kişilik başlangıç durumu her iki oyuncu için de sıfır skorla başlar")
+    func initialStateWithTwoPlayersHasTwoScores() {
+        let t = template([question("q1", seconds: 6)])
+        let state = PredictionTimerStateMachine.initialState(for: t, playerCount: 2)
+        #expect(state.scoreByPlayer == [0, 0])
     }
 
     @Test("Prompt fazında her tick süreyi bir azaltır")
@@ -106,7 +114,7 @@ struct PredictionTimerStateMachineTests {
         #expect(next.phase == .reveal)
         #expect(next.selectedAnswerIndex == 0)
         #expect(next.secondsRemaining == 3)
-        #expect(next.score == 1)
+        #expect(next.scoreByPlayer == [1])
     }
 
     @Test("Yanlış şıkka dokunmak reveal'a geçer ama skoru artırmaz")
@@ -117,7 +125,7 @@ struct PredictionTimerStateMachineTests {
         let next = PredictionTimerStateMachine.select(answerIndex: 1, state: state, template: t)
         #expect(next.phase == .reveal)
         #expect(next.selectedAnswerIndex == 1)
-        #expect(next.score == 0)
+        #expect(next.scoreByPlayer == [0])
     }
 
     @Test("reveal fazındayken select çağırmak state'i değiştirmez")
@@ -137,7 +145,7 @@ struct PredictionTimerStateMachineTests {
         state = PredictionTimerStateMachine.tick(state: state, template: t, revealDurationSeconds: 3)
         #expect(state.phase == .reveal)
         #expect(state.selectedAnswerIndex == nil)
-        #expect(state.score == 0)
+        #expect(state.scoreByPlayer == [0])
     }
 
     @Test("Skor sorular arasında ve finished'e geçerken korunur")
@@ -147,14 +155,48 @@ struct PredictionTimerStateMachineTests {
         let t = template([q1, q2])
         var state = PredictionTimerStateMachine.initialState(for: t, shuffle: identityShuffle)
         state = PredictionTimerStateMachine.select(answerIndex: 0, state: state, template: t, revealDurationSeconds: 1)
-        #expect(state.score == 1)
+        #expect(state.scoreByPlayer == [1])
         state = PredictionTimerStateMachine.tick(state: state, template: t, revealDurationSeconds: 1, shuffle: identityShuffle)
         #expect(state.phase == .prompt)
         #expect(state.questionIndex == 1)
-        #expect(state.score == 1)
+        #expect(state.scoreByPlayer == [1])
         state = PredictionTimerStateMachine.tick(state: state, template: t, revealDurationSeconds: 1)
         state = PredictionTimerStateMachine.tick(state: state, template: t, revealDurationSeconds: 1)
         #expect(state.phase == .finished)
-        #expect(state.score == 1)
+        #expect(state.scoreByPlayer == [1])
+    }
+
+    @Test("currentPlayerIndex tek kişilik oturumda her zaman 0 döner")
+    func currentPlayerIndexAlwaysZeroForSoloSession() {
+        #expect(PredictionTimerStateMachine.currentPlayerIndex(questionIndex: 0, playerCount: 1) == 0)
+        #expect(PredictionTimerStateMachine.currentPlayerIndex(questionIndex: 5, playerCount: 1) == 0)
+    }
+
+    @Test("currentPlayerIndex iki kişilik oturumda soru index'ine göre sırayla değişir")
+    func currentPlayerIndexAlternatesForTwoPlayers() {
+        #expect(PredictionTimerStateMachine.currentPlayerIndex(questionIndex: 0, playerCount: 2) == 0)
+        #expect(PredictionTimerStateMachine.currentPlayerIndex(questionIndex: 1, playerCount: 2) == 1)
+        #expect(PredictionTimerStateMachine.currentPlayerIndex(questionIndex: 2, playerCount: 2) == 0)
+        #expect(PredictionTimerStateMachine.currentPlayerIndex(questionIndex: 3, playerCount: 2) == 1)
+    }
+
+    @Test("İki kişilik oturumda doğru cevap, o soruya sırası gelen oyuncunun skorunu artırır")
+    func selectScoresCorrectPlayerInTwoPlayerSession() {
+        let q1 = question("q1", seconds: 6, choices: ["a-q1", "x", "y", "z"])
+        let q2 = question("q2", seconds: 6, choices: ["a-q2", "x", "y", "z"])
+        let t = template([q1, q2])
+        var state = PredictionTimerStateMachine.initialState(for: t, playerCount: 2, shuffle: identityShuffle)
+
+        // q1 (index 0) oyuncu 1'e ait
+        state = PredictionTimerStateMachine.select(answerIndex: 0, state: state, template: t, playerCount: 2, revealDurationSeconds: 1)
+        #expect(state.scoreByPlayer == [1, 0])
+
+        // q2'ye geç (index 1, oyuncu 2'ye ait)
+        state = PredictionTimerStateMachine.tick(state: state, template: t, revealDurationSeconds: 1, shuffle: identityShuffle)
+        #expect(state.questionIndex == 1)
+
+        // q2'yi yanlış cevapla — sadece oyuncu 2'nin skoru etkilenmeli (artmamalı)
+        state = PredictionTimerStateMachine.select(answerIndex: 1, state: state, template: t, playerCount: 2, revealDurationSeconds: 1)
+        #expect(state.scoreByPlayer == [1, 0])
     }
 }

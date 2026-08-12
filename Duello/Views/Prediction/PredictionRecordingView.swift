@@ -3,12 +3,14 @@ import UIKit
 
 /// Tahmin Et modu kayıt ekranı — teknik prompt Bölüm 7.3.
 /// Kayıt otomatik başlar (kısa bir 3-2-1 hazırlık sonrası), kategori bitince
-/// otomatik durur ve işleme ekranına geçilir. `recordingEnabled == false` ise
-/// kamera hiç açılmaz, video kaydedilmez — kullanıcı sadece skor görür
-/// (kayıt/paylaşım isteyenler için değil, hızlıca oynamak isteyenler için).
+/// birkaç saniye sonuç gösterilir (hâlâ kayıttayken) ve işleme ekranına
+/// geçilir. `recordingEnabled == false` ise kamera hiç açılmaz, video
+/// kaydedilmez — kullanıcı sadece skor görür. `playerCount == 2` ise sorular
+/// oyuncular arasında sırayla paylaşılır (bkz. `PredictionTimerStateMachine`).
 struct PredictionRecordingView: View {
     let template: PredictionTemplate
     let recordingEnabled: Bool
+    let playerCount: Int
     @Binding var path: [AppRoute]
     @EnvironmentObject private var session: RecordingSessionStore
     @Environment(\.locale) private var locale
@@ -18,20 +20,23 @@ struct PredictionRecordingView: View {
     @State private var lifecycle: RecordingLifecycle = .preparingCamera
     @State private var recBlinkVisible = true
 
+    private let resultDisplaySeconds = 4
     private let ticker = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     enum RecordingLifecycle: Equatable {
         case preparingCamera
         case countdown(Int)
         case recording
+        case showingResult(secondsLeft: Int)
         case done
     }
 
-    init(template: PredictionTemplate, recordingEnabled: Bool, path: Binding<[AppRoute]>) {
+    init(template: PredictionTemplate, recordingEnabled: Bool, playerCount: Int, path: Binding<[AppRoute]>) {
         self.template = template
         self.recordingEnabled = recordingEnabled
+        self.playerCount = playerCount
         self._path = path
-        self._predictionState = State(initialValue: PredictionTimerStateMachine.initialState(for: template))
+        self._predictionState = State(initialValue: PredictionTimerStateMachine.initialState(for: template, playerCount: playerCount))
     }
 
     var body: some View {
@@ -44,18 +49,24 @@ struct PredictionRecordingView: View {
                     .ignoresSafeArea()
             }
 
-            PredictionOverlayView(
-                phase: predictionState.phase,
-                question: currentQuestion,
-                choices: predictionState.shuffledChoices,
-                questionNumber: predictionState.questionIndex + 1,
-                totalQuestions: template.questions.count,
-                secondsRemaining: predictionState.secondsRemaining,
-                selectedAnswerIndex: predictionState.selectedAnswerIndex,
-                onSelect: selectAnswer
-            )
+            if case .showingResult = lifecycle {
+                PredictionSessionResultView(scoreByPlayer: predictionState.scoreByPlayer, total: template.questions.count)
+            } else {
+                PredictionOverlayView(
+                    phase: predictionState.phase,
+                    question: currentQuestion,
+                    choices: predictionState.shuffledChoices,
+                    questionNumber: predictionState.questionIndex + 1,
+                    totalQuestions: template.questions.count,
+                    secondsRemaining: predictionState.secondsRemaining,
+                    selectedAnswerIndex: predictionState.selectedAnswerIndex,
+                    playerCount: playerCount,
+                    currentPlayerIndex: currentPlayerIndex,
+                    onSelect: selectAnswer
+                )
+            }
 
-            if recordingEnabled, lifecycle == .recording {
+            if recordingEnabled, lifecycle == .recording || isShowingResult {
                 recIndicator
             }
 
@@ -80,7 +91,7 @@ struct PredictionRecordingView: View {
                 }
             }
 
-            RecordingExitButton(hasActiveRecording: lifecycle == .recording) {
+            RecordingExitButton(hasActiveRecording: hasActiveRecording) {
                 path.removeLast()
             }
         }
@@ -106,6 +117,19 @@ struct PredictionRecordingView: View {
                 cameraController.teardown()
             }
         }
+    }
+
+    private var isShowingResult: Bool {
+        if case .showingResult = lifecycle { return true }
+        return false
+    }
+
+    private var hasActiveRecording: Bool {
+        recordingEnabled && (lifecycle == .recording || isShowingResult)
+    }
+
+    private var currentPlayerIndex: Int {
+        PredictionTimerStateMachine.currentPlayerIndex(questionIndex: predictionState.questionIndex, playerCount: playerCount)
     }
 
     private var recIndicator: some View {
@@ -140,7 +164,7 @@ struct PredictionRecordingView: View {
     /// paketiyle, kamerasız/kayıtsız akışa geçer (bkz. `recordingEnabled == false`).
     private func switchToNoRecordingMode() {
         path.removeLast()
-        path.append(.predictionRecording(template, recordingEnabled: false))
+        path.append(.predictionRecording(template, recordingEnabled: false, playerCount: playerCount))
     }
 
     private func handleTick() {
@@ -154,6 +178,13 @@ struct PredictionRecordingView: View {
         case .recording:
             recBlinkVisible.toggle()
             advancePrediction()
+        case .showingResult(let secondsLeft):
+            recBlinkVisible.toggle()
+            if secondsLeft <= 1 {
+                finishRecording()
+            } else {
+                lifecycle = .showingResult(secondsLeft: secondsLeft - 1)
+            }
         case .preparingCamera, .done:
             break
         }
@@ -175,7 +206,9 @@ struct PredictionRecordingView: View {
         else { return }
         let isCorrect = predictionState.shuffledChoices.indices.contains(index)
             && currentQuestion.map { predictionState.shuffledChoices[index] == $0.answer } == true
-        predictionState = PredictionTimerStateMachine.select(answerIndex: index, state: predictionState, template: template)
+        predictionState = PredictionTimerStateMachine.select(
+            answerIndex: index, state: predictionState, template: template, playerCount: playerCount
+        )
         UINotificationFeedbackGenerator().notificationOccurred(isCorrect ? .success : .error)
         logCurrentPhaseIfNeeded()
     }
@@ -186,12 +219,24 @@ struct PredictionRecordingView: View {
         predictionState = PredictionTimerStateMachine.tick(state: predictionState, template: template)
 
         if predictionState.phase == .finished {
-            finishRecording()
+            showResultThenFinish()
             return
         }
         if predictionState.phase != previousPhase || predictionState.questionIndex != previousIndex {
             logCurrentPhaseIfNeeded()
         }
+    }
+
+    private func showResultThenFinish() {
+        if recordingEnabled {
+            cameraController.recorder.logOverlayEvent(
+                .showResult(text: L10n.predictionResultOverlayText(
+                    scoreByPlayer: predictionState.scoreByPlayer, total: template.questions.count, locale: locale
+                ))
+            )
+        }
+        UINotificationFeedbackGenerator().notificationOccurred(.success)
+        lifecycle = .showingResult(secondsLeft: resultDisplaySeconds)
     }
 
     private func logCurrentPhaseIfNeeded() {
@@ -220,7 +265,7 @@ struct PredictionRecordingView: View {
     private func finishRecording() {
         lifecycle = .done
         guard recordingEnabled else {
-            path.append(.predictionResult(template: template, score: predictionState.score))
+            path.append(.predictionResult(template: template, scoreByPlayer: predictionState.scoreByPlayer))
             return
         }
         cameraController.recorder.stopRecording()

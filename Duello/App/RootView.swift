@@ -30,11 +30,11 @@ struct RootView: View {
         case .categorySelection(let mode):
             CategorySelectionView(mode: mode, path: $path)
 
-        case .predictionRecording(let template, let recordingEnabled):
-            PredictionRecordingView(template: template, recordingEnabled: recordingEnabled, path: $path)
+        case .predictionRecording(let template, let recordingEnabled, let playerCount):
+            PredictionRecordingView(template: template, recordingEnabled: recordingEnabled, playerCount: playerCount, path: $path)
 
-        case .predictionResult(let template, let score):
-            PredictionResultView(template: template, score: score, path: $path)
+        case .predictionResult(let template, let scoreByPlayer):
+            PredictionResultView(template: template, scoreByPlayer: scoreByPlayer, path: $path)
 
         case .draftRecording(let template):
             DraftRecordingView(template: template, path: $path)
