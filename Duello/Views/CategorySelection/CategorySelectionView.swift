@@ -1,0 +1,97 @@
+import SwiftUI
+
+/// Yatay kart listesi — teknik prompt Bölüm 7, "Kategori Seçimi".
+struct CategorySelectionView: View {
+    let mode: GameMode
+    @Binding var path: [AppRoute]
+    @EnvironmentObject private var appState: AppState
+    @Environment(\.locale) private var locale
+    @State private var recordingEnabled = true
+
+    private var title: LocalizedStringKey {
+        mode == .prediction ? "Tahmin Et" : "Bütçeli Draft"
+    }
+
+    var body: some View {
+        ScrollView {
+            if mode == .prediction {
+                recordingToggle
+            }
+
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+                switch mode {
+                case .prediction:
+                    ForEach(appState.catalog.predictionPacks) { pack in
+                        Button {
+                            path.append(.predictionRecording(pack, recordingEnabled: recordingEnabled))
+                        } label: {
+                            CategoryCard(
+                                imageName: pack.coverImage,
+                                title: pack.title,
+                                subtitle: L10n.questionCount(pack.questions.count, locale: locale)
+                            )
+                        }
+                        .buttonStyle(.plain)
+                    }
+                case .draft:
+                    ForEach(appState.catalog.draftPacks) { pack in
+                        Button {
+                            path.append(.draftRecording(pack))
+                        } label: {
+                            CategoryCard(
+                                imageName: pack.coverImage,
+                                title: pack.title,
+                                subtitle: L10n.draftSubtitle(budget: pack.budget, optionCount: pack.pool.count, locale: locale)
+                            )
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+            }
+            .padding(16)
+        }
+        .navigationTitle(title)
+        .navigationBarTitleDisplayMode(.inline)
+    }
+
+    private var recordingToggle: some View {
+        Toggle(isOn: $recordingEnabled) {
+            Label("Videolu kaydet ve paylaş", systemImage: "video.fill")
+                .font(.subheadline.weight(.semibold))
+        }
+        .padding(14)
+        .background(Color.primary.opacity(0.06))
+        .clipShape(RoundedRectangle(cornerRadius: 14))
+        .padding(.horizontal, 16)
+        .padding(.top, 16)
+    }
+}
+
+private struct CategoryCard: View {
+    let imageName: String
+    let title: String
+    let subtitle: String
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            PlaceholderCoverView(imageName: imageName, label: title)
+                .aspectRatio(1, contentMode: .fit)
+                .shadow(color: .black.opacity(0.12), radius: 8, y: 4)
+
+            Text(title)
+                .font(.headline)
+                .foregroundStyle(.primary)
+                .lineLimit(2)
+            Text(subtitle)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+    }
+}
+
+#Preview {
+    NavigationStack {
+        CategorySelectionView(mode: .draft, path: .constant([]))
+            .environmentObject(AppState())
+    }
+}

@@ -1,0 +1,148 @@
+{
+  "predictionPacks": [
+    {
+      "id": "footballer-guess-1",
+      "mode": "prediction",
+      "title": "Guess the Footballer",
+      "coverImage": "cover_footballer_guess",
+      "questions": [
+        {
+          "id": "q1",
+          "prompt": "Finished 2nd at the 2023 Ballon d'Or, plays for Manchester City",
+          "answer": "Erling Haaland",
+          "answerImage": "haaland",
+          "timerSeconds": 6,
+          "choices": ["Erling Haaland", "Kylian Mbappé", "Karim Benzema", "Robert Lewandowski"]
+        },
+        {
+          "id": "q2",
+          "prompt": "Captained Argentina to the 2022 World Cup title",
+          "answer": "Lionel Messi",
+          "answerImage": "messi",
+          "timerSeconds": 6,
+          "choices": ["Lionel Messi", "Cristiano Ronaldo", "Neymar", "Ángel Di María"]
+        },
+        {
+          "id": "q3",
+          "prompt": "Transferred to Real Madrid in 2024, star forward of the French national team",
+          "answer": "Kylian Mbappé",
+          "answerImage": "mbappe",
+          "timerSeconds": 6,
+          "choices": ["Kylian Mbappé", "Erling Haaland", "Antoine Griezmann", "Ousmane Dembélé"]
+        },
+        {
+          "id": "q4",
+          "prompt": "Manchester City's Spanish deep-lying playmaker, won the 2024 Ballon d'Or",
+          "answer": "Rodri",
+          "answerImage": "rodri",
+          "timerSeconds": 6,
+          "choices": ["Rodri", "Kevin De Bruyne", "Toni Kroos", "Casemiro"]
+        },
+        {
+          "id": "q5",
+          "prompt": "Real Madrid's Brazilian winger, was a 2024 Ballon d'Or finalist",
+          "answer": "Vinícius Júnior",
+          "answerImage": "vinicius",
+          "timerSeconds": 6,
+          "choices": ["Vinícius Júnior", "Rodrygo", "Neymar", "Raphinha"]
+        }
+      ]
+    },
+    {
+      "id": "movie-guess-1",
+      "mode": "prediction",
+      "title": "Guess the Movie",
+      "coverImage": "cover_movie_guess",
+      "questions": [
+        {
+          "id": "q1",
+          "prompt": "1994 prison-escape film, one of IMDb's highest-rated movies of all time",
+          "answer": "The Shawshank Redemption",
+          "answerImage": "shawshank",
+          "timerSeconds": 6,
+          "choices": ["The Shawshank Redemption", "The Godfather", "The Green Mile", "Forrest Gump"]
+        },
+        {
+          "id": "q2",
+          "prompt": "Christopher Nolan film blending space travel and time dilation, starring Matthew McConaughey",
+          "answer": "Interstellar",
+          "answerImage": "interstellar",
+          "timerSeconds": 6,
+          "choices": ["Interstellar", "Inception", "Gravity", "The Martian"]
+        },
+        {
+          "id": "q3",
+          "prompt": "Bong Joon-ho's Oscar-winning South Korean film about class conflict",
+          "answer": "Parasite",
+          "answerImage": "parasite",
+          "timerSeconds": 6,
+          "choices": ["Parasite", "Burning", "Oldboy", "Decision to Leave"]
+        },
+        {
+          "id": "q4",
+          "prompt": "The first film in Coppola's classic mafia family trilogy",
+          "answer": "The Godfather",
+          "answerImage": "godfather",
+          "timerSeconds": 6,
+          "choices": ["The Godfather", "The Shawshank Redemption", "Casino", "The Green Mile"]
+        },
+        {
+          "id": "q5",
+          "prompt": "Quentin Tarantino film with a scrambled timeline, starring John Travolta and Samuel L. Jackson",
+          "answer": "Pulp Fiction",
+          "answerImage": "pulp_fiction",
+          "timerSeconds": 6,
+          "choices": ["Pulp Fiction", "Reservoir Dogs", "Kill Bill", "Django Unchained"]
+        }
+      ]
+    }
+  ],
+  "draftPacks": [
+    {
+      "id": "movie-draft-1",
+      "mode": "draft",
+      "title": "Movie Draft",
+      "coverImage": "cover_movie_draft",
+      "budget": 20,
+      "rosterSize": 5,
+      "pool": [
+        { "id": "flm1", "name": "The Shawshank Redemption", "cost": 9, "image": "shawshank" },
+        { "id": "flm2", "name": "The Godfather", "cost": 9, "image": "godfather" },
+        { "id": "flm3", "name": "The Dark Knight", "cost": 8, "image": "dark_knight" },
+        { "id": "flm4", "name": "Parasite", "cost": 8, "image": "parasite" },
+        { "id": "flm5", "name": "Interstellar", "cost": 6, "image": "interstellar" },
+        { "id": "flm6", "name": "Pulp Fiction", "cost": 6, "image": "pulp_fiction" },
+        { "id": "flm7", "name": "The Matrix", "cost": 6, "image": "matrix" },
+        { "id": "flm8", "name": "The Lord of the Rings: The Return of the King", "cost": 6, "image": "lotr_rotk" },
+        { "id": "flm9", "name": "Fight Club", "cost": 5, "image": "fight_club" },
+        { "id": "flm10", "name": "Gladiator", "cost": 5, "image": "gladiator" },
+        { "id": "flm11", "name": "The Green Mile", "cost": 4, "image": "green_mile" },
+        { "id": "flm12", "name": "Whiplash", "cost": 3, "image": "whiplash" },
+        { "id": "flm13", "name": "La La Land", "cost": 2, "image": "la_la_land" }
+      ]
+    },
+    {
+      "id": "footballer-draft-1",
+      "mode": "draft",
+      "title": "Footballer Draft",
+      "coverImage": "cover_footballer_draft",
+      "budget": 20,
+      "rosterSize": 5,
+      "pool": [
+        { "id": "ftb1", "name": "Lionel Messi", "cost": 9, "image": "messi" },
+        { "id": "ftb2", "name": "Cristiano Ronaldo", "cost": 9, "image": "ronaldo" },
+        { "id": "ftb3", "name": "Kylian Mbappé", "cost": 8, "image": "mbappe" },
+        { "id": "ftb4", "name": "Erling Haaland", "cost": 8, "image": "haaland" },
+        { "id": "ftb5", "name": "Kevin De Bruyne", "cost": 6, "image": "de_bruyne" },
+        { "id": "ftb6", "name": "Vinícius Júnior", "cost": 6, "image": "vinicius" },
+        { "id": "ftb7", "name": "Jude Bellingham", "cost": 6, "image": "bellingham" },
+        { "id": "ftb8", "name": "Rodri", "cost": 5, "image": "rodri" },
+        { "id": "ftb9", "name": "Mohamed Salah", "cost": 5, "image": "salah" },
+        { "id": "ftb10", "name": "Luka Modrić", "cost": 4, "image": "modric" },
+        { "id": "ftb11", "name": "Marcus Rashford", "cost": 3, "image": "rashford" },
+        { "id": "ftb12", "name": "Declan Rice", "cost": 3, "image": "rice" },
+        { "id": "ftb13", "name": "Alphonso Davies", "cost": 2, "image": "davies" }
+      ]
+    }
+  ]
+}

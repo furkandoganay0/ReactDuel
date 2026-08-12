@@ -1,0 +1,12 @@
+# XcodeGen ile üretilen proje dosyası — commit edilmez, `xcodegen generate` ile üretilir
+Duello.xcodeproj/
+
+# Xcode kullanıcı/derleme artefaktları
+DerivedData/
+*.xcuserstate
+xcuserdata/
+.build/
+.swiftpm/
+
+# macOS
+.DS_Store
