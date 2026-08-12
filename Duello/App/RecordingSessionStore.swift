@@ -10,12 +10,28 @@ final class RecordingSessionStore: ObservableObject {
     @Published var exportProgress: Float = 0
     @Published var exportErrorMessage: String?
 
+    /// Oyun bitince `PlayHistoryStore`'a eklenen kaydın id'si — kullanıcı
+    /// "Videoyu Kaydet" derse export tamamlandığında bu kayda video dosya adı
+    /// iliştirilir (bkz. `ProcessingView`).
+    @Published var pendingHistoryRecordID: UUID?
+
     func reset() {
         rawVideoURL = nil
         overlayEvents = []
         exportedVideoURL = nil
         exportProgress = 0
         exportErrorMessage = nil
+        pendingHistoryRecordID = nil
+    }
+
+    /// Kullanıcı `SaveDecisionView`'da "Kaydetme" derse çağrılır — ham kaydı
+    /// diskten siler. Oyun biter bitmez otomatik export ETMEME davranışının
+    /// karşı ucu: kaydetmek istemeyen kullanıcı için hiçbir iz kalmaz.
+    func discardRawVideo() {
+        if let rawVideoURL {
+            try? FileManager.default.removeItem(at: rawVideoURL)
+        }
+        reset()
     }
 
     func startExportIfNeeded(watermarkText: String = "⚡ Duello") {

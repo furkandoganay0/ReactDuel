@@ -39,11 +39,17 @@ struct RootView: View {
         case .draftRecording(let template):
             DraftRecordingView(template: template, path: $path)
 
+        case .saveDecision:
+            SaveDecisionView(path: $path)
+
         case .processing:
             ProcessingView(path: $path)
 
         case .preview:
             VideoPreviewView(path: $path)
+
+        case .history:
+            HistoryView(path: $path)
         }
     }
 }

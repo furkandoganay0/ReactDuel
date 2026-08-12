@@ -4,6 +4,8 @@ import UIKit
 /// Ana Ekran — tek ekran, derin gezinme yok (teknik prompt Bölüm 7).
 struct HomeView: View {
     @Binding var path: [AppRoute]
+    @EnvironmentObject private var playHistoryStore: PlayHistoryStore
+    @Environment(\.locale) private var locale
     @State private var isShowingSettings = false
 
     var body: some View {
@@ -19,6 +21,10 @@ struct HomeView: View {
             Text("Modunu seç, tepkini kaydet")
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
+
+            if playHistoryStore.currentStreak > 0 {
+                streakBadge
+            }
 
             Spacer()
 
@@ -44,6 +50,15 @@ struct HomeView: View {
         }
         .padding(.horizontal, 20)
         .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    path.append(.history)
+                } label: {
+                    Image(systemName: "clock.arrow.circlepath")
+                        .foregroundStyle(.secondary)
+                }
+                .accessibilityLabel(Text("Geçmiş"))
+            }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     isShowingSettings = true
@@ -57,6 +72,19 @@ struct HomeView: View {
         .sheet(isPresented: $isShowingSettings) {
             SettingsView()
         }
+    }
+
+    private var streakBadge: some View {
+        HStack(spacing: 6) {
+            Text("🔥")
+            Text(L10n.streakLabel(days: playHistoryStore.currentStreak, locale: locale))
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.orange)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 6)
+        .background(Color.orange.opacity(0.12))
+        .clipShape(Capsule())
     }
 }
 
@@ -122,4 +150,5 @@ private struct ModeCard: View {
         HomeView(path: .constant([]))
     }
     .environmentObject(AppState())
+    .environmentObject(PlayHistoryStore())
 }

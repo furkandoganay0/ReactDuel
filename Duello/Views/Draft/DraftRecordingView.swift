@@ -8,6 +8,7 @@ struct DraftRecordingView: View {
     let template: DraftTemplate
     @Binding var path: [AppRoute]
     @EnvironmentObject private var session: RecordingSessionStore
+    @EnvironmentObject private var playHistoryStore: PlayHistoryStore
     @Environment(\.locale) private var locale
 
     @StateObject private var cameraController = CameraController()
@@ -351,7 +352,13 @@ struct DraftRecordingView: View {
             session.reset()
             session.rawVideoURL = cameraController.recorder.lastRecordedURL
             session.overlayEvents = cameraController.recorder.overlayEvents
-            path.append(.processing)
+
+            let result = DraftScoreCalculator.winner(rosterA: draftState.rosterA, rosterB: draftState.rosterB)
+            let record = playHistoryStore.addRecord(
+                mode: .draft, packTitle: template.title, resultSummary: L10n.resultLabel(result, locale: locale)
+            )
+            session.pendingHistoryRecordID = record.id
+            path.append(.saveDecision)
         }
     }
 }

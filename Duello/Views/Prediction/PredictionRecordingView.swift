@@ -13,6 +13,7 @@ struct PredictionRecordingView: View {
     let playerCount: Int
     @Binding var path: [AppRoute]
     @EnvironmentObject private var session: RecordingSessionStore
+    @EnvironmentObject private var playHistoryStore: PlayHistoryStore
     @Environment(\.locale) private var locale
 
     @StateObject private var cameraController = CameraController()
@@ -300,7 +301,12 @@ struct PredictionRecordingView: View {
 
     private func finishRecording() {
         lifecycle = .done
+        let summary = L10n.predictionHistorySummary(
+            scoreByPlayer: predictionState.scoreByPlayer, total: template.questions.count, locale: locale
+        )
+
         guard recordingEnabled else {
+            playHistoryStore.addRecord(mode: .prediction, packTitle: template.title, resultSummary: summary)
             path.append(.predictionResult(template: template, scoreByPlayer: predictionState.scoreByPlayer))
             return
         }
@@ -311,7 +317,11 @@ struct PredictionRecordingView: View {
             session.reset()
             session.rawVideoURL = cameraController.recorder.lastRecordedURL
             session.overlayEvents = cameraController.recorder.overlayEvents
-            path.append(.processing)
+            // Skor her zaman geçmişe eklenir; video sadece kullanıcı `SaveDecisionView`'da
+            // onaylarsa (bkz. o ekran + `ProcessingView`) bu kayda iliştirilir.
+            let record = playHistoryStore.addRecord(mode: .prediction, packTitle: template.title, resultSummary: summary)
+            session.pendingHistoryRecordID = record.id
+            path.append(.saveDecision)
         }
     }
 }

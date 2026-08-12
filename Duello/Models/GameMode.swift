@@ -1,6 +1,6 @@
 import Foundation
 
-enum GameMode: String, Hashable {
+enum GameMode: String, Hashable, Codable {
     case prediction
     case draft
 }

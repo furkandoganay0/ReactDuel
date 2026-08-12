@@ -130,6 +130,19 @@ enum L10n {
         return "\(scoresLine)\n\(predictionWinnerText(scoreByPlayer: scoreByPlayer, locale: locale))"
     }
 
+    /// `PlayHistoryStore` kaydı için tek satırlık özet — video kartındaki
+    /// (`predictionResultOverlayText`) satır sonu burada YOK, geçmiş listesinde tek satır olarak görünsün diye.
+    static func predictionHistorySummary(scoreByPlayer: [Int], total: Int, locale: Locale) -> String {
+        guard scoreByPlayer.count >= 2 else {
+            return scoreSummary(score: scoreByPlayer.first ?? 0, total: total, locale: locale)
+        }
+        let turkish = isTurkish(locale)
+        let scoresLine = turkish
+            ? "Oyuncu 1: \(scoreByPlayer[0])/\(total) • Oyuncu 2: \(scoreByPlayer[1])/\(total)"
+            : "Player 1: \(scoreByPlayer[0])/\(total) • Player 2: \(scoreByPlayer[1])/\(total)"
+        return "\(scoresLine) — \(predictionWinnerText(scoreByPlayer: scoreByPlayer, locale: locale))"
+    }
+
     static func feedbackTitle(selectedCorrect: Bool?, locale: Locale) -> String {
         let turkish = isTurkish(locale)
         switch selectedCorrect {
@@ -190,6 +203,10 @@ enum L10n {
                 ? "Kameraya erişilemedi. İzin reddedilmiş olabilir ya da kamera başka bir uygulama tarafından kullanılıyor olabilir."
                 : "Couldn't access the camera. Permission may have been denied, or another app is using the camera."
         }
+    }
+
+    static func streakLabel(days: Int, locale: Locale) -> String {
+        isTurkish(locale) ? "\(days) gündür oynuyorsun!" : "\(days)-day streak!"
     }
 
     static func exportErrorMessage(locale: Locale) -> String {
