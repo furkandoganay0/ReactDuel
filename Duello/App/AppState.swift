@@ -19,11 +19,29 @@ final class AppState: ObservableObject {
         didSet { UserDefaults.standard.set(appearance.rawValue, forKey: Self.appearanceKey) }
     }
 
+    /// Paylaşılan videonun köşesindeki filigrana yazılacak, kullanıcının kendi
+    /// rumuzu — boşsa varsayılan "⚡ Duello" markası kullanılır (bkz.
+    /// `OverlayCompositionBuilder.makeWatermarkLayer`). İçerik üreticilerin
+    /// kendi videolarını kendi hesaplarıyla imzalayabilmesi için.
+    @Published var creatorHandle: String {
+        didSet { UserDefaults.standard.set(creatorHandle, forKey: Self.creatorHandleKey) }
+    }
+
     @Published private(set) var catalog: ContentCatalog
+
+    /// Export'a geçilecek gerçek filigran metni — boş/whitespace-only bir rumuz
+    /// varsayılan markaya düşer, doluysa baştaki "@" garanti edilir (kullanıcı
+    /// "@" eklemeyi unutsa bile).
+    var resolvedWatermarkText: String {
+        let trimmed = creatorHandle.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return "⚡ Duello" }
+        return trimmed.hasPrefix("@") ? trimmed : "@\(trimmed)"
+    }
 
     private static let onboardingKey = "duello.hasCompletedOnboarding"
     private static let languageKey = "duello.language"
     private static let appearanceKey = "duello.appearance"
+    private static let creatorHandleKey = "duello.creatorHandle"
 
     init() {
         hasCompletedOnboarding = UserDefaults.standard.bool(forKey: Self.onboardingKey)
@@ -34,6 +52,8 @@ final class AppState: ObservableObject {
 
         appearance = UserDefaults.standard.string(forKey: Self.appearanceKey)
             .flatMap(AppAppearance.init(rawValue:)) ?? .system
+
+        creatorHandle = UserDefaults.standard.string(forKey: Self.creatorHandleKey) ?? ""
 
         catalog = ContentLoader.loadCatalog(languageCode: storedLanguage.contentLanguageCode)
     }

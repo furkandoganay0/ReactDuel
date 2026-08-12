@@ -8,6 +8,9 @@ struct CategorySelectionView: View {
     @Environment(\.locale) private var locale
     @State private var recordingEnabled = true
     @State private var playerCount = 1
+    /// 0 = paketteki tüm sorular. Kısa/hızlı içerik için (bkz. Bölüm: influencer
+    /// formatı) bir paketten sadece birkaç soru çekip daha kısa bir video üretmeyi sağlar.
+    @State private var questionCountLimit = 0
 
     private var title: LocalizedStringKey {
         mode == .prediction ? "Tahmin Et" : "Bütçeli Draft"
@@ -17,6 +20,7 @@ struct CategorySelectionView: View {
         ScrollView {
             if mode == .prediction {
                 playerCountPicker
+                questionCountPicker
                 recordingToggle
             }
 
@@ -25,7 +29,8 @@ struct CategorySelectionView: View {
                 case .prediction:
                     ForEach(appState.catalog.predictionPacks) { pack in
                         Button {
-                            path.append(.predictionRecording(pack, recordingEnabled: recordingEnabled, playerCount: playerCount))
+                            let selectedPack = trimmedPack(pack, limit: questionCountLimit)
+                            path.append(.predictionRecording(selectedPack, recordingEnabled: recordingEnabled, playerCount: playerCount))
                         } label: {
                             CategoryCard(
                                 imageName: pack.coverImage,
@@ -56,6 +61,17 @@ struct CategorySelectionView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 
+    /// `limit == 0` ise pack'i olduğu gibi döner. Aksi halde sorular karıştırılıp
+    /// ilk `limit` tanesi alınır — aynı paketten tekrar tekrar farklı, kısa
+    /// videolar çıkarabilmek için (hep aynı 3 soru olmasın diye).
+    private func trimmedPack(_ pack: PredictionTemplate, limit: Int) -> PredictionTemplate {
+        guard limit > 0, limit < pack.questions.count else { return pack }
+        let selectedQuestions = Array(pack.questions.shuffled().prefix(limit))
+        return PredictionTemplate(
+            id: pack.id, mode: pack.mode, title: pack.title, coverImage: pack.coverImage, questions: selectedQuestions
+        )
+    }
+
     private var playerCountPicker: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Kaç kişi oynayacak?")
@@ -69,6 +85,22 @@ struct CategorySelectionView: View {
         }
         .padding(.horizontal, 16)
         .padding(.top, 16)
+    }
+
+    private var questionCountPicker: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Kaç soru?")
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
+            Picker("", selection: $questionCountLimit) {
+                Text("3 Soru").tag(3)
+                Text("5 Soru").tag(5)
+                Text("Tümü").tag(0)
+            }
+            .pickerStyle(.segmented)
+        }
+        .padding(.horizontal, 16)
+        .padding(.top, 10)
     }
 
     private var recordingToggle: some View {

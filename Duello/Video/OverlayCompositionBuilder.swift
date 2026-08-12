@@ -20,10 +20,16 @@ enum OverlayCompositionBuilder {
     ///   - events: Kayıt sırasında toplanan, kayıt başlangıcına göre zaman damgalı olaylar.
     ///   - totalDuration: Videonun toplam süresi (saniye) — son event'in ne zaman kaybolacağını belirler.
     ///   - renderSize: Composition'ın piksel boyutu (preferredTransform uygulanmış natural size).
+    ///   - watermarkText: Köşedeki filigranda gösterilecek metin — kullanıcı Ayarlar'dan kendi
+    ///     rumuzunu girdiyse onu, girmediyse varsayılan "⚡ Duello" markasını taşır
+    ///     (bkz. `AppState.creatorHandle`). Boş string verilmesi durumunda çağıran taraf
+    ///     zaten varsayılanı doldurmuş olmalı — burada tekrar dile göre seçim YAPILMAZ
+    ///     (export zamanının `Locale` erişimi yok, bkz. dosya başı NOT).
     static func buildOverlayLayer(
         events: [OverlayEvent],
         totalDuration: TimeInterval,
-        renderSize: CGSize
+        renderSize: CGSize,
+        watermarkText: String
     ) -> CALayer {
         let overlayLayer = CALayer()
         overlayLayer.frame = CGRect(origin: .zero, size: renderSize)
@@ -45,7 +51,7 @@ enum OverlayCompositionBuilder {
             overlayLayer.addSublayer(card)
         }
 
-        overlayLayer.addSublayer(makeWatermarkLayer(renderSize: renderSize))
+        overlayLayer.addSublayer(makeWatermarkLayer(text: watermarkText, renderSize: renderSize))
 
         return overlayLayer
     }
@@ -151,10 +157,11 @@ enum OverlayCompositionBuilder {
         return container
     }
 
-    /// Videonun tamamında sabit kalan, küçük ve göze batmayan marka rozeti —
-    /// paylaşılan videonun nereden geldiğini belli eder (organik keşif/viral döngü).
-    private static func makeWatermarkLayer(renderSize: CGSize) -> CALayer {
-        let width: CGFloat = renderSize.width * 0.32
+    /// Videonun tamamında sabit kalan, küçük ve göze batmayan marka/rumuz rozeti —
+    /// paylaşılan videonun nereden geldiğini belli eder (organik keşif/viral döngü),
+    /// ya da kullanıcı kendi rumuzunu girdiyse onu taşır.
+    private static func makeWatermarkLayer(text watermarkText: String, renderSize: CGSize) -> CALayer {
+        let width: CGFloat = renderSize.width * 0.4
         let height: CGFloat = renderSize.height * 0.032
         let container = CALayer()
         container.frame = CGRect(
@@ -171,14 +178,12 @@ enum OverlayCompositionBuilder {
         background.fillColor = UIColor.black.withAlphaComponent(0.4).cgColor
         container.addSublayer(background)
 
-        // Marka adı kasıtlı olarak çevrilmiyor (logotype gibi davranıyor) — export
-        // zamanının hiç `Locale` erişimi olmadığını hatırlatalım: burada dile göre
-        // metin seçmeye kalkışmak sessizce yanlış dilde bir watermark üretebilirdi.
         let text = CATextLayer()
         text.frame = container.bounds
-        text.string = "⚡ Duello"
+        text.string = watermarkText
         text.foregroundColor = UIColor.white.withAlphaComponent(0.9).cgColor
         text.alignmentMode = .center
+        text.truncationMode = .end
         text.contentsScale = UIScreen.main.scale
         text.font = CTFontCreateWithName("HelveticaNeue-Semibold" as CFString, 0, nil)
         text.fontSize = height * 0.42
@@ -211,6 +216,13 @@ private struct OverlayContent {
 
     init?(kind: OverlayEventKind) {
         switch kind {
+        case .showIntro(let introText):
+            text = introText
+            gradientColors = [UIColor.systemIndigo, UIColor(red: 0.55, green: 0.25, blue: 0.85, alpha: 1)]
+            textColor = .white
+            fontSize = 44
+            heightRatio = 0.22
+            verticalAnchor = .center
         case .showPrompt(let promptText):
             text = promptText
             gradientColors = [UIColor.black.withAlphaComponent(0.82), UIColor.black.withAlphaComponent(0.62)]

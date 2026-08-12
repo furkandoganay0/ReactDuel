@@ -76,6 +76,12 @@ enum L10n {
             : "Cost: \(cost) • Remaining budget after this pick: \(remainingBudgetAfterPick)"
     }
 
+    /// Seçim süresi dolduğunda otomatik yapılan pick için videoya yakılan metin —
+    /// manuel seçimden ayırt edilsin diye ayrı, "süre doldu" vurgulu bir ifade.
+    static func autoPickLabel(playerName: String, itemName: String, locale: Locale) -> String {
+        isTurkish(locale) ? "⏱️ Süre doldu — \(playerName): \(itemName)" : "⏱️ Time's up — \(playerName): \(itemName)"
+    }
+
     static func questionProgress(current: Int, total: Int, locale: Locale) -> String {
         isTurkish(locale) ? "Soru \(current)/\(total)" : "Question \(current)/\(total)"
     }

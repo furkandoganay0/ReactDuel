@@ -18,7 +18,7 @@ final class RecordingSessionStore: ObservableObject {
         exportErrorMessage = nil
     }
 
-    func startExportIfNeeded() {
+    func startExportIfNeeded(watermarkText: String = "⚡ Duello") {
         guard let rawVideoURL, exportedVideoURL == nil else { return }
         exportErrorMessage = nil
         exportProgress = 0
@@ -27,6 +27,7 @@ final class RecordingSessionStore: ObservableObject {
             rawVideoURL: rawVideoURL,
             overlayEvents: overlayEvents,
             outputURL: VideoExporter.makeOutputURL(),
+            watermarkText: watermarkText,
             progressHandler: { [weak self] progress in
                 self?.exportProgress = progress
             },

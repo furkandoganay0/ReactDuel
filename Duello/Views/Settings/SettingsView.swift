@@ -41,6 +41,16 @@ struct SettingsView: View {
                 } header: {
                     Text("Görünüm")
                 }
+
+                Section {
+                    TextField("@kullaniciadi", text: $appState.creatorHandle)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled()
+                } header: {
+                    Text("Video Filigranı")
+                } footer: {
+                    Text("Paylaştığın videonun köşesinde kendi rumuzun görünsün. Boş bırakırsan Duello markası kullanılır.")
+                }
             }
             .navigationTitle(Text("Ayarlar"))
             .navigationBarTitleDisplayMode(.inline)

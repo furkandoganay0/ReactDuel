@@ -14,13 +14,17 @@ struct DraftRecordingView: View {
     @State private var draftState: DraftState
     @State private var lifecycle: Lifecycle = .preparingCamera
     @State private var pendingPick: DraftPoolItem?
+    @State private var pickSecondsRemaining: Int
 
     private let resultDisplaySeconds = 4
+    private let introDisplaySeconds = 2
+    private let pickTimerSeconds = 8
     private let ticker = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     enum Lifecycle: Equatable {
         case preparingCamera
         case countdown(Int)
+        case showingIntro(secondsLeft: Int)
         case picking
         case showingResult(secondsLeft: Int)
         case done
@@ -30,6 +34,7 @@ struct DraftRecordingView: View {
         self.template = template
         self._path = path
         self._draftState = State(initialValue: DraftStateMachine.initialState(template: template))
+        self._pickSecondsRemaining = State(initialValue: 8)
     }
 
     var body: some View {
@@ -48,6 +53,8 @@ struct DraftRecordingView: View {
                     rosterB: draftState.rosterB,
                     result: DraftScoreCalculator.winner(rosterA: draftState.rosterA, rosterB: draftState.rosterB)
                 )
+            } else if case .showingIntro = lifecycle {
+                introCard
             } else if lifecycle == .picking {
                 bottomPoolPicker
             }
@@ -98,7 +105,7 @@ struct DraftRecordingView: View {
 
     private var hasActiveRecording: Bool {
         switch lifecycle {
-        case .picking, .showingResult: return true
+        case .picking, .showingResult, .showingIntro: return true
         case .preparingCamera, .countdown, .done: return false
         }
     }
@@ -107,10 +114,28 @@ struct DraftRecordingView: View {
         draftState.roster(for: draftState.currentPlayer)
     }
 
+    private var introCard: some View {
+        VStack(spacing: 12) {
+            Text("🔥")
+                .font(.system(size: 44))
+            Text(template.title)
+                .font(.system(size: 30, weight: .black, design: .rounded))
+                .foregroundStyle(.white)
+                .multilineTextAlignment(.center)
+        }
+        .padding(28)
+        .frame(maxWidth: .infinity)
+        .background(Color.orange.gradient)
+        .clipShape(RoundedRectangle(cornerRadius: 24))
+        .padding(.horizontal, 24)
+        .transition(.scale.combined(with: .opacity))
+    }
+
     private var topTurnBar: some View {
         VStack {
             VStack(spacing: 10) {
                 HStack {
+                    pickCountdownBadge
                     Text(L10n.playerLabel(draftState.currentPlayer, locale: locale))
                         .font(.headline)
                     Spacer()
@@ -140,6 +165,18 @@ struct DraftRecordingView: View {
             .animation(.easeInOut(duration: 0.2), value: currentRoster.count)
             Spacer()
         }
+    }
+
+    /// Bu turda seçim yapmak için kalan süre — süre dolarsa otomatik (rastgele
+    /// uygun) bir seçim yapılır (bkz. `autoPickForTimeout`). Tempo/gerginlik
+    /// için: önceden seçim süresi sınırsızdı, "ölü an" riski vardı.
+    private var pickCountdownBadge: some View {
+        Text("\(pickSecondsRemaining)")
+            .font(.subheadline.weight(.black))
+            .foregroundStyle(.white)
+            .frame(width: 26, height: 26)
+            .background(Circle().fill(pickSecondsRemaining <= 3 ? Color.red : Color.white.opacity(0.2)))
+            .animation(.easeInOut(duration: 0.2), value: pickSecondsRemaining <= 3)
     }
 
     /// Şu ana kadar seçilen item'ları canlı gösteren şerit — önceden bütçeyle
@@ -222,32 +259,71 @@ struct DraftRecordingView: View {
             } else {
                 lifecycle = .countdown(n - 1)
             }
+        case .showingIntro(let secondsLeft):
+            if secondsLeft <= 1 {
+                lifecycle = .picking
+                cameraController.recorder.logOverlayEvent(
+                    .showTurn(text: turnOverlayText(for: draftState.currentPlayer, budgetRemaining: template.budget))
+                )
+            } else {
+                lifecycle = .showingIntro(secondsLeft: secondsLeft - 1)
+            }
+        case .picking:
+            guard pendingPick == nil else { return } // onay modalı açıkken saat durur
+            if pickSecondsRemaining <= 1 {
+                autoPickForTimeout()
+            } else {
+                pickSecondsRemaining -= 1
+            }
         case .showingResult(let secondsLeft):
             if secondsLeft <= 1 {
                 finishRecording()
             } else {
                 lifecycle = .showingResult(secondsLeft: secondsLeft - 1)
             }
-        case .picking, .preparingCamera, .done:
+        case .preparingCamera, .done:
             break
         }
     }
 
+    /// Kayıt gerçekten başlar (kamera zaten çalışıyor); önce kısa bir "hook"
+    /// kartı gösterilir (bkz. `introCard`), asıl seçim turu ondan sonra başlar.
     private func startRecording() {
-        lifecycle = .picking
+        lifecycle = .showingIntro(secondsLeft: introDisplaySeconds)
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         cameraController.recorder.startRecording()
-        cameraController.recorder.logOverlayEvent(.showTurn(text: turnOverlayText(for: draftState.currentPlayer, budgetRemaining: template.budget)))
+        cameraController.recorder.logOverlayEvent(.showIntro(text: template.title))
     }
 
-    private func confirmPick(_ item: DraftPoolItem) {
+    /// Seçim süresi dolunca çağrılır: sırası gelen oyuncu için uygun (bütçeye
+    /// giren, roster'a sığan) item'lardan rastgele birini otomatik seçer —
+    /// oyunun akışı hiç durmasın diye. `advanceToNextActionablePlayer`
+    /// (`DraftStateMachine`) garanti eder ki sırası gelen oyuncu her zaman en
+    /// az bir uygun item bulabilir, o yüzden liste normalde boş olmaz.
+    private func autoPickForTimeout() {
+        let affordable = draftState.availablePool.filter {
+            BudgetValidator.canPick(
+                $0,
+                currentRoster: draftState.roster(for: draftState.currentPlayer),
+                budget: template.budget,
+                rosterSize: template.rosterSize
+            ) == .allowed
+        }
+        guard let randomItem = affordable.randomElement() else { return }
+        UINotificationFeedbackGenerator().notificationOccurred(.warning)
+        confirmPick(randomItem, isAutoPick: true)
+    }
+
+    private func confirmPick(_ item: DraftPoolItem, isAutoPick: Bool = false) {
         let playerBeforePick = draftState.currentPlayer
         draftState = DraftStateMachine.pick(item, state: draftState, template: template)
         pendingPick = nil
+        pickSecondsRemaining = pickTimerSeconds
 
-        cameraController.recorder.logOverlayEvent(
-            .showPick(text: "\(L10n.playerLabel(playerBeforePick, locale: locale)): \(item.name)")
-        )
+        let playerLabel = L10n.playerLabel(playerBeforePick, locale: locale)
+        let pickText = isAutoPick ? L10n.autoPickLabel(playerName: playerLabel, itemName: item.name, locale: locale)
+            : "\(playerLabel): \(item.name)"
+        cameraController.recorder.logOverlayEvent(.showPick(text: pickText))
 
         if draftState.isFinished {
             let result = DraftScoreCalculator.winner(rosterA: draftState.rosterA, rosterB: draftState.rosterB)

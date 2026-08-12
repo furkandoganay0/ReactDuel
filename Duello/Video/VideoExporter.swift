@@ -24,6 +24,7 @@ enum VideoExporter {
         rawVideoURL: URL,
         overlayEvents: [OverlayEvent],
         outputURL: URL,
+        watermarkText: String = "⚡ Duello",
         progressHandler: ((Float) -> Void)? = nil,
         completion: @escaping (Result<URL, VideoExportError>) -> Void
     ) {
@@ -86,7 +87,8 @@ enum VideoExporter {
                 let overlayLayer = OverlayCompositionBuilder.buildOverlayLayer(
                     events: overlayEvents,
                     totalDuration: CMTimeGetSeconds(duration),
-                    renderSize: renderSize
+                    renderSize: renderSize,
+                    watermarkText: watermarkText
                 )
 
                 let parentLayer = CALayer()

@@ -21,11 +21,13 @@ struct PredictionRecordingView: View {
     @State private var recBlinkVisible = true
 
     private let resultDisplaySeconds = 4
+    private let introDisplaySeconds = 2
     private let ticker = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     enum RecordingLifecycle: Equatable {
         case preparingCamera
         case countdown(Int)
+        case showingIntro(secondsLeft: Int)
         case recording
         case showingResult(secondsLeft: Int)
         case done
@@ -51,6 +53,8 @@ struct PredictionRecordingView: View {
 
             if case .showingResult = lifecycle {
                 PredictionSessionResultView(scoreByPlayer: predictionState.scoreByPlayer, total: template.questions.count)
+            } else if case .showingIntro = lifecycle {
+                introCard
             } else {
                 PredictionOverlayView(
                     phase: predictionState.phase,
@@ -66,7 +70,7 @@ struct PredictionRecordingView: View {
                 )
             }
 
-            if recordingEnabled, lifecycle == .recording || isShowingResult {
+            if hasActiveRecording {
                 recIndicator
             }
 
@@ -124,12 +128,34 @@ struct PredictionRecordingView: View {
         return false
     }
 
+    private var isShowingIntro: Bool {
+        if case .showingIntro = lifecycle { return true }
+        return false
+    }
+
     private var hasActiveRecording: Bool {
-        recordingEnabled && (lifecycle == .recording || isShowingResult)
+        recordingEnabled && (lifecycle == .recording || isShowingResult || isShowingIntro)
     }
 
     private var currentPlayerIndex: Int {
         PredictionTimerStateMachine.currentPlayerIndex(questionIndex: predictionState.questionIndex, playerCount: playerCount)
+    }
+
+    private var introCard: some View {
+        VStack(spacing: 12) {
+            Text("🔥")
+                .font(.system(size: 44))
+            Text(template.title)
+                .font(.system(size: 30, weight: .black, design: .rounded))
+                .foregroundStyle(.white)
+                .multilineTextAlignment(.center)
+        }
+        .padding(28)
+        .frame(maxWidth: .infinity)
+        .background(Color.indigo.gradient)
+        .clipShape(RoundedRectangle(cornerRadius: 24))
+        .padding(.horizontal, 24)
+        .transition(.scale.combined(with: .opacity))
     }
 
     private var recIndicator: some View {
@@ -175,6 +201,14 @@ struct PredictionRecordingView: View {
             } else {
                 lifecycle = .countdown(n - 1)
             }
+        case .showingIntro(let secondsLeft):
+            recBlinkVisible.toggle()
+            if secondsLeft <= 1 {
+                lifecycle = .recording
+                logCurrentPhaseIfNeeded()
+            } else {
+                lifecycle = .showingIntro(secondsLeft: secondsLeft - 1)
+            }
         case .recording:
             recBlinkVisible.toggle()
             advancePrediction()
@@ -190,13 +224,15 @@ struct PredictionRecordingView: View {
         }
     }
 
+    /// Kayıt gerçekten başlar (kamera zaten çalışıyor); önce kısa bir "hook"
+    /// kartı gösterilir (bkz. `introCard`), asıl soru akışı ondan sonra başlar.
     private func startRecording() {
-        lifecycle = .recording
+        lifecycle = .showingIntro(secondsLeft: introDisplaySeconds)
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         if recordingEnabled {
             cameraController.recorder.startRecording()
+            cameraController.recorder.logOverlayEvent(.showIntro(text: template.title))
         }
-        logCurrentPhaseIfNeeded()
     }
 
     private func selectAnswer(_ index: Int) {

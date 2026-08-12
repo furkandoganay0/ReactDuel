@@ -6,6 +6,7 @@ import SwiftUI
 struct ProcessingView: View {
     @Binding var path: [AppRoute]
     @EnvironmentObject private var session: RecordingSessionStore
+    @EnvironmentObject private var appState: AppState
     @Environment(\.locale) private var locale
 
     var body: some View {
@@ -30,7 +31,7 @@ struct ProcessingView: View {
                     .padding(.horizontal, 32)
                 Button("Tekrar Dene") {
                     session.exportedVideoURL = nil
-                    session.startExportIfNeeded()
+                    session.startExportIfNeeded(watermarkText: appState.resolvedWatermarkText)
                 }
                 .buttonStyle(.borderedProminent)
             } else {
@@ -50,7 +51,7 @@ struct ProcessingView: View {
         }
         .navigationBarBackButtonHidden(true)
         .onAppear {
-            session.startExportIfNeeded()
+            session.startExportIfNeeded(watermarkText: appState.resolvedWatermarkText)
         }
         .onChange(of: session.exportedVideoURL) { url in
             guard url != nil else { return }
