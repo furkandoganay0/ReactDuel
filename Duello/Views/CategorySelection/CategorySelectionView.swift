@@ -85,20 +85,21 @@ struct CategorySelectionView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 
-    /// `limit == 0` ise pack'i olduğu gibi döner. Aksi halde sorular karıştırılıp
-    /// ilk `limit` tanesi alınır — aynı paketten tekrar tekrar farklı, kısa
-    /// videolar çıkarabilmek için (hep aynı 3 soru olmasın diye).
+    /// Sorular HER ZAMAN karıştırılır (`limit == 0`/"Tümü" dahil) — önceden
+    /// tam paket oynanınca sorular hep aynı, sabit sırada geliyordu, bu da
+    /// paketi birkaç kez oynayınca "hep aynı sorular" hissi veriyordu.
+    /// `limit > 0` ise ayrıca karıştırılmış listenin ilk `limit` tanesi alınır.
     private func trimmedPredictionPack(_ pack: PredictionTemplate, limit: Int) -> PredictionTemplate {
-        guard limit > 0, limit < pack.questions.count else { return pack }
-        let selectedQuestions = Array(pack.questions.shuffled().prefix(limit))
+        let shuffled = pack.questions.shuffled()
+        let selectedQuestions = (limit > 0 && limit < shuffled.count) ? Array(shuffled.prefix(limit)) : shuffled
         return PredictionTemplate(
             id: pack.id, mode: pack.mode, title: pack.title, coverImage: pack.coverImage, questions: selectedQuestions
         )
     }
 
     private func trimmedThisOrThatPack(_ pack: ThisOrThatTemplate, limit: Int) -> ThisOrThatTemplate {
-        guard limit > 0, limit < pack.rounds.count else { return pack }
-        let selectedRounds = Array(pack.rounds.shuffled().prefix(limit))
+        let shuffled = pack.rounds.shuffled()
+        let selectedRounds = (limit > 0 && limit < shuffled.count) ? Array(shuffled.prefix(limit)) : shuffled
         return ThisOrThatTemplate(
             id: pack.id, mode: pack.mode, title: pack.title, coverImage: pack.coverImage, rounds: selectedRounds
         )
@@ -127,6 +128,7 @@ struct CategorySelectionView: View {
             Picker("", selection: $itemCountLimit) {
                 Text("3 Soru").tag(3)
                 Text("5 Soru").tag(5)
+                Text("10 Soru").tag(10)
                 Text("Tümü").tag(0)
             }
             .pickerStyle(.segmented)

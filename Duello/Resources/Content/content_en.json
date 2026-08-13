@@ -69,6 +69,70 @@
           "answerImage": "de_bruyne",
           "timerSeconds": 6,
           "choices": ["Kevin De Bruyne", "Toni Kroos", "Luka Modrić", "Martin Ødegaard"]
+        },
+        {
+          "id": "q9",
+          "prompt": "Brazilian star who played for PSG and Barcelona, known for flashy dribbles and free kicks",
+          "answer": "Neymar",
+          "answerImage": "neymar",
+          "timerSeconds": 6,
+          "choices": ["Neymar", "Vinícius Júnior", "Raphinha", "Casemiro"]
+        },
+        {
+          "id": "q10",
+          "prompt": "Won the 2022 Ballon d'Or, Real Madrid's legendary French striker",
+          "answer": "Karim Benzema",
+          "answerImage": "benzema",
+          "timerSeconds": 6,
+          "choices": ["Karim Benzema", "Olivier Giroud", "Antoine Griezmann", "Kylian Mbappé"]
+        },
+        {
+          "id": "q11",
+          "prompt": "Liverpool's Egyptian star, known as 'The Pharaoh'",
+          "answer": "Mohamed Salah",
+          "answerImage": "salah",
+          "timerSeconds": 6,
+          "choices": ["Mohamed Salah", "Sadio Mané", "Riyad Mahrez", "Achraf Hakimi"]
+        },
+        {
+          "id": "q12",
+          "prompt": "Won the Ballon d'Or in 2018, Real Madrid's Croatian midfielder",
+          "answer": "Luka Modrić",
+          "answerImage": "modric",
+          "timerSeconds": 6,
+          "choices": ["Luka Modrić", "Toni Kroos", "Ivan Rakitić", "Marcelo Brozović"]
+        },
+        {
+          "id": "q13",
+          "prompt": "Scored 5 goals in a single match for Bayern Munich, Polish goal machine",
+          "answer": "Robert Lewandowski",
+          "answerImage": "lewandowski",
+          "timerSeconds": 6,
+          "choices": ["Robert Lewandowski", "Erling Haaland", "Harry Kane", "Timo Werner"]
+        },
+        {
+          "id": "q14",
+          "prompt": "Transferred to Bayern Munich, England's all-time record goalscorer",
+          "answer": "Harry Kane",
+          "answerImage": "kane",
+          "timerSeconds": 6,
+          "choices": ["Harry Kane", "Marcus Rashford", "Raheem Sterling", "Jack Grealish"]
+        },
+        {
+          "id": "q15",
+          "prompt": "Liverpool's Dutch defensive wall, wears the captain's armband",
+          "answer": "Virgil van Dijk",
+          "answerImage": "van_dijk",
+          "timerSeconds": 6,
+          "choices": ["Virgil van Dijk", "Matthijs de Ligt", "Joël Matip", "Ibrahima Konaté"]
+        },
+        {
+          "id": "q16",
+          "prompt": "Arsenal's young English winger, wears the number 7 shirt",
+          "answer": "Bukayo Saka",
+          "answerImage": "saka",
+          "timerSeconds": 6,
+          "choices": ["Bukayo Saka", "Phil Foden", "Jude Bellingham", "Cole Palmer"]
         }
       ]
     },
@@ -141,6 +205,70 @@
           "answerImage": "fight_club",
           "timerSeconds": 6,
           "choices": ["Fight Club", "Se7en", "Gladiator", "American History X"]
+        },
+        {
+          "id": "q9",
+          "prompt": "Tom Hanks stars as a prison guard who meets a miraculous inmate",
+          "answer": "The Green Mile",
+          "answerImage": "green_mile",
+          "timerSeconds": 6,
+          "choices": ["The Green Mile", "The Shawshank Redemption", "Forrest Gump", "Cast Away"]
+        },
+        {
+          "id": "q10",
+          "prompt": "Russell Crowe plays a Roman general turned slave-gladiator",
+          "answer": "Gladiator",
+          "answerImage": "gladiator",
+          "timerSeconds": 6,
+          "choices": ["Gladiator", "Troy", "300", "Ben-Hur"]
+        },
+        {
+          "id": "q11",
+          "prompt": "Keanu Reeves chooses the red or blue pill in this simulated-reality sci-fi film",
+          "answer": "The Matrix",
+          "answerImage": "matrix",
+          "timerSeconds": 6,
+          "choices": ["The Matrix", "Inception", "Blade Runner 2049", "Star Trek"]
+        },
+        {
+          "id": "q12",
+          "prompt": "Leonardo DiCaprio and Kate Winslet star in this romance set aboard a sinking ship",
+          "answer": "Titanic",
+          "answerImage": "titanic",
+          "timerSeconds": 6,
+          "choices": ["Titanic", "Eternal Sunshine of the Spotless Mind", "La La Land", "The Great Gatsby"]
+        },
+        {
+          "id": "q13",
+          "prompt": "Frodo's quest to destroy the ring concludes in this final film of the trilogy",
+          "answer": "The Lord of the Rings: The Return of the King",
+          "answerImage": "lotr_rotk",
+          "timerSeconds": 6,
+          "choices": ["The Lord of the Rings: The Return of the King", "The Hobbit", "The Fellowship of the Ring", "The Chronicles of Narnia"]
+        },
+        {
+          "id": "q14",
+          "prompt": "A young drummer clashes with a ruthless music teacher in this film",
+          "answer": "Whiplash",
+          "answerImage": "whiplash",
+          "timerSeconds": 6,
+          "choices": ["Whiplash", "La La Land", "Sound of Metal", "Amadeus"]
+        },
+        {
+          "id": "q15",
+          "prompt": "Ryan Gosling and Emma Stone star in this musical romance set in Los Angeles",
+          "answer": "La La Land",
+          "answerImage": "la_la_land",
+          "timerSeconds": 6,
+          "choices": ["La La Land", "A Star Is Born", "Chicago", "Moulin Rouge!"]
+        },
+        {
+          "id": "q16",
+          "prompt": "Joaquin Phoenix won an Oscar playing a comedian's descent into Gotham's most dangerous criminal",
+          "answer": "Joker",
+          "answerImage": "joker",
+          "timerSeconds": 6,
+          "choices": ["Joker", "The Dark Knight", "Suicide Squad", "Batman Begins"]
         }
       ]
     },
@@ -213,6 +341,70 @@
           "answerImage": "the_weeknd",
           "timerSeconds": 6,
           "choices": ["The Weeknd", "Bruno Mars", "Drake", "Post Malone"]
+        },
+        {
+          "id": "q9",
+          "prompt": "Canadian singer who became famous young with 'Baby', later returned with 'Sorry'",
+          "answer": "Justin Bieber",
+          "answerImage": "justin_bieber",
+          "timerSeconds": 6,
+          "choices": ["Justin Bieber", "Shawn Mendes", "Charlie Puth", "Niall Horan"]
+        },
+        {
+          "id": "q10",
+          "prompt": "American pop star known for 'Thank U, Next' and a wide vocal range",
+          "answer": "Ariana Grande",
+          "answerImage": "ariana_grande",
+          "timerSeconds": 6,
+          "choices": ["Ariana Grande", "Selena Gomez", "Camila Cabello", "Demi Lovato"]
+        },
+        {
+          "id": "q11",
+          "prompt": "Canadian rapper known for 'God's Plan' and 'Hotline Bling'",
+          "answer": "Drake",
+          "answerImage": "drake",
+          "timerSeconds": 6,
+          "choices": ["Drake", "The Weeknd", "Kendrick Lamar", "J. Cole"]
+        },
+        {
+          "id": "q12",
+          "prompt": "British pop star known for 'Levitating' and 'Don't Start Now'",
+          "answer": "Dua Lipa",
+          "answerImage": "dua_lipa",
+          "timerSeconds": 6,
+          "choices": ["Dua Lipa", "Rita Ora", "Jess Glynne", "Ellie Goulding"]
+        },
+        {
+          "id": "q13",
+          "prompt": "Legendary American singer crowned 'King of Pop' after the Thriller album",
+          "answer": "Michael Jackson",
+          "answerImage": "michael_jackson",
+          "timerSeconds": 6,
+          "choices": ["Michael Jackson", "Prince", "Stevie Wonder", "James Brown"]
+        },
+        {
+          "id": "q14",
+          "prompt": "American singer known for 'I Will Always Love You' and her powerhouse vocals",
+          "answer": "Whitney Houston",
+          "answerImage": "whitney_houston",
+          "timerSeconds": 6,
+          "choices": ["Whitney Houston", "Mariah Carey", "Celine Dion", "Toni Braxton"]
+        },
+        {
+          "id": "q15",
+          "prompt": "British pianist-singer behind 'Rocket Man' and 'Your Song'",
+          "answer": "Elton John",
+          "answerImage": "elton_john",
+          "timerSeconds": 6,
+          "choices": ["Elton John", "Freddie Mercury", "David Bowie", "George Michael"]
+        },
+        {
+          "id": "q16",
+          "prompt": "American artist known for 'Bad Romance' and outrageous stage outfits",
+          "answer": "Lady Gaga",
+          "answerImage": "lady_gaga",
+          "timerSeconds": 6,
+          "choices": ["Lady Gaga", "Katy Perry", "Miley Cyrus", "Christina Aguilera"]
         }
       ]
     },
@@ -285,6 +477,70 @@
           "answerImage": "money_heist",
           "timerSeconds": 6,
           "choices": ["Money Heist", "Elite", "Narcos", "Sacred Games"]
+        },
+        {
+          "id": "q9",
+          "prompt": "Benedict Cumberbatch plays the famous detective in modern-day London in this BBC series",
+          "answer": "Sherlock",
+          "answerImage": "sherlock",
+          "timerSeconds": 6,
+          "choices": ["Sherlock", "Peaky Blinders", "Downton Abbey", "Doctor Who"]
+        },
+        {
+          "id": "q10",
+          "prompt": "Set in Birmingham, this British series follows the Shelby family's crime empire",
+          "answer": "Peaky Blinders",
+          "answerImage": "peaky_blinders",
+          "timerSeconds": 6,
+          "choices": ["Peaky Blinders", "Sherlock", "The Crown", "Downton Abbey"]
+        },
+        {
+          "id": "q11",
+          "prompt": "Set in the Star Wars universe, follows a lone bounty hunter and 'Baby Yoda'",
+          "answer": "The Mandalorian",
+          "answerImage": "mandalorian",
+          "timerSeconds": 6,
+          "choices": ["The Mandalorian", "Star Wars: Rebels", "Andor", "The Book of Boba Fett"]
+        },
+        {
+          "id": "q12",
+          "prompt": "Long-running medical drama set in a Seattle hospital",
+          "answer": "Grey's Anatomy",
+          "answerImage": "greys_anatomy",
+          "timerSeconds": 6,
+          "choices": ["Grey's Anatomy", "ER", "House", "The Good Doctor"]
+        },
+        {
+          "id": "q13",
+          "prompt": "Critically acclaimed series about police and drug gangs in Baltimore",
+          "answer": "The Wire",
+          "answerImage": "the_wire",
+          "timerSeconds": 6,
+          "choices": ["The Wire", "The Sopranos", "Narcos", "Gomorrah"]
+        },
+        {
+          "id": "q14",
+          "prompt": "Netflix series following the Addams family's dark daughter at a school for outcasts",
+          "answer": "Wednesday",
+          "answerImage": "wednesday",
+          "timerSeconds": 6,
+          "choices": ["Wednesday", "The Umbrella Academy", "Stranger Things", "Chilling Adventures of Sabrina"]
+        },
+        {
+          "id": "q15",
+          "prompt": "Sitcom about four physicist friends and their neighbor Penny",
+          "answer": "The Big Bang Theory",
+          "answerImage": "big_bang_theory",
+          "timerSeconds": 6,
+          "choices": ["The Big Bang Theory", "Friends", "How I Met Your Mother", "Community"]
+        },
+        {
+          "id": "q16",
+          "prompt": "Series about Pablo Escobar and the Colombian drug cartels",
+          "answer": "Narcos",
+          "answerImage": "narcos",
+          "timerSeconds": 6,
+          "choices": ["Narcos", "Breaking Bad", "The Wire", "Sacred Games"]
         }
       ]
     },
@@ -357,6 +613,70 @@
           "answerImage": "kobe",
           "timerSeconds": 6,
           "choices": ["Kobe Bryant", "Michael Jordan", "Allen Iverson", "Tracy McGrady"]
+        },
+        {
+          "id": "q9",
+          "prompt": "One of the NBA's most dominant centers, nicknamed 'Shaq', won 4 championships",
+          "answer": "Shaquille O'Neal",
+          "answerImage": "shaq",
+          "timerSeconds": 6,
+          "choices": ["Shaquille O'Neal", "Dwight Howard", "Karl Malone", "Hakeem Olajuwon"]
+        },
+        {
+          "id": "q10",
+          "prompt": "Nicknamed 'The Answer', a small but electrifying guard who took over the NBA",
+          "answer": "Allen Iverson",
+          "answerImage": "iverson",
+          "timerSeconds": 6,
+          "choices": ["Allen Iverson", "Tracy McGrady", "Vince Carter", "Baron Davis"]
+        },
+        {
+          "id": "q11",
+          "prompt": "Won 5 championships with the San Antonio Spurs, the quiet leader nicknamed 'The Big Fundamental'",
+          "answer": "Tim Duncan",
+          "answerImage": "duncan",
+          "timerSeconds": 6,
+          "choices": ["Tim Duncan", "Dirk Nowitzki", "Pau Gasol", "Kevin Garnett"]
+        },
+        {
+          "id": "q12",
+          "prompt": "German forward who single-handedly led the Dallas Mavericks to a championship",
+          "answer": "Dirk Nowitzki",
+          "answerImage": "nowitzki",
+          "timerSeconds": 6,
+          "choices": ["Dirk Nowitzki", "Tim Duncan", "Pau Gasol", "Manu Ginóbili"]
+        },
+        {
+          "id": "q13",
+          "prompt": "One of the first players to average a triple-double for a season, known for his energetic style",
+          "answer": "Russell Westbrook",
+          "answerImage": "westbrook",
+          "timerSeconds": 6,
+          "choices": ["Russell Westbrook", "James Harden", "Chris Paul", "Damian Lillard"]
+        },
+        {
+          "id": "q14",
+          "prompt": "Nicknamed 'The Beard', a star guard known for his stepback three-pointers",
+          "answer": "James Harden",
+          "answerImage": "harden",
+          "timerSeconds": 6,
+          "choices": ["James Harden", "Russell Westbrook", "Kyrie Irving", "Damian Lillard"]
+        },
+        {
+          "id": "q15",
+          "prompt": "Point guard known for extraordinary ball-handling, brought Cleveland its 2016 title",
+          "answer": "Kyrie Irving",
+          "answerImage": "kyrie",
+          "timerSeconds": 6,
+          "choices": ["Kyrie Irving", "James Harden", "Steph Curry", "Damian Lillard"]
+        },
+        {
+          "id": "q16",
+          "prompt": "Versatile big man who won a championship alongside LeBron James on the Lakers",
+          "answer": "Anthony Davis",
+          "answerImage": "anthony_davis",
+          "timerSeconds": 6,
+          "choices": ["Anthony Davis", "Joel Embiid", "Karl-Anthony Towns", "Rudy Gobert"]
         }
       ]
     },
@@ -429,6 +749,70 @@
           "answerImage": "canada",
           "timerSeconds": 6,
           "choices": ["Canada", "United States", "Norway", "Sweden"]
+        },
+        {
+          "id": "q9",
+          "prompt": "Where the Berlin Wall fell, home to Europe's largest economy",
+          "answer": "Germany",
+          "answerImage": "germany",
+          "timerSeconds": 6,
+          "choices": ["Germany", "France", "Poland", "Austria"]
+        },
+        {
+          "id": "q10",
+          "prompt": "Known for flamenco and bullfighting, capital Madrid, on the Iberian Peninsula",
+          "answer": "Spain",
+          "answerImage": "spain",
+          "timerSeconds": 6,
+          "choices": ["Spain", "Portugal", "Italy", "Mexico"]
+        },
+        {
+          "id": "q11",
+          "prompt": "Home to the Maya and Aztec civilizations, birthplace of tacos, in North America",
+          "answer": "Mexico",
+          "answerImage": "mexico",
+          "timerSeconds": 6,
+          "choices": ["Mexico", "Guatemala", "Peru", "Colombia"]
+        },
+        {
+          "id": "q12",
+          "prompt": "The world's largest country by area, capital Moscow",
+          "answer": "Russia",
+          "answerImage": "russia",
+          "timerSeconds": 6,
+          "choices": ["Russia", "Kazakhstan", "China", "Canada"]
+        },
+        {
+          "id": "q13",
+          "prompt": "Nelson Mandela served as president here, the southernmost country on its continent",
+          "answer": "South Africa",
+          "answerImage": "south_africa",
+          "timerSeconds": 6,
+          "choices": ["South Africa", "Kenya", "Nigeria", "Egypt"]
+        },
+        {
+          "id": "q14",
+          "prompt": "Birthplace of the ancient Olympics, home to the Acropolis, a Mediterranean country",
+          "answer": "Greece",
+          "answerImage": "greece",
+          "timerSeconds": 6,
+          "choices": ["Greece", "Italy", "Turkey", "Cyprus"]
+        },
+        {
+          "id": "q15",
+          "prompt": "Home to the Alps, famous for chocolate and watches, a neutral European country",
+          "answer": "Switzerland",
+          "answerImage": "switzerland",
+          "timerSeconds": 6,
+          "choices": ["Switzerland", "Austria", "Belgium", "Netherlands"]
+        },
+        {
+          "id": "q16",
+          "prompt": "Messi's homeland, known for tango and Patagonia, in South America",
+          "answer": "Argentina",
+          "answerImage": "argentina",
+          "timerSeconds": 6,
+          "choices": ["Argentina", "Chile", "Uruguay", "Brazil"]
         }
       ]
     }
@@ -541,7 +925,15 @@
         { "id": "r5", "optionA": "Cats", "optionB": "Dogs", "timerSeconds": 5 },
         { "id": "r6", "optionA": "Netflix", "optionB": "Movie Theater", "timerSeconds": 5 },
         { "id": "r7", "optionA": "Morning", "optionB": "Night", "timerSeconds": 5 },
-        { "id": "r8", "optionA": "Sweet", "optionB": "Savory", "timerSeconds": 5 }
+        { "id": "r8", "optionA": "Sweet", "optionB": "Savory", "timerSeconds": 5 },
+        { "id": "r9", "optionA": "Book", "optionB": "Movie", "timerSeconds": 5 },
+        { "id": "r10", "optionA": "City", "optionB": "Beach", "timerSeconds": 5 },
+        { "id": "r11", "optionA": "Early Riser", "optionB": "Night Owl", "timerSeconds": 5 },
+        { "id": "r12", "optionA": "Concert", "optionB": "Sports Game", "timerSeconds": 5 },
+        { "id": "r13", "optionA": "Mountain Cabin", "optionB": "Beachfront", "timerSeconds": 5 },
+        { "id": "r14", "optionA": "Text", "optionB": "Call", "timerSeconds": 5 },
+        { "id": "r15", "optionA": "Summer Vacation", "optionB": "Winter Vacation", "timerSeconds": 5 },
+        { "id": "r16", "optionA": "Home Cooking", "optionB": "Restaurant", "timerSeconds": 5 }
       ]
     }
   ]

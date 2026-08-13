@@ -69,6 +69,70 @@
           "answerImage": "de_bruyne",
           "timerSeconds": 6,
           "choices": ["Kevin De Bruyne", "Toni Kroos", "Luka Modrić", "Martin Ødegaard"]
+        },
+        {
+          "id": "q9",
+          "prompt": "Brezilyalı yıldız, PSG ve Barcelona formaları giydi, şık çalım ve serbest vuruşlarıyla tanınır",
+          "answer": "Neymar",
+          "answerImage": "neymar",
+          "timerSeconds": 6,
+          "choices": ["Neymar", "Vinícius Júnior", "Raphinha", "Casemiro"]
+        },
+        {
+          "id": "q10",
+          "prompt": "2022 Ballon d'Or'u kazanan, Real Madrid'in efsanevi Fransız santraforu",
+          "answer": "Karim Benzema",
+          "answerImage": "benzema",
+          "timerSeconds": 6,
+          "choices": ["Karim Benzema", "Olivier Giroud", "Antoine Griezmann", "Kylian Mbappé"]
+        },
+        {
+          "id": "q11",
+          "prompt": "Liverpool'un Mısırlı yıldızı, 'Firavun' lakabıyla bilinir",
+          "answer": "Mohamed Salah",
+          "answerImage": "salah",
+          "timerSeconds": 6,
+          "choices": ["Mohamed Salah", "Sadio Mané", "Riyad Mahrez", "Achraf Hakimi"]
+        },
+        {
+          "id": "q12",
+          "prompt": "2018'de Ballon d'Or kazanan, Real Madrid'in Hırvat orta sahası",
+          "answer": "Luka Modrić",
+          "answerImage": "modric",
+          "timerSeconds": 6,
+          "choices": ["Luka Modrić", "Toni Kroos", "Ivan Rakitić", "Marcelo Brozović"]
+        },
+        {
+          "id": "q13",
+          "prompt": "Bayern Münih'te tek maçta 5 gol atan, Polonyalı gol makinesi",
+          "answer": "Robert Lewandowski",
+          "answerImage": "lewandowski",
+          "timerSeconds": 6,
+          "choices": ["Robert Lewandowski", "Erling Haaland", "Harry Kane", "Timo Werner"]
+        },
+        {
+          "id": "q14",
+          "prompt": "Bayern Münih'e transfer olan, İngiltere milli takımının tarihi gol kralı",
+          "answer": "Harry Kane",
+          "answerImage": "kane",
+          "timerSeconds": 6,
+          "choices": ["Harry Kane", "Marcus Rashford", "Raheem Sterling", "Jack Grealish"]
+        },
+        {
+          "id": "q15",
+          "prompt": "Liverpool'un Hollandalı savunma duvarı, kaptanlık pazubandını taşıyor",
+          "answer": "Virgil van Dijk",
+          "answerImage": "van_dijk",
+          "timerSeconds": 6,
+          "choices": ["Virgil van Dijk", "Matthijs de Ligt", "Joël Matip", "Ibrahima Konaté"]
+        },
+        {
+          "id": "q16",
+          "prompt": "Arsenal'ın genç İngiliz kanat oyuncusu, formasında 7 numarayı taşır",
+          "answer": "Bukayo Saka",
+          "answerImage": "saka",
+          "timerSeconds": 6,
+          "choices": ["Bukayo Saka", "Phil Foden", "Jude Bellingham", "Cole Palmer"]
         }
       ]
     },
@@ -141,6 +205,70 @@
           "answerImage": "fight_club",
           "timerSeconds": 6,
           "choices": ["Dövüş Kulübü", "Se7en", "Gladyatör", "American History X"]
+        },
+        {
+          "id": "q9",
+          "prompt": "Tom Hanks'in başrolünde olduğu, bir hapishane gardiyanının mucizevi bir mahkumla tanışmasını anlatan film",
+          "answer": "Yeşil Yol",
+          "answerImage": "green_mile",
+          "timerSeconds": 6,
+          "choices": ["Yeşil Yol", "Esaretin Bedeli", "Forrest Gump", "Cast Away"]
+        },
+        {
+          "id": "q10",
+          "prompt": "Russell Crowe'un canlandırdığı bir Roma generalinin köle-gladyatöre dönüşümünü anlatan film",
+          "answer": "Gladyatör",
+          "answerImage": "gladiator",
+          "timerSeconds": 6,
+          "choices": ["Gladyatör", "Truva", "300", "Ben-Hur"]
+        },
+        {
+          "id": "q11",
+          "prompt": "Keanu Reeves'in kırmızı ya da mavi hap seçtiği, simülasyon gerçekliğini konu alan bilim kurgu filmi",
+          "answer": "Matrix",
+          "answerImage": "matrix",
+          "timerSeconds": 6,
+          "choices": ["Matrix", "Başlangıç", "Blade Runner 2049", "Uzay Yolu"]
+        },
+        {
+          "id": "q12",
+          "prompt": "Leonardo DiCaprio ve Kate Winslet'in başrollerini paylaştığı, batan bir gemide geçen aşk filmi",
+          "answer": "Titanik",
+          "answerImage": "titanic",
+          "timerSeconds": 6,
+          "choices": ["Titanik", "Aşk Tutulması", "La La Land", "Büyük Gatsby"]
+        },
+        {
+          "id": "q13",
+          "prompt": "Frodo'nun yüzüğü yok etme yolculuğunun tamamlandığı, üçlemenin son filmi",
+          "answer": "Yüzüklerin Efendisi: Kralın Dönüşü",
+          "answerImage": "lotr_rotk",
+          "timerSeconds": 6,
+          "choices": ["Yüzüklerin Efendisi: Kralın Dönüşü", "Hobbit", "Yüzük Kardeşliği", "Narnia Günlükleri"]
+        },
+        {
+          "id": "q14",
+          "prompt": "Genç bir davulcu ile acımasız müzik öğretmeni arasındaki gerilimi anlatan film",
+          "answer": "Whiplash",
+          "answerImage": "whiplash",
+          "timerSeconds": 6,
+          "choices": ["Whiplash", "La La Land", "Sound of Metal", "Amadeus"]
+        },
+        {
+          "id": "q15",
+          "prompt": "Ryan Gosling ve Emma Stone'un başrolünde olduğu, Los Angeles'ta geçen müzikal aşk filmi",
+          "answer": "La La Land",
+          "answerImage": "la_la_land",
+          "timerSeconds": 6,
+          "choices": ["La La Land", "Bir Yıldız Doğuyor", "Chicago", "Moulin Rouge!"]
+        },
+        {
+          "id": "q16",
+          "prompt": "Joaquin Phoenix'in Oscar kazandığı, bir komedyenin Gotham'ın en tehlikeli suçlusuna dönüşümünü anlatan film",
+          "answer": "Joker",
+          "answerImage": "joker",
+          "timerSeconds": 6,
+          "choices": ["Joker", "Kara Şövalye", "İntihar Timi", "Batman Begins"]
         }
       ]
     },
@@ -213,6 +341,70 @@
           "answerImage": "the_weeknd",
           "timerSeconds": 6,
           "choices": ["The Weeknd", "Bruno Mars", "Drake", "Post Malone"]
+        },
+        {
+          "id": "q9",
+          "prompt": "'Baby' şarkısıyla genç yaşta ünlenen, sonradan 'Sorry' ile geri dönüş yapan Kanadalı şarkıcı",
+          "answer": "Justin Bieber",
+          "answerImage": "justin_bieber",
+          "timerSeconds": 6,
+          "choices": ["Justin Bieber", "Shawn Mendes", "Charlie Puth", "Niall Horan"]
+        },
+        {
+          "id": "q10",
+          "prompt": "'Thank U, Next' ve geniş vokal aralığıyla tanınan Amerikalı pop yıldızı",
+          "answer": "Ariana Grande",
+          "answerImage": "ariana_grande",
+          "timerSeconds": 6,
+          "choices": ["Ariana Grande", "Selena Gomez", "Camila Cabello", "Demi Lovato"]
+        },
+        {
+          "id": "q11",
+          "prompt": "'God's Plan' ve 'Hotline Bling' şarkılarıyla tanınan Kanadalı rapçi",
+          "answer": "Drake",
+          "answerImage": "drake",
+          "timerSeconds": 6,
+          "choices": ["Drake", "The Weeknd", "Kendrick Lamar", "J. Cole"]
+        },
+        {
+          "id": "q12",
+          "prompt": "'Levitating' ve 'Don't Start Now' şarkılarıyla tanınan İngiliz pop yıldızı",
+          "answer": "Dua Lipa",
+          "answerImage": "dua_lipa",
+          "timerSeconds": 6,
+          "choices": ["Dua Lipa", "Rita Ora", "Jess Glynne", "Ellie Goulding"]
+        },
+        {
+          "id": "q13",
+          "prompt": "'Thriller' albümüyle 'Pop'un Kralı' unvanını alan efsanevi Amerikalı şarkıcı",
+          "answer": "Michael Jackson",
+          "answerImage": "michael_jackson",
+          "timerSeconds": 6,
+          "choices": ["Michael Jackson", "Prince", "Stevie Wonder", "James Brown"]
+        },
+        {
+          "id": "q14",
+          "prompt": "'I Will Always Love You' şarkısıyla tanınan, güçlü vokaliyle efsaneleşen Amerikalı şarkıcı",
+          "answer": "Whitney Houston",
+          "answerImage": "whitney_houston",
+          "timerSeconds": 6,
+          "choices": ["Whitney Houston", "Mariah Carey", "Celine Dion", "Toni Braxton"]
+        },
+        {
+          "id": "q15",
+          "prompt": "'Rocket Man' ve 'Your Song' şarkılarının İngiliz piyanist-şarkıcısı",
+          "answer": "Elton John",
+          "answerImage": "elton_john",
+          "timerSeconds": 6,
+          "choices": ["Elton John", "Freddie Mercury", "David Bowie", "George Michael"]
+        },
+        {
+          "id": "q16",
+          "prompt": "'Bad Romance' şarkısı ve sıra dışı sahne kostümleriyle tanınan Amerikalı sanatçı",
+          "answer": "Lady Gaga",
+          "answerImage": "lady_gaga",
+          "timerSeconds": 6,
+          "choices": ["Lady Gaga", "Katy Perry", "Miley Cyrus", "Christina Aguilera"]
         }
       ]
     },
@@ -285,6 +477,70 @@
           "answerImage": "money_heist",
           "timerSeconds": 6,
           "choices": ["Money Heist", "Elite", "Narcos", "Sacred Games"]
+        },
+        {
+          "id": "q9",
+          "prompt": "Benedict Cumberbatch'in modern Londra'da geçen ünlü dedektifi canlandırdığı BBC dizisi",
+          "answer": "Sherlock",
+          "answerImage": "sherlock",
+          "timerSeconds": 6,
+          "choices": ["Sherlock", "Peaky Blinders", "Downton Abbey", "Doctor Who"]
+        },
+        {
+          "id": "q10",
+          "prompt": "Birmingham'da geçen, Shelby ailesinin suç imparatorluğunu anlatan İngiliz dizisi",
+          "answer": "Peaky Blinders",
+          "answerImage": "peaky_blinders",
+          "timerSeconds": 6,
+          "choices": ["Peaky Blinders", "Sherlock", "The Crown", "Downton Abbey"]
+        },
+        {
+          "id": "q11",
+          "prompt": "Star Wars evreninde geçen, yalnız bir ödül avcısı ve 'Bebek Yoda'yı konu alan dizi",
+          "answer": "The Mandalorian",
+          "answerImage": "mandalorian",
+          "timerSeconds": 6,
+          "choices": ["The Mandalorian", "Star Wars: Rebels", "Andor", "The Book of Boba Fett"]
+        },
+        {
+          "id": "q12",
+          "prompt": "Seattle'da bir hastanede geçen, uzun soluklu tıbbi drama dizisi",
+          "answer": "Grey's Anatomy",
+          "answerImage": "greys_anatomy",
+          "timerSeconds": 6,
+          "choices": ["Grey's Anatomy", "ER", "House", "The Good Doctor"]
+        },
+        {
+          "id": "q13",
+          "prompt": "Baltimore'da polis ve uyuşturucu çeteleri arasındaki mücadeleyi anlatan, eleştirmenlerce övülen dizi",
+          "answer": "The Wire",
+          "answerImage": "the_wire",
+          "timerSeconds": 6,
+          "choices": ["The Wire", "The Sopranos", "Narcos", "Gomorrah"]
+        },
+        {
+          "id": "q14",
+          "prompt": "Addams ailesinin karanlık kızının bir cadı okulundaki maceralarını anlatan Netflix dizisi",
+          "answer": "Wednesday",
+          "answerImage": "wednesday",
+          "timerSeconds": 6,
+          "choices": ["Wednesday", "The Umbrella Academy", "Stranger Things", "Sabrina'nın Ürkütücü Maceraları"]
+        },
+        {
+          "id": "q15",
+          "prompt": "Dört fizikçi arkadaşın ve komşuları Penny'nin hayatını anlatan komedi dizisi",
+          "answer": "The Big Bang Theory",
+          "answerImage": "big_bang_theory",
+          "timerSeconds": 6,
+          "choices": ["The Big Bang Theory", "Friends", "How I Met Your Mother", "Community"]
+        },
+        {
+          "id": "q16",
+          "prompt": "Pablo Escobar ve Kolombiya uyuşturucu kartellerini konu alan dizi",
+          "answer": "Narcos",
+          "answerImage": "narcos",
+          "timerSeconds": 6,
+          "choices": ["Narcos", "Breaking Bad", "The Wire", "Sacred Games"]
         }
       ]
     },
@@ -357,6 +613,70 @@
           "answerImage": "kobe",
           "timerSeconds": 6,
           "choices": ["Kobe Bryant", "Michael Jordan", "Allen Iverson", "Tracy McGrady"]
+        },
+        {
+          "id": "q9",
+          "prompt": "NBA tarihinin en dominant pivotlarından, 'Shaq' lakaplı, 4 şampiyonluk kazandı",
+          "answer": "Shaquille O'Neal",
+          "answerImage": "shaq",
+          "timerSeconds": 6,
+          "choices": ["Shaquille O'Neal", "Dwight Howard", "Karl Malone", "Hakeem Olajuwon"]
+        },
+        {
+          "id": "q10",
+          "prompt": "'The Answer' lakaplı, ufak tefek yapısına rağmen NBA'i alt üst eden çaplaz oyuncu",
+          "answer": "Allen Iverson",
+          "answerImage": "iverson",
+          "timerSeconds": 6,
+          "choices": ["Allen Iverson", "Tracy McGrady", "Vince Carter", "Baron Davis"]
+        },
+        {
+          "id": "q11",
+          "prompt": "San Antonio Spurs ile 5 şampiyonluk kazanan, 'Büyük Temel' lakaplı sessiz lider",
+          "answer": "Tim Duncan",
+          "answerImage": "duncan",
+          "timerSeconds": 6,
+          "choices": ["Tim Duncan", "Dirk Nowitzki", "Pau Gasol", "Kevin Garnett"]
+        },
+        {
+          "id": "q12",
+          "prompt": "Dallas Mavericks'i tek başına şampiyon yapan Alman forvet",
+          "answer": "Dirk Nowitzki",
+          "answerImage": "nowitzki",
+          "timerSeconds": 6,
+          "choices": ["Dirk Nowitzki", "Tim Duncan", "Pau Gasol", "Manu Ginóbili"]
+        },
+        {
+          "id": "q13",
+          "prompt": "Bir sezonda ortalama triple-double yapan ilk oyunculardan, enerjik oyun tarzıyla bilinir",
+          "answer": "Russell Westbrook",
+          "answerImage": "westbrook",
+          "timerSeconds": 6,
+          "choices": ["Russell Westbrook", "James Harden", "Chris Paul", "Damian Lillard"]
+        },
+        {
+          "id": "q14",
+          "prompt": "'The Beard' lakaplı, stepback üçlükleriyle tanınan yıldız oyun kurucu",
+          "answer": "James Harden",
+          "answerImage": "harden",
+          "timerSeconds": 6,
+          "choices": ["James Harden", "Russell Westbrook", "Kyrie Irving", "Damian Lillard"]
+        },
+        {
+          "id": "q15",
+          "prompt": "Olağanüstü top sürme yeteneğiyle bilinen, Cleveland'a 2016 şampiyonluğunu getiren oyun kurucu",
+          "answer": "Kyrie Irving",
+          "answerImage": "kyrie",
+          "timerSeconds": 6,
+          "choices": ["Kyrie Irving", "James Harden", "Steph Curry", "Damian Lillard"]
+        },
+        {
+          "id": "q16",
+          "prompt": "Lakers'ta LeBron James'le birlikte şampiyonluk kazanan, çok yönlü uzun oyuncu",
+          "answer": "Anthony Davis",
+          "answerImage": "anthony_davis",
+          "timerSeconds": 6,
+          "choices": ["Anthony Davis", "Joel Embiid", "Karl-Anthony Towns", "Rudy Gobert"]
         }
       ]
     },
@@ -429,6 +749,70 @@
           "answerImage": "canada",
           "timerSeconds": 6,
           "choices": ["Kanada", "Amerika Birleşik Devletleri", "Norveç", "İsveç"]
+        },
+        {
+          "id": "q9",
+          "prompt": "Berlin Duvarı'nın yıkıldığı, Avrupa'nın en büyük ekonomisine sahip ülke",
+          "answer": "Almanya",
+          "answerImage": "germany",
+          "timerSeconds": 6,
+          "choices": ["Almanya", "Fransa", "Polonya", "Avusturya"]
+        },
+        {
+          "id": "q10",
+          "prompt": "Flamenko ve boğa güreşiyle bilinen, başkenti Madrid olan İber Yarımadası ülkesi",
+          "answer": "İspanya",
+          "answerImage": "spain",
+          "timerSeconds": 6,
+          "choices": ["İspanya", "Portekiz", "İtalya", "Meksika"]
+        },
+        {
+          "id": "q11",
+          "prompt": "Maya ve Aztek uygarlıklarına ev sahipliği yapmış, tacos'un anavatanı Kuzey Amerika ülkesi",
+          "answer": "Meksika",
+          "answerImage": "mexico",
+          "timerSeconds": 6,
+          "choices": ["Meksika", "Guatemala", "Peru", "Kolombiya"]
+        },
+        {
+          "id": "q12",
+          "prompt": "Dünyanın yüzölçümü bakımından en büyük ülkesi, başkenti Moskova",
+          "answer": "Rusya",
+          "answerImage": "russia",
+          "timerSeconds": 6,
+          "choices": ["Rusya", "Kazakistan", "Çin", "Kanada"]
+        },
+        {
+          "id": "q13",
+          "prompt": "Nelson Mandela'nın devlet başkanlığı yaptığı, kıtanın en güneyindeki ülke",
+          "answer": "Güney Afrika",
+          "answerImage": "south_africa",
+          "timerSeconds": 6,
+          "choices": ["Güney Afrika", "Kenya", "Nijerya", "Mısır"]
+        },
+        {
+          "id": "q14",
+          "prompt": "Antik Olimpiyatların doğduğu, Akropolis'e ev sahipliği yapan Akdeniz ülkesi",
+          "answer": "Yunanistan",
+          "answerImage": "greece",
+          "timerSeconds": 6,
+          "choices": ["Yunanistan", "İtalya", "Türkiye", "Kıbrıs"]
+        },
+        {
+          "id": "q15",
+          "prompt": "Alpler'e ev sahipliği yapan, çikolata ve saatleriyle ünlü tarafsız Avrupa ülkesi",
+          "answer": "İsviçre",
+          "answerImage": "switzerland",
+          "timerSeconds": 6,
+          "choices": ["İsviçre", "Avusturya", "Belçika", "Hollanda"]
+        },
+        {
+          "id": "q16",
+          "prompt": "Messi'nin memleketi, tango ve Patagonya'sıyla bilinen Güney Amerika ülkesi",
+          "answer": "Arjantin",
+          "answerImage": "argentina",
+          "timerSeconds": 6,
+          "choices": ["Arjantin", "Şili", "Uruguay", "Brezilya"]
         }
       ]
     }
@@ -541,7 +925,15 @@
         { "id": "r5", "optionA": "Kedi", "optionB": "Köpek", "timerSeconds": 5 },
         { "id": "r6", "optionA": "Netflix", "optionB": "Sinema", "timerSeconds": 5 },
         { "id": "r7", "optionA": "Sabah", "optionB": "Gece", "timerSeconds": 5 },
-        { "id": "r8", "optionA": "Tatlı", "optionB": "Tuzlu", "timerSeconds": 5 }
+        { "id": "r8", "optionA": "Tatlı", "optionB": "Tuzlu", "timerSeconds": 5 },
+        { "id": "r9", "optionA": "Kitap", "optionB": "Film", "timerSeconds": 5 },
+        { "id": "r10", "optionA": "Şehir", "optionB": "Sahil", "timerSeconds": 5 },
+        { "id": "r11", "optionA": "Erken Kalkmak", "optionB": "Geç Yatmak", "timerSeconds": 5 },
+        { "id": "r12", "optionA": "Konser", "optionB": "Maç", "timerSeconds": 5 },
+        { "id": "r13", "optionA": "Dağ Evi", "optionB": "Deniz Kenarı", "timerSeconds": 5 },
+        { "id": "r14", "optionA": "Mesaj", "optionB": "Arama", "timerSeconds": 5 },
+        { "id": "r15", "optionA": "Yaz Tatili", "optionB": "Kış Tatili", "timerSeconds": 5 },
+        { "id": "r16", "optionA": "Ev Yemeği", "optionB": "Restoran", "timerSeconds": 5 }
       ]
     }
   ]

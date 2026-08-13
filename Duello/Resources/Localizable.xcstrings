@@ -98,6 +98,22 @@
         }
       }
     },
+    "10 Soru" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "10 Questions"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "10 Soru"
+          }
+        }
+      }
+    },
     "5 Soru" : {
       "localizations" : {
         "en" : {
