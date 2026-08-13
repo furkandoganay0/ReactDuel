@@ -526,5 +526,23 @@
         { "id": "bkt13", "name": "Trae Young", "cost": 2, "image": "trae_young" }
       ]
     }
+  ],
+  "thisOrThatPacks": [
+    {
+      "id": "classics-1",
+      "mode": "thisOrThat",
+      "title": "This or That: Classics",
+      "coverImage": "cover_this_or_that_classics",
+      "rounds": [
+        { "id": "r1", "optionA": "Pizza", "optionB": "Burger", "timerSeconds": 5 },
+        { "id": "r2", "optionA": "Beach", "optionB": "Mountains", "timerSeconds": 5 },
+        { "id": "r3", "optionA": "Coffee", "optionB": "Tea", "timerSeconds": 5 },
+        { "id": "r4", "optionA": "Summer", "optionB": "Winter", "timerSeconds": 5 },
+        { "id": "r5", "optionA": "Cats", "optionB": "Dogs", "timerSeconds": 5 },
+        { "id": "r6", "optionA": "Netflix", "optionB": "Movie Theater", "timerSeconds": 5 },
+        { "id": "r7", "optionA": "Morning", "optionB": "Night", "timerSeconds": 5 },
+        { "id": "r8", "optionA": "Sweet", "optionB": "Savory", "timerSeconds": 5 }
+      ]
+    }
   ]
 }

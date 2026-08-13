@@ -67,15 +67,31 @@ struct HistoryView: View {
         .listRowBackground(Color.orange.opacity(0.12))
     }
 
+    private func modeIcon(_ mode: GameMode) -> String {
+        switch mode {
+        case .prediction: return "questionmark.circle.fill"
+        case .draft: return "person.2.circle.fill"
+        case .thisOrThat: return "arrow.left.arrow.right.circle.fill"
+        }
+    }
+
+    private func modeColor(_ mode: GameMode) -> Color {
+        switch mode {
+        case .prediction: return .indigo
+        case .draft: return .orange
+        case .thisOrThat: return .purple
+        }
+    }
+
     private func recordRow(_ record: PlaySessionRecord) -> some View {
         Button {
             guard record.savedVideoFileName != nil else { return }
             playingRecord = record
         } label: {
             HStack(spacing: 12) {
-                Image(systemName: record.mode == .prediction ? "questionmark.circle.fill" : "person.2.circle.fill")
+                Image(systemName: modeIcon(record.mode))
                     .font(.system(size: 30))
-                    .foregroundStyle(record.mode == .prediction ? .indigo : .orange)
+                    .foregroundStyle(modeColor(record.mode))
 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(record.packTitle)

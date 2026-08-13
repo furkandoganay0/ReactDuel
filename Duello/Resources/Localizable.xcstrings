@@ -123,6 +123,86 @@
         }
       }
     },
+    "Bu mu O mu" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This or That"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu mu O mu"
+          }
+        }
+      }
+    },
+    "Hızlı ikili seçimler, tepkini yakala" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quick either-or picks, catch the reaction"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hızlı ikili seçimler, tepkini yakala"
+          }
+        }
+      }
+    },
+    "Bitti!" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bitti!"
+          }
+        }
+      }
+    },
+    "Tercihlerin:" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your picks:"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tercihlerin:"
+          }
+        }
+      }
+    },
+    "⏱️ Süre doldu" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏱️ Time's up"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⏱️ Süre doldu"
+          }
+        }
+      }
+    },
     "Bütçeli Draft" : {
       "extractionState" : "stale",
       "localizations" : {

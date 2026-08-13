@@ -39,6 +39,9 @@ struct RootView: View {
         case .draftRecording(let template):
             DraftRecordingView(template: template, path: $path)
 
+        case .thisOrThatRecording(let template, let recordingEnabled, let playerCount):
+            ThisOrThatRecordingView(template: template, recordingEnabled: recordingEnabled, playerCount: playerCount, path: $path)
+
         case .saveDecision:
             SaveDecisionView(path: $path)
 

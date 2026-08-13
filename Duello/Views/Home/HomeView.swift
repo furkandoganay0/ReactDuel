@@ -2,6 +2,8 @@ import SwiftUI
 import UIKit
 
 /// Ana Ekran — tek ekran, derin gezinme yok (teknik prompt Bölüm 7).
+/// `ScrollView` içinde: 3 mod kartı + üst içerik küçük ekranlarda taşabiliyordu,
+/// sabit `Spacer()`li merkezleme yerine doğal akışa bırakıldı.
 struct HomeView: View {
     @Binding var path: [AppRoute]
     @EnvironmentObject private var playHistoryStore: PlayHistoryStore
@@ -9,46 +11,57 @@ struct HomeView: View {
     @State private var isShowingSettings = false
 
     var body: some View {
-        VStack(spacing: 20) {
-            Image(systemName: "bolt.horizontal.circle.fill")
-                .font(.system(size: 44))
-                .foregroundStyle(.white, Color.indigo.gradient)
-                .padding(.top, 20)
+        ScrollView {
+            VStack(spacing: 20) {
+                Image(systemName: "bolt.horizontal.circle.fill")
+                    .font(.system(size: 44))
+                    .foregroundStyle(.white, Color.indigo.gradient)
+                    .padding(.top, 20)
 
-            Text("Duello")
-                .font(.system(size: 40, weight: .black, design: .rounded))
+                Text("Duello")
+                    .font(.system(size: 40, weight: .black, design: .rounded))
 
-            Text("Modunu seç, tepkini kaydet")
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
+                Text("Modunu seç, tepkini kaydet")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
 
-            if playHistoryStore.currentStreak > 0 {
-                streakBadge
+                if playHistoryStore.currentStreak > 0 {
+                    streakBadge
+                }
+
+                VStack(spacing: 16) {
+                    ModeCard(
+                        title: "Tahmin Et",
+                        subtitle: "İpucuna bak, süre dolmadan tahmin et",
+                        systemImage: "questionmark.circle.fill",
+                        color: .indigo
+                    ) {
+                        path.append(.categorySelection(.prediction))
+                    }
+
+                    ModeCard(
+                        title: "Bütçeli Draft",
+                        subtitle: "Sabit bütçeyle sırayla seç, kazananı bul",
+                        systemImage: "person.2.circle.fill",
+                        color: .orange
+                    ) {
+                        path.append(.categorySelection(.draft))
+                    }
+
+                    ModeCard(
+                        title: "Bu mu O mu",
+                        subtitle: "Hızlı ikili seçimler, tepkini yakala",
+                        systemImage: "arrow.left.arrow.right.circle.fill",
+                        color: .purple
+                    ) {
+                        path.append(.categorySelection(.thisOrThat))
+                    }
+                }
+                .padding(.top, 12)
+                .padding(.bottom, 24)
             }
-
-            Spacer()
-
-            ModeCard(
-                title: "Tahmin Et",
-                subtitle: "İpucuna bak, süre dolmadan tahmin et",
-                systemImage: "questionmark.circle.fill",
-                color: .indigo
-            ) {
-                path.append(.categorySelection(.prediction))
-            }
-
-            ModeCard(
-                title: "Bütçeli Draft",
-                subtitle: "Sabit bütçeyle sırayla seç, kazananı bul",
-                systemImage: "person.2.circle.fill",
-                color: .orange
-            ) {
-                path.append(.categorySelection(.draft))
-            }
-
-            Spacer()
+            .padding(.horizontal, 20)
         }
-        .padding(.horizontal, 20)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {

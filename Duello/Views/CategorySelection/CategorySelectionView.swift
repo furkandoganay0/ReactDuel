@@ -8,19 +8,29 @@ struct CategorySelectionView: View {
     @Environment(\.locale) private var locale
     @State private var recordingEnabled = true
     @State private var playerCount = 1
-    /// 0 = paketteki tüm sorular. Kısa/hızlı içerik için (bkz. Bölüm: influencer
-    /// formatı) bir paketten sadece birkaç soru çekip daha kısa bir video üretmeyi sağlar.
-    @State private var questionCountLimit = 0
+    /// 0 = paketteki tüm soru/round. Kısa/hızlı içerik için (bkz. Bölüm: influencer
+    /// formatı) bir paketten sadece birkaçını çekip daha kısa bir video üretmeyi sağlar.
+    @State private var itemCountLimit = 0
 
     private var title: LocalizedStringKey {
-        mode == .prediction ? "Tahmin Et" : "Bütçeli Draft"
+        switch mode {
+        case .prediction: return "Tahmin Et"
+        case .draft: return "Bütçeli Draft"
+        case .thisOrThat: return "Bu mu O mu"
+        }
+    }
+
+    /// Tek/iki kişi + hızlı mod seçicileri sadece "sıra tabanlı" modlarda anlamlı —
+    /// Draft'ın kendi (her zaman 2 kişilik) turn akışı zaten var.
+    private var showsSharedPickers: Bool {
+        mode == .prediction || mode == .thisOrThat
     }
 
     var body: some View {
         ScrollView {
-            if mode == .prediction {
+            if showsSharedPickers {
                 playerCountPicker
-                questionCountPicker
+                itemCountPicker
                 recordingToggle
             }
 
@@ -29,7 +39,7 @@ struct CategorySelectionView: View {
                 case .prediction:
                     ForEach(appState.catalog.predictionPacks) { pack in
                         Button {
-                            let selectedPack = trimmedPack(pack, limit: questionCountLimit)
+                            let selectedPack = trimmedPredictionPack(pack, limit: itemCountLimit)
                             path.append(.predictionRecording(selectedPack, recordingEnabled: recordingEnabled, playerCount: playerCount))
                         } label: {
                             CategoryCard(
@@ -53,6 +63,20 @@ struct CategorySelectionView: View {
                         }
                         .buttonStyle(.plain)
                     }
+                case .thisOrThat:
+                    ForEach(appState.catalog.thisOrThatPacks) { pack in
+                        Button {
+                            let selectedPack = trimmedThisOrThatPack(pack, limit: itemCountLimit)
+                            path.append(.thisOrThatRecording(selectedPack, recordingEnabled: recordingEnabled, playerCount: playerCount))
+                        } label: {
+                            CategoryCard(
+                                imageName: pack.coverImage,
+                                title: pack.title,
+                                subtitle: L10n.roundCount(pack.rounds.count, locale: locale)
+                            )
+                        }
+                        .buttonStyle(.plain)
+                    }
                 }
             }
             .padding(16)
@@ -64,11 +88,19 @@ struct CategorySelectionView: View {
     /// `limit == 0` ise pack'i olduğu gibi döner. Aksi halde sorular karıştırılıp
     /// ilk `limit` tanesi alınır — aynı paketten tekrar tekrar farklı, kısa
     /// videolar çıkarabilmek için (hep aynı 3 soru olmasın diye).
-    private func trimmedPack(_ pack: PredictionTemplate, limit: Int) -> PredictionTemplate {
+    private func trimmedPredictionPack(_ pack: PredictionTemplate, limit: Int) -> PredictionTemplate {
         guard limit > 0, limit < pack.questions.count else { return pack }
         let selectedQuestions = Array(pack.questions.shuffled().prefix(limit))
         return PredictionTemplate(
             id: pack.id, mode: pack.mode, title: pack.title, coverImage: pack.coverImage, questions: selectedQuestions
+        )
+    }
+
+    private func trimmedThisOrThatPack(_ pack: ThisOrThatTemplate, limit: Int) -> ThisOrThatTemplate {
+        guard limit > 0, limit < pack.rounds.count else { return pack }
+        let selectedRounds = Array(pack.rounds.shuffled().prefix(limit))
+        return ThisOrThatTemplate(
+            id: pack.id, mode: pack.mode, title: pack.title, coverImage: pack.coverImage, rounds: selectedRounds
         )
     }
 
@@ -87,12 +119,12 @@ struct CategorySelectionView: View {
         .padding(.top, 16)
     }
 
-    private var questionCountPicker: some View {
+    private var itemCountPicker: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Kaç soru?")
                 .font(.caption.weight(.semibold))
                 .foregroundStyle(.secondary)
-            Picker("", selection: $questionCountLimit) {
+            Picker("", selection: $itemCountLimit) {
                 Text("3 Soru").tag(3)
                 Text("5 Soru").tag(5)
                 Text("Tümü").tag(0)

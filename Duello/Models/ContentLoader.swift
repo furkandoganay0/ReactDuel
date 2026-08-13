@@ -19,8 +19,9 @@ extension Bundle {
 struct ContentCatalog: Codable {
     let predictionPacks: [PredictionTemplate]
     let draftPacks: [DraftTemplate]
+    let thisOrThatPacks: [ThisOrThatTemplate]
 
-    static let empty = ContentCatalog(predictionPacks: [], draftPacks: [])
+    static let empty = ContentCatalog(predictionPacks: [], draftPacks: [], thisOrThatPacks: [])
 }
 
 /// Bundled, dile göre ayrılmış içerik JSON'larını yükler.

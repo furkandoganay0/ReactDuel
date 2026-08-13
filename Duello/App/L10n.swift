@@ -18,6 +18,10 @@ enum L10n {
         isTurkish(locale) ? "\(count) soru" : "\(count) question\(count == 1 ? "" : "s")"
     }
 
+    static func roundCount(_ count: Int, locale: Locale) -> String {
+        isTurkish(locale) ? "\(count) tur" : "\(count) round\(count == 1 ? "" : "s")"
+    }
+
     static func draftSubtitle(budget: Int, optionCount: Int, locale: Locale) -> String {
         isTurkish(locale)
             ? "Bütçe: \(budget) • \(optionCount) seçenek"
@@ -141,6 +145,14 @@ enum L10n {
             ? "Oyuncu 1: \(scoreByPlayer[0])/\(total) • Oyuncu 2: \(scoreByPlayer[1])/\(total)"
             : "Player 1: \(scoreByPlayer[0])/\(total) • Player 2: \(scoreByPlayer[1])/\(total)"
         return "\(scoresLine) — \(predictionWinnerText(scoreByPlayer: scoreByPlayer, locale: locale))"
+    }
+
+    static func thisOrThatTimeoutLabel(locale: Locale) -> String {
+        isTurkish(locale) ? "⏱️ Süre doldu" : "⏱️ Time's up"
+    }
+
+    static func thisOrThatEmptyResultSummary(locale: Locale) -> String {
+        isTurkish(locale) ? "Kimse seçim yapmadı" : "No picks were made"
     }
 
     static func feedbackTitle(selectedCorrect: Bool?, locale: Locale) -> String {

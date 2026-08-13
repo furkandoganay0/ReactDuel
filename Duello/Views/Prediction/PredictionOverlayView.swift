@@ -164,15 +164,6 @@ struct PredictionOverlayView: View {
     }
 }
 
-/// Dokunulunca hafifçe küçülen, "canlı" hissettiren buton stili — şık butonları için.
-private struct PressableButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .scaleEffect(configuration.isPressed ? 0.94 : 1)
-            .animation(.easeOut(duration: 0.12), value: configuration.isPressed)
-    }
-}
-
 #Preview {
     ZStack {
         Color.black

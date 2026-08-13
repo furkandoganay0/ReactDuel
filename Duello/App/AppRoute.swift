@@ -9,6 +9,7 @@ enum AppRoute: Hashable {
     case predictionRecording(PredictionTemplate, recordingEnabled: Bool, playerCount: Int)
     case predictionResult(template: PredictionTemplate, scoreByPlayer: [Int])
     case draftRecording(DraftTemplate)
+    case thisOrThatRecording(ThisOrThatTemplate, recordingEnabled: Bool, playerCount: Int)
     /// Kayıt bitti, kullanıcıya videoyu kaydedip kaydetmeyeceği soruluyor —
     /// oyun biter bitmez otomatik export ARTIK başlamıyor.
     case saveDecision
