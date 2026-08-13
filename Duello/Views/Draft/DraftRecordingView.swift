@@ -367,7 +367,7 @@ struct DraftRecordingView: View {
 
             let result = DraftScoreCalculator.winner(rosterA: draftState.rosterA, rosterB: draftState.rosterB)
             let record = playHistoryStore.addRecord(
-                mode: .draft, packTitle: template.title, resultSummary: L10n.resultLabel(result, locale: locale)
+                mode: .draft, packTitle: template.title, resultSummary: L10n.resultLabel(result, locale: locale), playerCount: 2
             )
             session.pendingHistoryRecordID = record.id
             path.append(.saveDecision)

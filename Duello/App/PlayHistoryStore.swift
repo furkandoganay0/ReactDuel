@@ -11,6 +11,38 @@ struct PlaySessionRecord: Codable, Identifiable, Equatable {
     let packTitle: String
     let resultSummary: String
     var savedVideoFileName: String?
+    /// Kaç kişi oynadı — Bütçeli Draft her zaman 2, Tahmin Et/Bu mu O mu 1 ya da 2
+    /// olabilir (bkz. `CategorySelectionView`'daki "Kaç kişi oynayacak?" seçici).
+    let playerCount: Int
+
+    init(id: UUID, date: Date, mode: GameMode, packTitle: String, resultSummary: String, savedVideoFileName: String?, playerCount: Int) {
+        self.id = id
+        self.date = date
+        self.mode = mode
+        self.packTitle = packTitle
+        self.resultSummary = resultSummary
+        self.savedVideoFileName = savedVideoFileName
+        self.playerCount = playerCount
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case id, date, mode, packTitle, resultSummary, savedVideoFileName, playerCount
+    }
+
+    /// Bu alan eklenmeden önce diskte kaydedilmiş geçmiş kayıtlarında `playerCount`
+    /// yok — `decodeIfPresent` ile yoksa moda göre makul bir varsayılana düşülüyor
+    /// (Draft zaten her zaman 2 kişilik). Bu olmadan tek bir eski kayıt bile TÜM
+    /// geçmişin sessizce boşalmasına (decode hatasıyla) yol açardı.
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(UUID.self, forKey: .id)
+        date = try container.decode(Date.self, forKey: .date)
+        mode = try container.decode(GameMode.self, forKey: .mode)
+        packTitle = try container.decode(String.self, forKey: .packTitle)
+        resultSummary = try container.decode(String.self, forKey: .resultSummary)
+        savedVideoFileName = try container.decodeIfPresent(String.self, forKey: .savedVideoFileName)
+        playerCount = try container.decodeIfPresent(Int.self, forKey: .playerCount) ?? (mode == .draft ? 2 : 1)
+    }
 }
 
 /// Hem "Geçmiş" galerisinin (kaydedilen videolar) hem skor geçmişi/serinin
@@ -43,9 +75,10 @@ final class PlayHistoryStore: ObservableObject {
     }
 
     @discardableResult
-    func addRecord(mode: GameMode, packTitle: String, resultSummary: String) -> PlaySessionRecord {
+    func addRecord(mode: GameMode, packTitle: String, resultSummary: String, playerCount: Int) -> PlaySessionRecord {
         let record = PlaySessionRecord(
-            id: UUID(), date: Date(), mode: mode, packTitle: packTitle, resultSummary: resultSummary, savedVideoFileName: nil
+            id: UUID(), date: Date(), mode: mode, packTitle: packTitle, resultSummary: resultSummary,
+            savedVideoFileName: nil, playerCount: playerCount
         )
         records.insert(record, at: 0)
         persist()

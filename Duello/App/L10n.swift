@@ -22,6 +22,15 @@ enum L10n {
         isTurkish(locale) ? "\(count) tur" : "\(count) round\(count == 1 ? "" : "s")"
     }
 
+    /// Geçmiş listesinde bir düellonun kaç kişilik olduğunu gösterir.
+    static func playerCountLabel(_ count: Int, locale: Locale) -> String {
+        let turkish = isTurkish(locale)
+        if count <= 1 {
+            return turkish ? "Tek Kişi" : "Solo"
+        }
+        return turkish ? "\(count) Kişi" : "\(count) Players"
+    }
+
     static func draftSubtitle(budget: Int, optionCount: Int, locale: Locale) -> String {
         isTurkish(locale)
             ? "Bütçe: \(budget) • \(optionCount) seçenek"

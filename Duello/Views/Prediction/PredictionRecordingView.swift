@@ -342,7 +342,7 @@ struct PredictionRecordingView: View {
         )
 
         guard recordingEnabled else {
-            playHistoryStore.addRecord(mode: .prediction, packTitle: template.title, resultSummary: summary)
+            playHistoryStore.addRecord(mode: .prediction, packTitle: template.title, resultSummary: summary, playerCount: playerCount)
             path.append(.predictionResult(template: template, scoreByPlayer: predictionState.scoreByPlayer))
             return
         }
@@ -355,7 +355,9 @@ struct PredictionRecordingView: View {
             session.overlayEvents = cameraController.recorder.overlayEvents
             // Skor her zaman geçmişe eklenir; video sadece kullanıcı `SaveDecisionView`'da
             // onaylarsa (bkz. o ekran + `ProcessingView`) bu kayda iliştirilir.
-            let record = playHistoryStore.addRecord(mode: .prediction, packTitle: template.title, resultSummary: summary)
+            let record = playHistoryStore.addRecord(
+                mode: .prediction, packTitle: template.title, resultSummary: summary, playerCount: playerCount
+            )
             session.pendingHistoryRecordID = record.id
             path.append(.saveDecision)
         }

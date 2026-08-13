@@ -83,6 +83,20 @@ struct HistoryView: View {
         }
     }
 
+    /// Bu düellonun kaç kişilik olduğunu (Tek Kişi / 2 Kişi) gösteren küçük rozet —
+    /// önceden geçmiş listesinde bu bilgi hiç yoktu, hangi kaydın arkadaşınla mı
+    /// yoksa tek başına mı oynandığını ayırt edemiyordun.
+    private func playerCountBadge(_ playerCount: Int) -> some View {
+        Label(L10n.playerCountLabel(playerCount, locale: locale), systemImage: playerCount > 1 ? "person.2.fill" : "person.fill")
+            .font(.caption2.weight(.semibold))
+            .labelStyle(.titleAndIcon)
+            .foregroundStyle(.secondary)
+            .padding(.horizontal, 6)
+            .padding(.vertical, 2)
+            .background(Color.primary.opacity(0.06))
+            .clipShape(Capsule())
+    }
+
     private func recordRow(_ record: PlaySessionRecord) -> some View {
         Button {
             guard record.savedVideoFileName != nil else { return }
@@ -94,9 +108,12 @@ struct HistoryView: View {
                     .foregroundStyle(modeColor(record.mode))
 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(record.packTitle)
-                        .font(.subheadline.weight(.semibold))
-                        .foregroundStyle(.primary)
+                    HStack(spacing: 6) {
+                        Text(record.packTitle)
+                            .font(.subheadline.weight(.semibold))
+                            .foregroundStyle(.primary)
+                        playerCountBadge(record.playerCount)
+                    }
                     Text(record.resultSummary)
                         .font(.caption)
                         .foregroundStyle(.secondary)

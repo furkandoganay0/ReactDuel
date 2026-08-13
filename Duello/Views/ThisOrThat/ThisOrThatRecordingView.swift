@@ -287,7 +287,7 @@ struct ThisOrThatRecordingView: View {
             : state.pickedLabels.joined(separator: " • ")
 
         guard recordingEnabled else {
-            playHistoryStore.addRecord(mode: .thisOrThat, packTitle: template.title, resultSummary: summary)
+            playHistoryStore.addRecord(mode: .thisOrThat, packTitle: template.title, resultSummary: summary, playerCount: playerCount)
             path.removeAll()
             return
         }
@@ -296,7 +296,9 @@ struct ThisOrThatRecordingView: View {
             session.reset()
             session.rawVideoURL = cameraController.recorder.lastRecordedURL
             session.overlayEvents = cameraController.recorder.overlayEvents
-            let record = playHistoryStore.addRecord(mode: .thisOrThat, packTitle: template.title, resultSummary: summary)
+            let record = playHistoryStore.addRecord(
+                mode: .thisOrThat, packTitle: template.title, resultSummary: summary, playerCount: playerCount
+            )
             session.pendingHistoryRecordID = record.id
             path.append(.saveDecision)
         }
