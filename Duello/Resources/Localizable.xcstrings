@@ -289,6 +289,38 @@
         }
       }
     },
+    "Doğru/Yanlış Sesi" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Correct/Wrong Sound"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doğru/Yanlış Sesi"
+          }
+        }
+      }
+    },
+    "Tahmin Et modunda cevap sonrası kısa bir ses efekti çalar." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plays a short sound effect after each answer in Guess It mode."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tahmin Et modunda cevap sonrası kısa bir ses efekti çalar."
+          }
+        }
+      }
+    },
     "Video Filigranı" : {
       "localizations" : {
         "en" : {
@@ -317,6 +349,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Paylaştığın videonun köşesinde kendi rumuzun görünsün. Boş bırakırsan Duello markası kullanılır."
+          }
+        }
+      }
+    },
+    "Günün Paketi" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pack of the Day"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Günün Paketi"
           }
         }
       }

@@ -51,6 +51,14 @@ struct SettingsView: View {
                 } footer: {
                     Text("Paylaştığın videonun köşesinde kendi rumuzun görünsün. Boş bırakırsan Duello markası kullanılır.")
                 }
+
+                Section {
+                    Toggle(isOn: $appState.soundEffectsEnabled) {
+                        Label("Doğru/Yanlış Sesi", systemImage: "speaker.wave.2.fill")
+                    }
+                } footer: {
+                    Text("Tahmin Et modunda cevap sonrası kısa bir ses efekti çalar.")
+                }
             }
             .navigationTitle(Text("Ayarlar"))
             .navigationBarTitleDisplayMode(.inline)

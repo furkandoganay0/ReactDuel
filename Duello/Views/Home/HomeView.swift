@@ -7,8 +7,19 @@ import UIKit
 struct HomeView: View {
     @Binding var path: [AppRoute]
     @EnvironmentObject private var playHistoryStore: PlayHistoryStore
+    @EnvironmentObject private var appState: AppState
     @Environment(\.locale) private var locale
     @State private var isShowingSettings = false
+
+    /// Güne göre deterministik seçilen bir paket — her gün aynı, cihazlar
+    /// arasında da tutarlı (kullanıcıya özel rastgelelik değil, takvim günü
+    /// bazlı). "Bugün ne oynasam" kararsızlığını azaltmak için.
+    private var featuredPack: PredictionTemplate? {
+        let packs = appState.catalog.predictionPacks
+        guard !packs.isEmpty else { return nil }
+        let dayOfYear = Calendar.current.ordinality(of: .day, in: .year, for: Date()) ?? 1
+        return packs[dayOfYear % packs.count]
+    }
 
     var body: some View {
         ScrollView {
@@ -27,6 +38,10 @@ struct HomeView: View {
 
                 if playHistoryStore.currentStreak > 0 {
                     streakBadge
+                }
+
+                if let featuredPack {
+                    featuredPackBanner(featuredPack)
                 }
 
                 VStack(spacing: 16) {
@@ -85,6 +100,36 @@ struct HomeView: View {
         .sheet(isPresented: $isShowingSettings) {
             SettingsView()
         }
+    }
+
+    private func featuredPackBanner(_ pack: PredictionTemplate) -> some View {
+        Button {
+            path.append(.predictionRecording(pack, recordingEnabled: true, playerCount: 1))
+        } label: {
+            HStack(spacing: 12) {
+                PlaceholderCoverView(imageName: pack.coverImage, label: pack.title)
+                    .frame(width: 44, height: 44)
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Günün Paketi")
+                        .font(.caption2.weight(.bold))
+                        .foregroundStyle(.indigo)
+                        .textCase(.uppercase)
+                    Text(pack.title)
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(.primary)
+                }
+
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            .padding(12)
+            .background(Color.indigo.opacity(0.08))
+            .clipShape(RoundedRectangle(cornerRadius: 14))
+        }
+        .buttonStyle(.plain)
     }
 
     private var streakBadge: some View {

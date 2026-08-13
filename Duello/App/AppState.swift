@@ -27,6 +27,12 @@ final class AppState: ObservableObject {
         didSet { UserDefaults.standard.set(creatorHandle, forKey: Self.creatorHandleKey) }
     }
 
+    /// Tahmin Et modunda doğru/yanlış cevap için kısa ses efekti çalınsın mı —
+    /// bazı kullanıcılar sessiz/sadece titreşimli tercih edebilir.
+    @Published var soundEffectsEnabled: Bool {
+        didSet { UserDefaults.standard.set(soundEffectsEnabled, forKey: Self.soundEffectsEnabledKey) }
+    }
+
     @Published private(set) var catalog: ContentCatalog
 
     /// Export'a geçilecek gerçek filigran metni — boş/whitespace-only bir rumuz
@@ -42,6 +48,7 @@ final class AppState: ObservableObject {
     private static let languageKey = "duello.language"
     private static let appearanceKey = "duello.appearance"
     private static let creatorHandleKey = "duello.creatorHandle"
+    private static let soundEffectsEnabledKey = "duello.soundEffectsEnabled"
 
     init() {
         hasCompletedOnboarding = UserDefaults.standard.bool(forKey: Self.onboardingKey)
@@ -54,6 +61,11 @@ final class AppState: ObservableObject {
             .flatMap(AppAppearance.init(rawValue:)) ?? .system
 
         creatorHandle = UserDefaults.standard.string(forKey: Self.creatorHandleKey) ?? ""
+
+        // `bool(forKey:)` hiç set edilmemişse `false` döner — varsayılan AÇIK
+        // olması gerektiği için burada `object(forKey:)` ile "hiç set edilmemiş mi"
+        // ayrımını yapıyoruz.
+        soundEffectsEnabled = (UserDefaults.standard.object(forKey: Self.soundEffectsEnabledKey) as? Bool) ?? true
 
         catalog = ContentLoader.loadCatalog(languageCode: storedLanguage.contentLanguageCode)
     }

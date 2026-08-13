@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Duello hiçbir veriyi izleme/reklam amacıyla toplamıyor, üçüncü taraf SDK
+	     kullanmıyor, hiçbir sunucuya veri göndermiyor — tüm içerik (skor geçmişi,
+	     ayarlar, kaydedilen videolar) sadece cihazda, UserDefaults ve
+	     Application Support'ta tutuluyor (bkz. AppState, PlayHistoryStore). -->
+	<key>NSPrivacyTracking</key>
+	<false/>
+	<key>NSPrivacyTrackingDomains</key>
+	<array/>
+	<key>NSPrivacyCollectedDataTypes</key>
+	<array/>
+	<key>NSPrivacyAccessedAPITypes</key>
+	<array>
+		<!-- Dil/görünüm/rumuz tercihleri ve onboarding durumu UserDefaults'ta
+		     saklanıyor (bkz. AppState) — sadece uygulamanın kendi verisi, cihaz
+		     dışına hiç gönderilmiyor. Dosya sistemi kullanımımız (PlayHistoryStore:
+		     video/geçmiş kaydı) Apple'ın "required reason" API listesindeki
+		     zaman damgası okuma API'lerine girmiyor — sadece create/copy/remove,
+		     o yüzden burada sadece UserDefaults kategorisi var. -->
+		<dict>
+			<key>NSPrivacyAccessedAPIType</key>
+			<string>NSPrivacyAccessedAPICategoryUserDefaults</string>
+			<key>NSPrivacyAccessedAPITypeReasons</key>
+			<array>
+				<string>CA92.1</string>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

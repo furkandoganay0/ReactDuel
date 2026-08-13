@@ -14,6 +14,7 @@ struct PredictionRecordingView: View {
     @Binding var path: [AppRoute]
     @EnvironmentObject private var session: RecordingSessionStore
     @EnvironmentObject private var playHistoryStore: PlayHistoryStore
+    @EnvironmentObject private var appState: AppState
     @Environment(\.locale) private var locale
 
     @StateObject private var cameraController = CameraController()
@@ -247,6 +248,9 @@ struct PredictionRecordingView: View {
             answerIndex: index, state: predictionState, template: template, playerCount: playerCount
         )
         UINotificationFeedbackGenerator().notificationOccurred(isCorrect ? .success : .error)
+        if appState.soundEffectsEnabled {
+            isCorrect ? SoundEffectPlayer.playCorrect() : SoundEffectPlayer.playWrong()
+        }
         logCurrentPhaseIfNeeded()
     }
 
