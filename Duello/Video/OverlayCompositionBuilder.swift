@@ -5,6 +5,12 @@ import UIKit
 /// hiyerarşisi üretir. Bu katman `VideoExporter` tarafından
 /// `AVVideoCompositionCoreAnimationTool` ile videoya "yakılır".
 ///
+/// Canlı ekranda gördüğün arayüzle (oyuncu renkleri, ilerleme/şık bilgisi)
+/// videoya yakılanın BİREBİR aynı görünmesi hedefleniyor — kartların rengi
+/// `playerIndex`e göre (Oyuncu 1 = indigo, Oyuncu 2 = turuncu, tek kişilik =
+/// nötr siyah) `PredictionOverlayView`/`ThisOrThatOverlayView`'daki
+/// `turnBanner` rengiyle aynı paleti kullanıyor.
+///
 /// BİLİNEN RİSK (teknik prompt Bölüm 9 + playbook Bölüm 3'teki CIImage/UIKit
 /// orijin sorunuyla aynı sınıf hata): burada kullanılan "üstten-orijin, normal
 /// frame koordinatları" deseni (`CALayer` sublayer'ları `postProcessingAsVideoLayer`
@@ -139,7 +145,7 @@ enum OverlayCompositionBuilder {
         // gerçek yüksekliğine göre biraz büyük tutup, insetBy ile görsel olarak
         // ortalamaya yakın bir yerleşim hedefliyoruz. Tam dikey merkezleme
         // gerekiyorsa font yüksekliğine göre dinamik inset hesaplanabilir (v2).
-        text.frame = container.bounds.insetBy(dx: 26, dy: cardHeight * 0.14)
+        text.frame = container.bounds.insetBy(dx: 26, dy: cardHeight * 0.1)
         text.string = content.text
         text.foregroundColor = content.textColor.cgColor
         text.alignmentMode = .center
@@ -193,6 +199,19 @@ enum OverlayCompositionBuilder {
     }
 }
 
+/// Canlı ekranda oyuncu 1/2'yi ayırt eden renkler — `PredictionOverlayView`/
+/// `ThisOrThatOverlayView`'daki `currentPlayerColor` ile AYNI palet (indigo/turuncu).
+/// Videoya yakılan kartların canlı ekranla renk açısından da birebir eşleşmesi için.
+private enum PlayerPalette {
+    static func gradient(for playerIndex: Int?) -> [UIColor] {
+        switch playerIndex {
+        case 0: return [UIColor.systemIndigo, UIColor(red: 0.30, green: 0.20, blue: 0.75, alpha: 1)]
+        case 1: return [UIColor.systemOrange, UIColor(red: 0.85, green: 0.45, blue: 0.05, alpha: 1)]
+        default: return [UIColor.black.withAlphaComponent(0.82), UIColor.black.withAlphaComponent(0.62)]
+        }
+    }
+}
+
 /// Bir `OverlayEventKind`'ı ekranda gösterilecek metne/renge/konuma çevirir.
 private struct OverlayContent {
     let text: String
@@ -223,40 +242,53 @@ private struct OverlayContent {
             fontSize = 44
             heightRatio = 0.22
             verticalAnchor = .center
-        case .showPrompt(let promptText):
+        case .showPrompt(let promptText, let playerIndex):
             text = promptText
-            gradientColors = [UIColor.black.withAlphaComponent(0.82), UIColor.black.withAlphaComponent(0.62)]
+            gradientColors = PlayerPalette.gradient(for: playerIndex)
             textColor = .white
-            fontSize = 38
-            heightRatio = 0.15
+            fontSize = 34
+            heightRatio = 0.17
             verticalAnchor = .top
-        case .showAnswer(let answerText):
-            text = answerText
-            gradientColors = [UIColor.systemGreen, UIColor(red: 0.05, green: 0.55, blue: 0.35, alpha: 1)]
+        case .showChoices(let choicesText, let playerIndex):
+            text = choicesText
+            gradientColors = PlayerPalette.gradient(for: playerIndex)
             textColor = .white
-            fontSize = 46
-            heightRatio = 0.21
+            fontSize = 24
+            heightRatio = 0.16
+            verticalAnchor = .bottom
+        case .showAnswer(let answerText, let playerIndex):
+            text = answerText
+            gradientColors = playerIndex != nil
+                ? PlayerPalette.gradient(for: playerIndex)
+                : [UIColor.systemGreen, UIColor(red: 0.05, green: 0.55, blue: 0.35, alpha: 1)]
+            textColor = .white
+            fontSize = 42
+            heightRatio = 0.22
             verticalAnchor = .center
-        case .showTurn(let turnText):
+        case .showTurn(let turnText, let playerIndex):
             text = turnText
-            gradientColors = [UIColor.black.withAlphaComponent(0.82), UIColor.black.withAlphaComponent(0.62)]
+            gradientColors = PlayerPalette.gradient(for: playerIndex)
             textColor = .white
             fontSize = 29
             heightRatio = 0.10
             verticalAnchor = .top
-        case .showPick(let pickText):
+        case .showPick(let pickText, let playerIndex):
             text = pickText
-            gradientColors = [UIColor.systemBlue, UIColor(red: 0.25, green: 0.35, blue: 0.9, alpha: 1)]
+            gradientColors = playerIndex != nil
+                ? PlayerPalette.gradient(for: playerIndex)
+                : [UIColor.systemBlue, UIColor(red: 0.25, green: 0.35, blue: 0.9, alpha: 1)]
             textColor = .white
-            fontSize = 32
+            fontSize = 30
             heightRatio = 0.12
             verticalAnchor = .bottom
-        case .showResult(let resultText):
+        case .showResult(let resultText, let playerIndex):
             text = resultText
-            gradientColors = [UIColor.systemOrange, UIColor(red: 0.85, green: 0.25, blue: 0.35, alpha: 1)]
+            gradientColors = playerIndex != nil
+                ? PlayerPalette.gradient(for: playerIndex)
+                : [UIColor.systemOrange, UIColor(red: 0.85, green: 0.25, blue: 0.35, alpha: 1)]
             textColor = .white
-            fontSize = 50
-            heightRatio = 0.20
+            fontSize = 36
+            heightRatio = 0.28
             verticalAnchor = .center
         case .hideAll:
             return nil

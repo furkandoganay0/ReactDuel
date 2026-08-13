@@ -53,6 +53,20 @@ enum L10n {
         }
     }
 
+    /// Videoya yakılan Draft sonuç kartı için — canlı ekrandaki `DraftResultView`
+    /// gibi (kazanan + her iki rosterın isim/toplam maliyeti) çok satırlı bir özet.
+    /// Önceden video sadece kazananın adını gösteriyordu, roster hiç görünmüyordu.
+    static func draftResultVideoSummary(
+        resultText: String, rosterA: [String], costA: Int, rosterB: [String], costB: Int, locale: Locale
+    ) -> String {
+        let turkish = isTurkish(locale)
+        let nameA = turkish ? "Oyuncu 1" : "Player 1"
+        let nameB = turkish ? "Oyuncu 2" : "Player 2"
+        let lineA = "\(nameA) (\(costA)): \(rosterA.joined(separator: ", "))"
+        let lineB = "\(nameB) (\(costB)): \(rosterB.joined(separator: ", "))"
+        return "\(resultText)\n\n\(lineA)\n\(lineB)"
+    }
+
     static func resultTextWithEmoji(_ result: DraftResult, locale: Locale) -> String {
         let turkish = isTurkish(locale)
         switch result {
@@ -88,6 +102,10 @@ enum L10n {
 
     static func questionProgress(current: Int, total: Int, locale: Locale) -> String {
         isTurkish(locale) ? "Soru \(current)/\(total)" : "Question \(current)/\(total)"
+    }
+
+    static func roundProgress(current: Int, total: Int, locale: Locale) -> String {
+        isTurkish(locale) ? "Tur \(current)/\(total)" : "Round \(current)/\(total)"
     }
 
     /// Tahmin Et modunda `playerIndex` 0/1 içindir (sadece tek/iki kişilik oturum

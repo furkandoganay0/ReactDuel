@@ -143,6 +143,12 @@ struct PredictionRecordingView: View {
         PredictionTimerStateMachine.currentPlayerIndex(questionIndex: predictionState.questionIndex, playerCount: playerCount)
     }
 
+    /// `nil` tek kişilik oturumda — videoya yakılan kartlar `PlayerPalette`'te
+    /// nötr siyaha düşer, canlıdaki nötr (renksiz) akışla eşleşsin diye.
+    private var videoPlayerIndex: Int? {
+        playerCount > 1 ? currentPlayerIndex : nil
+    }
+
     private var introCard: some View {
         VStack(spacing: 12) {
             Text("🔥")
@@ -271,25 +277,51 @@ struct PredictionRecordingView: View {
     private func showResultThenFinish() {
         if recordingEnabled {
             cameraController.recorder.logOverlayEvent(
-                .showResult(text: L10n.predictionResultOverlayText(
-                    scoreByPlayer: predictionState.scoreByPlayer, total: template.questions.count, locale: locale
-                ))
+                .showResult(
+                    text: L10n.predictionResultOverlayText(
+                        scoreByPlayer: predictionState.scoreByPlayer, total: template.questions.count, locale: locale
+                    ),
+                    playerIndex: nil
+                )
             )
         }
         UINotificationFeedbackGenerator().notificationOccurred(.success)
         lifecycle = .showingResult(secondsLeft: resultDisplaySeconds)
     }
 
+    /// Canlı ekranda gördüğün her şeyin (ilerleme rozeti, şık butonları, oyuncu
+    /// rengi) videoya da yakılmasını sağlar — önceden video sadece soru metnini
+    /// gösteriyordu, izleyici şıkların ne olduğunu hiç göremiyordu.
     private func logCurrentPhaseIfNeeded() {
         guard recordingEnabled, let question = currentQuestion else { return }
         switch predictionState.phase {
         case .prompt:
-            cameraController.recorder.logOverlayEvent(.showPrompt(text: question.prompt))
+            let progress = L10n.questionProgress(
+                current: predictionState.questionIndex + 1, total: template.questions.count, locale: locale
+            )
+            cameraController.recorder.logOverlayEvent(
+                .showPrompt(text: "\(progress)\n\n\(question.prompt)", playerIndex: videoPlayerIndex)
+            )
+            cameraController.recorder.logOverlayEvent(
+                .showChoices(text: choicesVideoText(), playerIndex: videoPlayerIndex)
+            )
         case .reveal:
-            cameraController.recorder.logOverlayEvent(.showAnswer(text: revealText(for: question)))
+            cameraController.recorder.logOverlayEvent(
+                .showAnswer(text: revealText(for: question), playerIndex: videoPlayerIndex)
+            )
         case .finished:
             break
         }
+    }
+
+    private func choicesVideoText() -> String {
+        let letters = ["A", "B", "C", "D"]
+        return predictionState.shuffledChoices.enumerated()
+            .map { index, choice in
+                let letter = index < letters.count ? letters[index] : "•"
+                return "\(letter)  \(choice)"
+            }
+            .joined(separator: "\n")
     }
 
     private func revealText(for question: PredictionQuestion) -> String {

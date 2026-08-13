@@ -264,7 +264,7 @@ struct DraftRecordingView: View {
             if secondsLeft <= 1 {
                 lifecycle = .picking
                 cameraController.recorder.logOverlayEvent(
-                    .showTurn(text: turnOverlayText(for: draftState.currentPlayer, budgetRemaining: template.budget))
+                    .showTurn(text: turnOverlayText(for: draftState.currentPlayer, budgetRemaining: template.budget), playerIndex: nil)
                 )
             } else {
                 lifecycle = .showingIntro(secondsLeft: secondsLeft - 1)
@@ -323,20 +323,32 @@ struct DraftRecordingView: View {
 
         let playerLabel = L10n.playerLabel(playerBeforePick, locale: locale)
         let pickText = isAutoPick ? L10n.autoPickLabel(playerName: playerLabel, itemName: item.name, locale: locale)
-            : "\(playerLabel): \(item.name)"
-        cameraController.recorder.logOverlayEvent(.showPick(text: pickText))
+            : "\(playerLabel): \(item.name) (\(item.cost))"
+        cameraController.recorder.logOverlayEvent(.showPick(text: pickText, playerIndex: nil))
 
         if draftState.isFinished {
             let result = DraftScoreCalculator.winner(rosterA: draftState.rosterA, rosterB: draftState.rosterB)
-            cameraController.recorder.logOverlayEvent(.showResult(text: L10n.resultLabel(result, locale: locale)))
+            // Canlı ekranda kayıt bitince görünen `DraftResultView` her iki rosterı
+            // da (isim + toplam maliyet) karşılaştırmalı gösteriyor — video da aynısını
+            // yakmalı, önceden sadece kazananın adı yazıyordu.
+            let summary = L10n.draftResultVideoSummary(
+                resultText: L10n.resultLabel(result, locale: locale),
+                rosterA: draftState.rosterA.map(\.name), costA: DraftScoreCalculator.totalCost(of: draftState.rosterA),
+                rosterB: draftState.rosterB.map(\.name), costB: DraftScoreCalculator.totalCost(of: draftState.rosterB),
+                locale: locale
+            )
+            cameraController.recorder.logOverlayEvent(.showResult(text: summary, playerIndex: nil))
             UINotificationFeedbackGenerator().notificationOccurred(.success)
             lifecycle = .showingResult(secondsLeft: resultDisplaySeconds)
         } else {
             cameraController.recorder.logOverlayEvent(
-                .showTurn(text: turnOverlayText(
-                    for: draftState.currentPlayer,
-                    budgetRemaining: draftState.remainingBudget(for: draftState.currentPlayer, template: template)
-                ))
+                .showTurn(
+                    text: turnOverlayText(
+                        for: draftState.currentPlayer,
+                        budgetRemaining: draftState.remainingBudget(for: draftState.currentPlayer, template: template)
+                    ),
+                    playerIndex: nil
+                )
             )
         }
     }

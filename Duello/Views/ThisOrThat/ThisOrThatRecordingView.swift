@@ -135,6 +135,11 @@ struct ThisOrThatRecordingView: View {
         ThisOrThatStateMachine.currentPlayerIndex(roundIndex: state.roundIndex, playerCount: playerCount)
     }
 
+    /// `nil` tek kişilik oturumda — bkz. `PredictionRecordingView.videoPlayerIndex`.
+    private var videoPlayerIndex: Int? {
+        playerCount > 1 ? currentPlayerIndex : nil
+    }
+
     private var currentRound: ThisOrThatRound? {
         guard state.roundIndex < template.rounds.count else { return nil }
         return template.rounds[state.roundIndex]
@@ -251,20 +256,25 @@ struct ThisOrThatRecordingView: View {
             let summary = state.pickedLabels.isEmpty
                 ? L10n.thisOrThatEmptyResultSummary(locale: locale)
                 : state.pickedLabels.joined(separator: " • ")
-            cameraController.recorder.logOverlayEvent(.showResult(text: summary))
+            cameraController.recorder.logOverlayEvent(.showResult(text: summary, playerIndex: nil))
         }
         UINotificationFeedbackGenerator().notificationOccurred(.success)
         lifecycle = .showingResult(secondsLeft: resultDisplaySeconds)
     }
 
+    /// Canlı ekrandaki VS düzenini (iki büyük seçenek + aralarında "VS") ve
+    /// tur ilerlemesini videoya da yakar — önceden video tek satırlık
+    /// "A  •  B" metnine sıkıştırıyordu, VS hissi kayboluyordu.
     private func logCurrentPhaseIfNeeded() {
         guard recordingEnabled, let round = currentRound else { return }
         switch state.phase {
         case .choosing:
-            cameraController.recorder.logOverlayEvent(.showPrompt(text: "\(round.optionA)  •  \(round.optionB)"))
+            let progress = L10n.roundProgress(current: state.roundIndex + 1, total: template.rounds.count, locale: locale)
+            let text = "\(progress)\n\n\(round.optionA)\n\nVS\n\n\(round.optionB)"
+            cameraController.recorder.logOverlayEvent(.showPrompt(text: text, playerIndex: videoPlayerIndex))
         case .revealed:
             let text = state.selectedOption.map { $0 ? round.optionA : round.optionB } ?? L10n.thisOrThatTimeoutLabel(locale: locale)
-            cameraController.recorder.logOverlayEvent(.showAnswer(text: text))
+            cameraController.recorder.logOverlayEvent(.showAnswer(text: text, playerIndex: videoPlayerIndex))
         case .finished:
             break
         }
