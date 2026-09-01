@@ -815,6 +815,278 @@
           "choices": ["Arjantin", "Şili", "Uruguay", "Brezilya"]
         }
       ]
+    },
+    {
+      "id": "anime-guess-1",
+      "mode": "prediction",
+      "title": "Anime Karakterini Tahmin Et",
+      "coverImage": "cover_anime_guess",
+      "questions": [
+        {
+          "id": "q1",
+          "prompt": "Dokuz Kuyruklu Tilki'yi içinde taşıyan, Hokage olmayı hayal eden turuncu kıyafetli ninja",
+          "answer": "Naruto Uzumaki",
+          "answerImage": "naruto",
+          "timerSeconds": 6,
+          "choices": ["Naruto Uzumaki", "Sasuke Uchiha", "Boruto Uzumaki", "Kakashi Hatake"]
+        },
+        {
+          "id": "q2",
+          "prompt": "Lastik gibi uzayabilen, Korsan Kral olmak isteyen One Piece'in başkahramanı",
+          "answer": "Monkey D. Luffy",
+          "answerImage": "luffy",
+          "timerSeconds": 6,
+          "choices": ["Monkey D. Luffy", "Roronoa Zoro", "Sanji", "Portgas D. Ace"]
+        },
+        {
+          "id": "q3",
+          "prompt": "Dragon Ball'un Sayan ırkından, Kamehameha dalgası atan başkahramanı",
+          "answer": "Goku",
+          "answerImage": "goku",
+          "timerSeconds": 6,
+          "choices": ["Goku", "Vegeta", "Gohan", "Piccolo"]
+        },
+        {
+          "id": "q4",
+          "prompt": "Ölüm Defteri'ni bulup suçluları yargılamaya başlayan Death Note'un başkarakteri",
+          "answer": "Light Yagami",
+          "answerImage": "light_yagami",
+          "timerSeconds": 6,
+          "choices": ["Light Yagami", "L", "Ryuk", "Near"]
+        },
+        {
+          "id": "q5",
+          "prompt": "Titan'a dönüşebilen, Attack on Titan'ın başkahramanı",
+          "answer": "Eren Yeager",
+          "answerImage": "eren_yeager",
+          "timerSeconds": 6,
+          "choices": ["Eren Yeager", "Mikasa Ackerman", "Armin Arlert", "Levi Ackerman"]
+        },
+        {
+          "id": "q6",
+          "prompt": "Kardeşiyle birlikte simya yapan, 'Çelik Simyacı' lakaplı Fullmetal Alchemist karakteri",
+          "answer": "Edward Elric",
+          "answerImage": "edward_elric",
+          "timerSeconds": 6,
+          "choices": ["Edward Elric", "Alphonse Elric", "Roy Mustang", "Winry Rockbell"]
+        },
+        {
+          "id": "q7",
+          "prompt": "Kız kardeşini iblisten insana geri döndürmeye çalışan Demon Slayer'ın başkahramanı",
+          "answer": "Tanjiro Kamado",
+          "answerImage": "tanjiro",
+          "timerSeconds": 6,
+          "choices": ["Tanjiro Kamado", "Zenitsu Agatsuma", "Inosuke Hashibira", "Giyu Tomioka"]
+        },
+        {
+          "id": "q8",
+          "prompt": "Ölüm Meleği güçleri kazanan, Bleach'in turuncu saçlı başkahramanı",
+          "answer": "Ichigo Kurosaki",
+          "answerImage": "ichigo",
+          "timerSeconds": 6,
+          "choices": ["Ichigo Kurosaki", "Rukia Kuchiki", "Uryu Ishida", "Renji Abarai"]
+        },
+        {
+          "id": "q9",
+          "prompt": "Tek yumrukla her düşmanı yenen, One Punch Man'in kel kahramanı",
+          "answer": "Saitama",
+          "answerImage": "saitama",
+          "timerSeconds": 6,
+          "choices": ["Saitama", "Genos", "Speed-o'-Sound Sonic", "Mumen Rider"]
+        },
+        {
+          "id": "q10",
+          "prompt": "İnsanlığın en güçlü askeri olarak bilinen Attack on Titan karakteri",
+          "answer": "Levi Ackerman",
+          "answerImage": "levi_ackerman",
+          "timerSeconds": 6,
+          "choices": ["Levi Ackerman", "Erwin Smith", "Eren Yeager", "Hange Zoë"]
+        },
+        {
+          "id": "q11",
+          "prompt": "Naruto'nun ezeli rakibi, Sharingan gözlerine sahip Uchiha klanının son üyesi",
+          "answer": "Sasuke Uchiha",
+          "answerImage": "sasuke",
+          "timerSeconds": 6,
+          "choices": ["Sasuke Uchiha", "Itachi Uchiha", "Naruto Uzumaki", "Obito Uchiha"]
+        },
+        {
+          "id": "q12",
+          "prompt": "Quirk'süz doğup sonradan güç kazanan My Hero Academia'nın başkahramanı",
+          "answer": "Izuku Midoriya",
+          "answerImage": "deku",
+          "timerSeconds": 6,
+          "choices": ["Izuku Midoriya", "Bakugo Katsuki", "Shoto Todoroki", "All Might"]
+        },
+        {
+          "id": "q13",
+          "prompt": "Uzayda ödül avcılığı yapan Cowboy Bebop'un havalı başkahramanı",
+          "answer": "Spike Spiegel",
+          "answerImage": "spike_spiegel",
+          "timerSeconds": 6,
+          "choices": ["Spike Spiegel", "Jet Black", "Faye Valentine", "Ed"]
+        },
+        {
+          "id": "q14",
+          "prompt": "Geass gücüyle imparatorluğa karşı savaşan Code Geass'ın başkahramanı",
+          "answer": "Lelouch Lamperouge",
+          "answerImage": "lelouch",
+          "timerSeconds": 6,
+          "choices": ["Lelouch Lamperouge", "Suzaku Kururugi", "C.C.", "Kallen Kozuki"]
+        },
+        {
+          "id": "q15",
+          "prompt": "Kayıp babasını bulmak için Hunter olan Hunter x Hunter'ın başkahramanı",
+          "answer": "Gon Freecss",
+          "answerImage": "gon",
+          "timerSeconds": 6,
+          "choices": ["Gon Freecss", "Killua Zoldyck", "Kurapika", "Leorio Paladiknight"]
+        },
+        {
+          "id": "q16",
+          "prompt": "Sanal gerçeklikte mahsur kalan Sword Art Online'ın başkahramanı",
+          "answer": "Kirito",
+          "answerImage": "kirito",
+          "timerSeconds": 6,
+          "choices": ["Kirito", "Asuna", "Klein", "Sinon"]
+        }
+      ]
+    },
+    {
+      "id": "game-character-guess-1",
+      "mode": "prediction",
+      "title": "Oyun Karakterini Tahmin Et",
+      "coverImage": "cover_game_guess",
+      "questions": [
+        {
+          "id": "q1",
+          "prompt": "Kırmızı şapkalı, mantar yiyerek büyüyen Nintendo'nun efsanevi platform oyunu kahramanı",
+          "answer": "Mario",
+          "answerImage": "mario",
+          "timerSeconds": 6,
+          "choices": ["Mario", "Luigi", "Bowser", "Yoshi"]
+        },
+        {
+          "id": "q2",
+          "prompt": "Yeşil kıyafetli, Zelda Prensesi'ni kurtarmaya çalışan Legend of Zelda'nın sessiz kahramanı",
+          "answer": "Link",
+          "answerImage": "link",
+          "timerSeconds": 6,
+          "choices": ["Link", "Zelda", "Ganondorf", "Impa"]
+        },
+        {
+          "id": "q3",
+          "prompt": "Yeşil zırhlı, Halo serisinin uzay askeri kahramanı",
+          "answer": "Master Chief",
+          "answerImage": "master_chief",
+          "timerSeconds": 6,
+          "choices": ["Master Chief", "Cortana", "Arbiter", "Doom Slayer"]
+        },
+        {
+          "id": "q4",
+          "prompt": "Yunan tanrılarını öldüren, sonra İskandinav mitolojisine taşınan God of War'un öfkeli kahramanı",
+          "answer": "Kratos",
+          "answerImage": "kratos",
+          "timerSeconds": 6,
+          "choices": ["Kratos", "Atreus", "Thor", "Zeus"]
+        },
+        {
+          "id": "q5",
+          "prompt": "Antik hazineler peşinde koşan, Tomb Raider serisinin maceracı arkeoloğu",
+          "answer": "Lara Croft",
+          "answerImage": "lara_croft",
+          "timerSeconds": 6,
+          "choices": ["Lara Croft", "Nathan Drake", "Aloy", "Chloe Frazer"]
+        },
+        {
+          "id": "q6",
+          "prompt": "Canavar avcısı bir 'Witcher', mutant güçlere sahip beyaz saçlı kahraman",
+          "answer": "Geralt of Rivia",
+          "answerImage": "geralt",
+          "timerSeconds": 6,
+          "choices": ["Geralt of Rivia", "Vesemir", "Yennefer", "Dandelion"]
+        },
+        {
+          "id": "q7",
+          "prompt": "The Last of Us'ta, virüse bağışıklığı olan genç hayatta kalan",
+          "answer": "Ellie",
+          "answerImage": "ellie",
+          "timerSeconds": 6,
+          "choices": ["Ellie", "Joel", "Abby", "Riley"]
+        },
+        {
+          "id": "q8",
+          "prompt": "Final Fantasy VII'nin, dev bir kılıç taşıyan eski SOLDIER askeri",
+          "answer": "Cloud Strife",
+          "answerImage": "cloud_strife",
+          "timerSeconds": 6,
+          "choices": ["Cloud Strife", "Sephiroth", "Tifa Lockhart", "Zack Fair"]
+        },
+        {
+          "id": "q9",
+          "prompt": "Metal Gear Solid serisinin gizli görev uzmanı ajanı",
+          "answer": "Solid Snake",
+          "answerImage": "solid_snake",
+          "timerSeconds": 6,
+          "choices": ["Solid Snake", "Big Boss", "Raiden", "Revolver Ocelot"]
+        },
+        {
+          "id": "q10",
+          "prompt": "Pokémon serisinin elektrik tipi, sarı renkli maskot canlısı",
+          "answer": "Pikachu",
+          "answerImage": "pikachu",
+          "timerSeconds": 6,
+          "choices": ["Pikachu", "Charizard", "Eevee", "Mewtwo"]
+        },
+        {
+          "id": "q11",
+          "prompt": "Mavi renkli, ışık hızında koşan Sega'nın maskot kirpisi",
+          "answer": "Sonic",
+          "answerImage": "sonic",
+          "timerSeconds": 6,
+          "choices": ["Sonic", "Tails", "Knuckles", "Shadow"]
+        },
+        {
+          "id": "q12",
+          "prompt": "Robot dinozorların dolaştığı bir dünyada avcılık yapan Horizon serisinin kahramanı",
+          "answer": "Aloy",
+          "answerImage": "aloy",
+          "timerSeconds": 6,
+          "choices": ["Aloy", "Lara Croft", "Ellie", "Chun-Li"]
+        },
+        {
+          "id": "q13",
+          "prompt": "Red Dead Redemption 2'nin, çete üyesi kovboy başkahramanı",
+          "answer": "Arthur Morgan",
+          "answerImage": "arthur_morgan",
+          "timerSeconds": 6,
+          "choices": ["Arthur Morgan", "John Marston", "Dutch van der Linde", "Micah Bell"]
+        },
+        {
+          "id": "q14",
+          "prompt": "Street Fighter serisinin güçlü tekmeleriyle tanınan Çinli dövüşçüsü",
+          "answer": "Chun-Li",
+          "answerImage": "chun_li",
+          "timerSeconds": 6,
+          "choices": ["Chun-Li", "Cammy", "Sakura", "Mai Shiranui"]
+        },
+        {
+          "id": "q15",
+          "prompt": "Street Fighter'ın 'Hadouken' hareketiyle tanınan gezgin dövüş sanatları ustası",
+          "answer": "Ryu",
+          "answerImage": "ryu",
+          "timerSeconds": 6,
+          "choices": ["Ryu", "Ken Masters", "Akuma", "Guile"]
+        },
+        {
+          "id": "q16",
+          "prompt": "Uncharted serisinin hazine avcısı, esprili başkahramanı",
+          "answer": "Nathan Drake",
+          "answerImage": "nathan_drake",
+          "timerSeconds": 6,
+          "choices": ["Nathan Drake", "Sully", "Elena Fisher", "Sam Drake"]
+        }
+      ]
     }
   ],
   "draftPacks": [
@@ -909,6 +1181,29 @@
         { "id": "bkt12", "name": "Devin Booker", "cost": 3, "image": "booker" },
         { "id": "bkt13", "name": "Trae Young", "cost": 2, "image": "trae_young" }
       ]
+    },
+    {
+      "id": "anime-draft-1",
+      "mode": "draft",
+      "title": "Anime Draftı",
+      "coverImage": "cover_anime_draft",
+      "budget": 20,
+      "rosterSize": 5,
+      "pool": [
+        { "id": "anm1", "name": "Naruto Uzumaki", "cost": 9, "image": "naruto" },
+        { "id": "anm2", "name": "Goku", "cost": 9, "image": "goku" },
+        { "id": "anm3", "name": "Monkey D. Luffy", "cost": 8, "image": "luffy" },
+        { "id": "anm4", "name": "Eren Yeager", "cost": 8, "image": "eren_yeager" },
+        { "id": "anm5", "name": "Light Yagami", "cost": 6, "image": "light_yagami" },
+        { "id": "anm6", "name": "Edward Elric", "cost": 6, "image": "edward_elric" },
+        { "id": "anm7", "name": "Tanjiro Kamado", "cost": 6, "image": "tanjiro" },
+        { "id": "anm8", "name": "Ichigo Kurosaki", "cost": 6, "image": "ichigo" },
+        { "id": "anm9", "name": "Saitama", "cost": 5, "image": "saitama" },
+        { "id": "anm10", "name": "Levi Ackerman", "cost": 5, "image": "levi_ackerman" },
+        { "id": "anm11", "name": "Izuku Midoriya", "cost": 4, "image": "deku" },
+        { "id": "anm12", "name": "Spike Spiegel", "cost": 3, "image": "spike_spiegel" },
+        { "id": "anm13", "name": "Kirito", "cost": 2, "image": "kirito" }
+      ]
     }
   ],
   "thisOrThatPacks": [
@@ -934,6 +1229,30 @@
         { "id": "r14", "optionA": "Mesaj", "optionB": "Arama", "timerSeconds": 5 },
         { "id": "r15", "optionA": "Yaz Tatili", "optionB": "Kış Tatili", "timerSeconds": 5 },
         { "id": "r16", "optionA": "Ev Yemeği", "optionB": "Restoran", "timerSeconds": 5 }
+      ]
+    },
+    {
+      "id": "tough-choices-1",
+      "mode": "thisOrThat",
+      "title": "Bu mu O mu: Zor Seçimler",
+      "coverImage": "cover_this_or_that_tough",
+      "rounds": [
+        { "id": "r1", "optionA": "Telefon", "optionB": "Bilgisayar", "timerSeconds": 5 },
+        { "id": "r2", "optionA": "Instagram", "optionB": "TikTok", "timerSeconds": 5 },
+        { "id": "r3", "optionA": "Spotify", "optionB": "YouTube Music", "timerSeconds": 5 },
+        { "id": "r4", "optionA": "iPhone", "optionB": "Android", "timerSeconds": 5 },
+        { "id": "r5", "optionA": "Kahvaltı", "optionB": "Akşam Yemeği", "timerSeconds": 5 },
+        { "id": "r6", "optionA": "Yalnız Seyahat", "optionB": "Grup Seyahati", "timerSeconds": 5 },
+        { "id": "r7", "optionA": "Sessizlik", "optionB": "Müzik", "timerSeconds": 5 },
+        { "id": "r8", "optionA": "Plan Yapmak", "optionB": "Anlık Karar", "timerSeconds": 5 },
+        { "id": "r9", "optionA": "Klasik Müzik", "optionB": "Pop Müzik", "timerSeconds": 5 },
+        { "id": "r10", "optionA": "Kahve", "optionB": "Enerji İçeceği", "timerSeconds": 5 },
+        { "id": "r11", "optionA": "Kitap Okumak", "optionB": "Podcast Dinlemek", "timerSeconds": 5 },
+        { "id": "r12", "optionA": "Yürüyüş", "optionB": "Koşu", "timerSeconds": 5 },
+        { "id": "r13", "optionA": "Erken Emeklilik", "optionB": "Sevdiğin İş", "timerSeconds": 5 },
+        { "id": "r14", "optionA": "Şehirde Yaşamak", "optionB": "Köyde Yaşamak", "timerSeconds": 5 },
+        { "id": "r15", "optionA": "Yeni Arkadaşlar", "optionB": "Eski Dostlar", "timerSeconds": 5 },
+        { "id": "r16", "optionA": "Para", "optionB": "Zaman", "timerSeconds": 5 }
       ]
     }
   ]

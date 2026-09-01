@@ -815,6 +815,278 @@
           "choices": ["Argentina", "Chile", "Uruguay", "Brazil"]
         }
       ]
+    },
+    {
+      "id": "anime-guess-1",
+      "mode": "prediction",
+      "title": "Guess the Anime Character",
+      "coverImage": "cover_anime_guess",
+      "questions": [
+        {
+          "id": "q1",
+          "prompt": "Carries the Nine-Tailed Fox inside him, an orange-clad ninja who dreams of becoming Hokage",
+          "answer": "Naruto Uzumaki",
+          "answerImage": "naruto",
+          "timerSeconds": 6,
+          "choices": ["Naruto Uzumaki", "Sasuke Uchiha", "Boruto Uzumaki", "Kakashi Hatake"]
+        },
+        {
+          "id": "q2",
+          "prompt": "Can stretch like rubber, One Piece's protagonist who wants to become Pirate King",
+          "answer": "Monkey D. Luffy",
+          "answerImage": "luffy",
+          "timerSeconds": 6,
+          "choices": ["Monkey D. Luffy", "Roronoa Zoro", "Sanji", "Portgas D. Ace"]
+        },
+        {
+          "id": "q3",
+          "prompt": "Dragon Ball's Saiyan hero known for the Kamehameha wave",
+          "answer": "Goku",
+          "answerImage": "goku",
+          "timerSeconds": 6,
+          "choices": ["Goku", "Vegeta", "Gohan", "Piccolo"]
+        },
+        {
+          "id": "q4",
+          "prompt": "Finds a Death Note and starts judging criminals, protagonist of Death Note",
+          "answer": "Light Yagami",
+          "answerImage": "light_yagami",
+          "timerSeconds": 6,
+          "choices": ["Light Yagami", "L", "Ryuk", "Near"]
+        },
+        {
+          "id": "q5",
+          "prompt": "Can transform into a Titan, Attack on Titan's protagonist",
+          "answer": "Eren Yeager",
+          "answerImage": "eren_yeager",
+          "timerSeconds": 6,
+          "choices": ["Eren Yeager", "Mikasa Ackerman", "Armin Arlert", "Levi Ackerman"]
+        },
+        {
+          "id": "q6",
+          "prompt": "Practices alchemy with his brother, nicknamed the 'Fullmetal Alchemist'",
+          "answer": "Edward Elric",
+          "answerImage": "edward_elric",
+          "timerSeconds": 6,
+          "choices": ["Edward Elric", "Alphonse Elric", "Roy Mustang", "Winry Rockbell"]
+        },
+        {
+          "id": "q7",
+          "prompt": "Tries to turn his sister back from a demon into a human, Demon Slayer's protagonist",
+          "answer": "Tanjiro Kamado",
+          "answerImage": "tanjiro",
+          "timerSeconds": 6,
+          "choices": ["Tanjiro Kamado", "Zenitsu Agatsuma", "Inosuke Hashibira", "Giyu Tomioka"]
+        },
+        {
+          "id": "q8",
+          "prompt": "Gains Soul Reaper powers, Bleach's orange-haired protagonist",
+          "answer": "Ichigo Kurosaki",
+          "answerImage": "ichigo",
+          "timerSeconds": 6,
+          "choices": ["Ichigo Kurosaki", "Rukia Kuchiki", "Uryu Ishida", "Renji Abarai"]
+        },
+        {
+          "id": "q9",
+          "prompt": "Defeats every enemy with a single punch, One Punch Man's bald hero",
+          "answer": "Saitama",
+          "answerImage": "saitama",
+          "timerSeconds": 6,
+          "choices": ["Saitama", "Genos", "Speed-o'-Sound Sonic", "Mumen Rider"]
+        },
+        {
+          "id": "q10",
+          "prompt": "Known as humanity's strongest soldier in Attack on Titan",
+          "answer": "Levi Ackerman",
+          "answerImage": "levi_ackerman",
+          "timerSeconds": 6,
+          "choices": ["Levi Ackerman", "Erwin Smith", "Eren Yeager", "Hange Zoë"]
+        },
+        {
+          "id": "q11",
+          "prompt": "Naruto's eternal rival, the last member of the Uchiha clan with Sharingan eyes",
+          "answer": "Sasuke Uchiha",
+          "answerImage": "sasuke",
+          "timerSeconds": 6,
+          "choices": ["Sasuke Uchiha", "Itachi Uchiha", "Naruto Uzumaki", "Obito Uchiha"]
+        },
+        {
+          "id": "q12",
+          "prompt": "Born without a Quirk but later gains power, My Hero Academia's protagonist",
+          "answer": "Izuku Midoriya",
+          "answerImage": "deku",
+          "timerSeconds": 6,
+          "choices": ["Izuku Midoriya", "Bakugo Katsuki", "Shoto Todoroki", "All Might"]
+        },
+        {
+          "id": "q13",
+          "prompt": "A cool bounty hunter in space, Cowboy Bebop's protagonist",
+          "answer": "Spike Spiegel",
+          "answerImage": "spike_spiegel",
+          "timerSeconds": 6,
+          "choices": ["Spike Spiegel", "Jet Black", "Faye Valentine", "Ed"]
+        },
+        {
+          "id": "q14",
+          "prompt": "Fights the empire with the power of Geass, protagonist of Code Geass",
+          "answer": "Lelouch Lamperouge",
+          "answerImage": "lelouch",
+          "timerSeconds": 6,
+          "choices": ["Lelouch Lamperouge", "Suzaku Kururugi", "C.C.", "Kallen Kozuki"]
+        },
+        {
+          "id": "q15",
+          "prompt": "Becomes a Hunter to find his missing father, Hunter x Hunter's protagonist",
+          "answer": "Gon Freecss",
+          "answerImage": "gon",
+          "timerSeconds": 6,
+          "choices": ["Gon Freecss", "Killua Zoldyck", "Kurapika", "Leorio Paladiknight"]
+        },
+        {
+          "id": "q16",
+          "prompt": "Trapped in a virtual reality game, Sword Art Online's protagonist",
+          "answer": "Kirito",
+          "answerImage": "kirito",
+          "timerSeconds": 6,
+          "choices": ["Kirito", "Asuna", "Klein", "Sinon"]
+        }
+      ]
+    },
+    {
+      "id": "game-character-guess-1",
+      "mode": "prediction",
+      "title": "Guess the Video Game Character",
+      "coverImage": "cover_game_guess",
+      "questions": [
+        {
+          "id": "q1",
+          "prompt": "Red-capped hero who grows by eating mushrooms, Nintendo's legendary platformer star",
+          "answer": "Mario",
+          "answerImage": "mario",
+          "timerSeconds": 6,
+          "choices": ["Mario", "Luigi", "Bowser", "Yoshi"]
+        },
+        {
+          "id": "q2",
+          "prompt": "Green-clad hero trying to rescue Princess Zelda in this silent protagonist series",
+          "answer": "Link",
+          "answerImage": "link",
+          "timerSeconds": 6,
+          "choices": ["Link", "Zelda", "Ganondorf", "Impa"]
+        },
+        {
+          "id": "q3",
+          "prompt": "Green-armored super-soldier, the space marine hero of the Halo series",
+          "answer": "Master Chief",
+          "answerImage": "master_chief",
+          "timerSeconds": 6,
+          "choices": ["Master Chief", "Cortana", "Arbiter", "Doom Slayer"]
+        },
+        {
+          "id": "q4",
+          "prompt": "Killed the Greek gods, then moved on to Norse mythology, God of War's rage-filled hero",
+          "answer": "Kratos",
+          "answerImage": "kratos",
+          "timerSeconds": 6,
+          "choices": ["Kratos", "Atreus", "Thor", "Zeus"]
+        },
+        {
+          "id": "q5",
+          "prompt": "Chases ancient treasures, Tomb Raider's adventurous archaeologist",
+          "answer": "Lara Croft",
+          "answerImage": "lara_croft",
+          "timerSeconds": 6,
+          "choices": ["Lara Croft", "Nathan Drake", "Aloy", "Chloe Frazer"]
+        },
+        {
+          "id": "q6",
+          "prompt": "A monster-hunting 'Witcher' with mutant powers and white hair",
+          "answer": "Geralt of Rivia",
+          "answerImage": "geralt",
+          "timerSeconds": 6,
+          "choices": ["Geralt of Rivia", "Vesemir", "Yennefer", "Dandelion"]
+        },
+        {
+          "id": "q7",
+          "prompt": "In The Last of Us, a young survivor immune to the infection",
+          "answer": "Ellie",
+          "answerImage": "ellie",
+          "timerSeconds": 6,
+          "choices": ["Ellie", "Joel", "Abby", "Riley"]
+        },
+        {
+          "id": "q8",
+          "prompt": "Final Fantasy VII's former SOLDIER carrying an oversized sword",
+          "answer": "Cloud Strife",
+          "answerImage": "cloud_strife",
+          "timerSeconds": 6,
+          "choices": ["Cloud Strife", "Sephiroth", "Tifa Lockhart", "Zack Fair"]
+        },
+        {
+          "id": "q9",
+          "prompt": "Metal Gear Solid's stealth mission specialist agent",
+          "answer": "Solid Snake",
+          "answerImage": "solid_snake",
+          "timerSeconds": 6,
+          "choices": ["Solid Snake", "Big Boss", "Raiden", "Revolver Ocelot"]
+        },
+        {
+          "id": "q10",
+          "prompt": "Pokémon's electric-type, yellow mascot creature",
+          "answer": "Pikachu",
+          "answerImage": "pikachu",
+          "timerSeconds": 6,
+          "choices": ["Pikachu", "Charizard", "Eevee", "Mewtwo"]
+        },
+        {
+          "id": "q11",
+          "prompt": "Blue, super-fast hedgehog, Sega's mascot",
+          "answer": "Sonic",
+          "answerImage": "sonic",
+          "timerSeconds": 6,
+          "choices": ["Sonic", "Tails", "Knuckles", "Shadow"]
+        },
+        {
+          "id": "q12",
+          "prompt": "Hunts robotic dinosaurs in Horizon's post-apocalyptic world",
+          "answer": "Aloy",
+          "answerImage": "aloy",
+          "timerSeconds": 6,
+          "choices": ["Aloy", "Lara Croft", "Ellie", "Chun-Li"]
+        },
+        {
+          "id": "q13",
+          "prompt": "Red Dead Redemption 2's outlaw gang-member protagonist",
+          "answer": "Arthur Morgan",
+          "answerImage": "arthur_morgan",
+          "timerSeconds": 6,
+          "choices": ["Arthur Morgan", "John Marston", "Dutch van der Linde", "Micah Bell"]
+        },
+        {
+          "id": "q14",
+          "prompt": "Street Fighter's Chinese fighter known for her powerful kicks",
+          "answer": "Chun-Li",
+          "answerImage": "chun_li",
+          "timerSeconds": 6,
+          "choices": ["Chun-Li", "Cammy", "Sakura", "Mai Shiranui"]
+        },
+        {
+          "id": "q15",
+          "prompt": "Street Fighter's wandering martial artist known for the 'Hadouken'",
+          "answer": "Ryu",
+          "answerImage": "ryu",
+          "timerSeconds": 6,
+          "choices": ["Ryu", "Ken Masters", "Akuma", "Guile"]
+        },
+        {
+          "id": "q16",
+          "prompt": "Uncharted's witty treasure-hunting protagonist",
+          "answer": "Nathan Drake",
+          "answerImage": "nathan_drake",
+          "timerSeconds": 6,
+          "choices": ["Nathan Drake", "Sully", "Elena Fisher", "Sam Drake"]
+        }
+      ]
     }
   ],
   "draftPacks": [
@@ -909,6 +1181,29 @@
         { "id": "bkt12", "name": "Devin Booker", "cost": 3, "image": "booker" },
         { "id": "bkt13", "name": "Trae Young", "cost": 2, "image": "trae_young" }
       ]
+    },
+    {
+      "id": "anime-draft-1",
+      "mode": "draft",
+      "title": "Anime Draft",
+      "coverImage": "cover_anime_draft",
+      "budget": 20,
+      "rosterSize": 5,
+      "pool": [
+        { "id": "anm1", "name": "Naruto Uzumaki", "cost": 9, "image": "naruto" },
+        { "id": "anm2", "name": "Goku", "cost": 9, "image": "goku" },
+        { "id": "anm3", "name": "Monkey D. Luffy", "cost": 8, "image": "luffy" },
+        { "id": "anm4", "name": "Eren Yeager", "cost": 8, "image": "eren_yeager" },
+        { "id": "anm5", "name": "Light Yagami", "cost": 6, "image": "light_yagami" },
+        { "id": "anm6", "name": "Edward Elric", "cost": 6, "image": "edward_elric" },
+        { "id": "anm7", "name": "Tanjiro Kamado", "cost": 6, "image": "tanjiro" },
+        { "id": "anm8", "name": "Ichigo Kurosaki", "cost": 6, "image": "ichigo" },
+        { "id": "anm9", "name": "Saitama", "cost": 5, "image": "saitama" },
+        { "id": "anm10", "name": "Levi Ackerman", "cost": 5, "image": "levi_ackerman" },
+        { "id": "anm11", "name": "Izuku Midoriya", "cost": 4, "image": "deku" },
+        { "id": "anm12", "name": "Spike Spiegel", "cost": 3, "image": "spike_spiegel" },
+        { "id": "anm13", "name": "Kirito", "cost": 2, "image": "kirito" }
+      ]
     }
   ],
   "thisOrThatPacks": [
@@ -934,6 +1229,30 @@
         { "id": "r14", "optionA": "Text", "optionB": "Call", "timerSeconds": 5 },
         { "id": "r15", "optionA": "Summer Vacation", "optionB": "Winter Vacation", "timerSeconds": 5 },
         { "id": "r16", "optionA": "Home Cooking", "optionB": "Restaurant", "timerSeconds": 5 }
+      ]
+    },
+    {
+      "id": "tough-choices-1",
+      "mode": "thisOrThat",
+      "title": "This or That: Tough Choices",
+      "coverImage": "cover_this_or_that_tough",
+      "rounds": [
+        { "id": "r1", "optionA": "Phone", "optionB": "Computer", "timerSeconds": 5 },
+        { "id": "r2", "optionA": "Instagram", "optionB": "TikTok", "timerSeconds": 5 },
+        { "id": "r3", "optionA": "Spotify", "optionB": "YouTube Music", "timerSeconds": 5 },
+        { "id": "r4", "optionA": "iPhone", "optionB": "Android", "timerSeconds": 5 },
+        { "id": "r5", "optionA": "Breakfast", "optionB": "Dinner", "timerSeconds": 5 },
+        { "id": "r6", "optionA": "Solo Travel", "optionB": "Group Travel", "timerSeconds": 5 },
+        { "id": "r7", "optionA": "Silence", "optionB": "Music", "timerSeconds": 5 },
+        { "id": "r8", "optionA": "Planning", "optionB": "Spontaneous", "timerSeconds": 5 },
+        { "id": "r9", "optionA": "Classical Music", "optionB": "Pop Music", "timerSeconds": 5 },
+        { "id": "r10", "optionA": "Coffee", "optionB": "Energy Drink", "timerSeconds": 5 },
+        { "id": "r11", "optionA": "Reading", "optionB": "Podcasts", "timerSeconds": 5 },
+        { "id": "r12", "optionA": "Walking", "optionB": "Running", "timerSeconds": 5 },
+        { "id": "r13", "optionA": "Early Retirement", "optionB": "Dream Job", "timerSeconds": 5 },
+        { "id": "r14", "optionA": "City Living", "optionB": "Country Living", "timerSeconds": 5 },
+        { "id": "r15", "optionA": "New Friends", "optionB": "Old Friends", "timerSeconds": 5 },
+        { "id": "r16", "optionA": "Money", "optionB": "Time", "timerSeconds": 5 }
       ]
     }
   ]
