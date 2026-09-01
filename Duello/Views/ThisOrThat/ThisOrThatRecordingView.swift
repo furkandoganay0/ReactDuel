@@ -54,7 +54,9 @@ struct ThisOrThatRecordingView: View {
                 ThisOrThatSessionResultView(pickedLabels: state.pickedLabels)
             } else if case .showingIntro = lifecycle {
                 introCard
-            } else {
+            } else if lifecycle != .preparingCamera {
+                // Kamera hazır olmadan (ör. izin reddi) bu katmanı hiç çizme —
+                // aksi halde `CameraErrorView` ile aynı anda üst üste biniyordu.
                 ThisOrThatOverlayView(
                     phase: state.phase,
                     round: currentRound,

@@ -11,6 +11,11 @@ struct CameraPreviewView: UIViewRepresentable {
 
     func makeUIView(context: Context) -> PreviewUIView {
         let view = PreviewUIView()
+        // Oturum henüz kare üretmiyorsa (izin reddi, konfigürasyon hatası, ya da
+        // Simulator'da hiç) katman şeffaf kalır — arkasında ne varsa o görünür.
+        // `CameraErrorView`'ın beyaz metni böyle bir zeminde kayboluyordu; sabit
+        // siyah zemin bunu cihazdan/duruma bağımsız hale getiriyor.
+        view.backgroundColor = .black
         view.videoPreviewLayer.session = session
         view.videoPreviewLayer.videoGravity = .resizeAspectFill
         view.videoPreviewLayer.connection?.videoOrientation = .portrait

@@ -57,7 +57,9 @@ struct PredictionRecordingView: View {
                 PredictionSessionResultView(scoreByPlayer: predictionState.scoreByPlayer, total: template.questions.count)
             } else if case .showingIntro = lifecycle {
                 introCard
-            } else {
+            } else if lifecycle != .preparingCamera {
+                // Kamera hazır olmadan (ör. izin reddi) bu katmanı hiç çizme —
+                // aksi halde `CameraErrorView` ile aynı anda üst üste biniyordu.
                 PredictionOverlayView(
                     phase: predictionState.phase,
                     question: currentQuestion,
