@@ -253,4 +253,51 @@ enum L10n {
             ? "Video işlenirken bir sorun oluştu. Lütfen tekrar dene."
             : "Something went wrong while preparing the video. Please try again."
     }
+
+    /// Özel paket oluşturma ekranlarında "N / minimum M eklendi" ilerleme metni —
+    /// Kaydet butonunun neden hâlâ pasif olduğunu kullanıcıya açıklıyor.
+    static func addedProgress(current: Int, minimum: Int, unit: ContentUnit, locale: Locale) -> String {
+        let turkish = isTurkish(locale)
+        let unitWord = unit.label(count: minimum, locale: locale)
+        if current >= minimum {
+            return turkish ? "\(current) \(unitWord) eklendi" : "\(current) \(unitWord) added"
+        }
+        return turkish ? "\(current)/\(minimum) \(unitWord) — en az \(minimum) gerekli" : "\(current)/\(minimum) \(unitWord) — at least \(minimum) required"
+    }
+
+    static func questionNumberLabel(_ n: Int, locale: Locale) -> String {
+        isTurkish(locale) ? "Soru \(n)" : "Question \(n)"
+    }
+
+    static func roundNumberLabel(_ n: Int, locale: Locale) -> String {
+        isTurkish(locale) ? "Tur \(n)" : "Round \(n)"
+    }
+
+    enum ContentUnit {
+        case question, round, poolItem
+
+        func label(count: Int, locale: Locale) -> String {
+            let turkish = isTurkish(locale)
+            switch self {
+            case .question: return turkish ? "soru" : (count == 1 ? "question" : "questions")
+            case .round: return turkish ? "tur" : (count == 1 ? "round" : "rounds")
+            case .poolItem: return turkish ? "öğe" : (count == 1 ? "item" : "items")
+            }
+        }
+    }
+
+    /// Draft paketi oluştururken bütçe/kadro tutarlılığını canlı gösteren ipucu —
+    /// en ucuz `rosterSize` öğenin toplamı bütçeyi aşarsa oyun hiç bitirilemez
+    /// (bkz. içerik JSON'larındaki aynı invaryant, `BudgetValidator`).
+    static func draftPoolBudgetHint(cheapestRosterSum: Int, budget: Int, rosterSize: Int, locale: Locale) -> String {
+        let turkish = isTurkish(locale)
+        if cheapestRosterSum > budget {
+            return turkish
+                ? "En ucuz \(rosterSize) öğenin toplamı (\(cheapestRosterSum)) bütçeyi (\(budget)) aşıyor — kadro tamamlanamaz."
+                : "The cheapest \(rosterSize) items add up to \(cheapestRosterSum), which exceeds the budget (\(budget)) — a roster can't be completed."
+        }
+        return turkish
+            ? "Bütçeyle en az bir \(rosterSize) kişilik kadro tamamlanabiliyor."
+            : "The budget allows completing at least one \(rosterSize)-item roster."
+    }
 }

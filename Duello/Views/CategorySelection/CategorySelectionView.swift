@@ -5,6 +5,7 @@ struct CategorySelectionView: View {
     let mode: GameMode
     @Binding var path: [AppRoute]
     @EnvironmentObject private var appState: AppState
+    @EnvironmentObject private var userContentStore: UserContentStore
     @Environment(\.locale) private var locale
     @State private var recordingEnabled = true
     @State private var playerCount = 1
@@ -35,9 +36,11 @@ struct CategorySelectionView: View {
             }
 
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+                createPackCard
+
                 switch mode {
                 case .prediction:
-                    ForEach(appState.catalog.predictionPacks) { pack in
+                    ForEach(userContentStore.predictionPacks + appState.catalog.predictionPacks) { pack in
                         Button {
                             let selectedPack = trimmedPredictionPack(pack, limit: itemCountLimit)
                             path.append(.predictionRecording(selectedPack, recordingEnabled: recordingEnabled, playerCount: playerCount))
@@ -45,26 +48,34 @@ struct CategorySelectionView: View {
                             CategoryCard(
                                 imageName: pack.coverImage,
                                 title: pack.title,
-                                subtitle: L10n.questionCount(pack.questions.count, locale: locale)
+                                subtitle: L10n.questionCount(pack.questions.count, locale: locale),
+                                isUserPack: UserContentStore.isUserPack(id: pack.id)
                             )
                         }
                         .buttonStyle(.plain)
+                        .modifier(UserPackDeleteContextMenu(isUserPack: UserContentStore.isUserPack(id: pack.id)) {
+                            userContentStore.deletePredictionPack(pack)
+                        })
                     }
                 case .draft:
-                    ForEach(appState.catalog.draftPacks) { pack in
+                    ForEach(userContentStore.draftPacks + appState.catalog.draftPacks) { pack in
                         Button {
                             path.append(.draftRecording(pack))
                         } label: {
                             CategoryCard(
                                 imageName: pack.coverImage,
                                 title: pack.title,
-                                subtitle: L10n.draftSubtitle(budget: pack.budget, optionCount: pack.pool.count, locale: locale)
+                                subtitle: L10n.draftSubtitle(budget: pack.budget, optionCount: pack.pool.count, locale: locale),
+                                isUserPack: UserContentStore.isUserPack(id: pack.id)
                             )
                         }
                         .buttonStyle(.plain)
+                        .modifier(UserPackDeleteContextMenu(isUserPack: UserContentStore.isUserPack(id: pack.id)) {
+                            userContentStore.deleteDraftPack(pack)
+                        })
                     }
                 case .thisOrThat:
-                    ForEach(appState.catalog.thisOrThatPacks) { pack in
+                    ForEach(userContentStore.thisOrThatPacks + appState.catalog.thisOrThatPacks) { pack in
                         Button {
                             let selectedPack = trimmedThisOrThatPack(pack, limit: itemCountLimit)
                             path.append(.thisOrThatRecording(selectedPack, recordingEnabled: recordingEnabled, playerCount: playerCount))
@@ -72,10 +83,14 @@ struct CategorySelectionView: View {
                             CategoryCard(
                                 imageName: pack.coverImage,
                                 title: pack.title,
-                                subtitle: L10n.roundCount(pack.rounds.count, locale: locale)
+                                subtitle: L10n.roundCount(pack.rounds.count, locale: locale),
+                                isUserPack: UserContentStore.isUserPack(id: pack.id)
                             )
                         }
                         .buttonStyle(.plain)
+                        .modifier(UserPackDeleteContextMenu(isUserPack: UserContentStore.isUserPack(id: pack.id)) {
+                            userContentStore.deleteThisOrThatPack(pack)
+                        })
                     }
                 }
             }
@@ -148,18 +163,62 @@ struct CategorySelectionView: View {
         .padding(.horizontal, 16)
         .padding(.top, 10)
     }
+
+    /// Kullanıcının kendi paketini yazabildiği ekrana giden kart — her mod
+    /// kendi "Yeni ... Paketi" ekranına gider (bkz. `AppRoute`).
+    private var createPackCard: some View {
+        Button {
+            switch mode {
+            case .prediction: path.append(.createPredictionPack)
+            case .draft: path.append(.createDraftPack)
+            case .thisOrThat: path.append(.createThisOrThatPack)
+            }
+        } label: {
+            VStack(alignment: .leading, spacing: 8) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 16)
+                        .strokeBorder(Color.accentColor, style: StrokeStyle(lineWidth: 2, dash: [6]))
+                    Image(systemName: "plus.circle.fill")
+                        .font(.system(size: 32))
+                        .foregroundStyle(Color.accentColor)
+                }
+                .aspectRatio(1, contentMode: .fit)
+
+                Text("Paket Oluştur")
+                    .font(.headline)
+                    .foregroundStyle(.primary)
+                Text("Kendi sorularını yaz")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .buttonStyle(.plain)
+    }
 }
 
 private struct CategoryCard: View {
     let imageName: String
     let title: String
     let subtitle: String
+    var isUserPack: Bool = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            PlaceholderCoverView(imageName: imageName, label: title)
-                .aspectRatio(1, contentMode: .fit)
-                .shadow(color: .black.opacity(0.12), radius: 8, y: 4)
+            ZStack(alignment: .topTrailing) {
+                PlaceholderCoverView(imageName: imageName, label: title)
+                    .aspectRatio(1, contentMode: .fit)
+                    .shadow(color: .black.opacity(0.12), radius: 8, y: 4)
+
+                if isUserPack {
+                    Image(systemName: "person.fill")
+                        .font(.caption2.weight(.bold))
+                        .foregroundStyle(.white)
+                        .padding(6)
+                        .background(Color.black.opacity(0.45))
+                        .clipShape(Circle())
+                        .padding(6)
+                }
+            }
 
             Text(title)
                 .font(.headline)
@@ -172,9 +231,31 @@ private struct CategoryCard: View {
     }
 }
 
+/// Sadece kullanıcının kendi yazdığı paketlere (bundled paketlere değil) uzun
+/// basınca "Sil" seçeneği sunan context menu — `HistoryView`'daki swipe-to-delete
+/// ile aynı ruhta (onay istemeden direkt siler), ama `LazyVGrid` kartları
+/// `List` satırı olmadığı için `swipeActions` yerine `contextMenu` kullanıyor.
+private struct UserPackDeleteContextMenu: ViewModifier {
+    let isUserPack: Bool
+    let onDelete: () -> Void
+
+    func body(content: Content) -> some View {
+        if isUserPack {
+            content.contextMenu {
+                Button(role: .destructive, action: onDelete) {
+                    Label("Sil", systemImage: "trash")
+                }
+            }
+        } else {
+            content
+        }
+    }
+}
+
 #Preview {
     NavigationStack {
         CategorySelectionView(mode: .draft, path: .constant([]))
             .environmentObject(AppState())
+            .environmentObject(UserContentStore())
     }
 }
