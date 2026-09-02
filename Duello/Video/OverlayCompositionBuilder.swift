@@ -35,7 +35,8 @@ enum OverlayCompositionBuilder {
         events: [OverlayEvent],
         totalDuration: TimeInterval,
         renderSize: CGSize,
-        watermarkText: String
+        watermarkText: String,
+        watermarkLogo: UIImage? = nil
     ) -> CALayer {
         let overlayLayer = CALayer()
         overlayLayer.frame = CGRect(origin: .zero, size: renderSize)
@@ -57,7 +58,7 @@ enum OverlayCompositionBuilder {
             overlayLayer.addSublayer(card)
         }
 
-        overlayLayer.addSublayer(makeWatermarkLayer(text: watermarkText, renderSize: renderSize))
+        overlayLayer.addSublayer(makeWatermarkLayer(text: watermarkText, logo: watermarkLogo, renderSize: renderSize))
 
         return overlayLayer
     }
@@ -165,10 +166,17 @@ enum OverlayCompositionBuilder {
 
     /// Videonun tamamında sabit kalan, küçük ve göze batmayan marka/rumuz rozeti —
     /// paylaşılan videonun nereden geldiğini belli eder (organik keşif/viral döngü),
-    /// ya da kullanıcı kendi rumuzunu girdiyse onu taşır.
-    private static func makeWatermarkLayer(text watermarkText: String, renderSize: CGSize) -> CALayer {
-        let width: CGFloat = renderSize.width * 0.4
+    /// ya da kullanıcı kendi rumuzunu girdiyse onu taşır. `logo` verilmişse
+    /// (bkz. `AppState.watermarkLogoData`, `SettingsView`), rumuzun solunda küçük
+    /// yuvarlak bir profil fotoğrafı/logo da gösterilir — içerik üreticinin sadece
+    /// metin değil, görsel kimliğini de taşıyabilmesi için.
+    private static func makeWatermarkLayer(text watermarkText: String, logo: UIImage?, renderSize: CGSize) -> CALayer {
         let height: CGFloat = renderSize.height * 0.032
+        let logoDiameter = logo != nil ? height * 0.82 : 0
+        let horizontalPadding = height * 0.4
+        let textWidth: CGFloat = renderSize.width * 0.36
+        let width = textWidth + (logo != nil ? logoDiameter + horizontalPadding * 0.6 : 0)
+
         let container = CALayer()
         container.frame = CGRect(
             x: renderSize.width - width - renderSize.width * 0.04,
@@ -184,11 +192,30 @@ enum OverlayCompositionBuilder {
         background.fillColor = UIColor.black.withAlphaComponent(0.4).cgColor
         container.addSublayer(background)
 
+        var textOriginX: CGFloat = 0
+        if let logo, let cgLogo = logo.cgImage {
+            let logoLayer = CALayer()
+            logoLayer.frame = CGRect(
+                x: (height - logoDiameter) / 2,
+                y: (height - logoDiameter) / 2,
+                width: logoDiameter,
+                height: logoDiameter
+            )
+            logoLayer.contents = cgLogo
+            logoLayer.contentsGravity = .resizeAspectFill
+            logoLayer.cornerRadius = logoDiameter / 2
+            logoLayer.masksToBounds = true
+            logoLayer.borderWidth = 1
+            logoLayer.borderColor = UIColor.white.withAlphaComponent(0.6).cgColor
+            container.addSublayer(logoLayer)
+            textOriginX = logoLayer.frame.maxX
+        }
+
         let text = CATextLayer()
-        text.frame = container.bounds
+        text.frame = CGRect(x: textOriginX, y: 0, width: container.bounds.width - textOriginX, height: height)
         text.string = watermarkText
         text.foregroundColor = UIColor.white.withAlphaComponent(0.9).cgColor
-        text.alignmentMode = .center
+        text.alignmentMode = logo != nil ? .left : .center
         text.truncationMode = .end
         text.contentsScale = UIScreen.main.scale
         text.font = CTFontCreateWithName("HelveticaNeue-Semibold" as CFString, 0, nil)

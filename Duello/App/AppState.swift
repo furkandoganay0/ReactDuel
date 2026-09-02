@@ -19,6 +19,12 @@ final class AppState: ObservableObject {
         didSet { UserDefaults.standard.set(appearance.rawValue, forKey: Self.appearanceKey) }
     }
 
+    /// Uygulamanın vurgu rengi — içerik üreticinin kendi marka rengini
+    /// yansıtabilmesi için (bkz. `AppAccentColor`, `RootView.tint`).
+    @Published var accentColorChoice: AppAccentColor {
+        didSet { UserDefaults.standard.set(accentColorChoice.rawValue, forKey: Self.accentColorKey) }
+    }
+
     /// Paylaşılan videonun köşesindeki filigrana yazılacak, kullanıcının kendi
     /// rumuzu — boşsa varsayılan "⚡ Duello" markası kullanılır (bkz.
     /// `OverlayCompositionBuilder.makeWatermarkLayer`). İçerik üreticilerin
@@ -31,6 +37,15 @@ final class AppState: ObservableObject {
     /// bazı kullanıcılar sessiz/sadece titreşimli tercih edebilir.
     @Published var soundEffectsEnabled: Bool {
         didSet { UserDefaults.standard.set(soundEffectsEnabled, forKey: Self.soundEffectsEnabledKey) }
+    }
+
+    /// Su damgasındaki metnin yanına eklenen küçük yuvarlak logo/profil fotoğrafı —
+    /// içerik üreticinin kendi markasını (sadece rumuz metni değil, görsel kimliği de)
+    /// paylaştığı her videoya taşıyabilmesi için. Zaten küçültülüp JPEG'e çevrilmiş
+    /// olarak saklanır (bkz. `SettingsView.pickLogo`) — `UserDefaults`'a yazılabilecek
+    /// boyutta kalması garanti edilir.
+    @Published var watermarkLogoData: Data? {
+        didSet { UserDefaults.standard.set(watermarkLogoData, forKey: Self.watermarkLogoKey) }
     }
 
     @Published private(set) var catalog: ContentCatalog
@@ -49,6 +64,8 @@ final class AppState: ObservableObject {
     private static let appearanceKey = "duello.appearance"
     private static let creatorHandleKey = "duello.creatorHandle"
     private static let soundEffectsEnabledKey = "duello.soundEffectsEnabled"
+    private static let watermarkLogoKey = "duello.watermarkLogoData"
+    private static let accentColorKey = "duello.accentColor"
 
     init() {
         hasCompletedOnboarding = UserDefaults.standard.bool(forKey: Self.onboardingKey)
@@ -60,12 +77,17 @@ final class AppState: ObservableObject {
         appearance = UserDefaults.standard.string(forKey: Self.appearanceKey)
             .flatMap(AppAppearance.init(rawValue:)) ?? .system
 
+        accentColorChoice = UserDefaults.standard.string(forKey: Self.accentColorKey)
+            .flatMap(AppAccentColor.init(rawValue:)) ?? .indigo
+
         creatorHandle = UserDefaults.standard.string(forKey: Self.creatorHandleKey) ?? ""
 
         // `bool(forKey:)` hiç set edilmemişse `false` döner — varsayılan AÇIK
         // olması gerektiği için burada `object(forKey:)` ile "hiç set edilmemiş mi"
         // ayrımını yapıyoruz.
         soundEffectsEnabled = (UserDefaults.standard.object(forKey: Self.soundEffectsEnabledKey) as? Bool) ?? true
+
+        watermarkLogoData = UserDefaults.standard.data(forKey: Self.watermarkLogoKey)
 
         catalog = ContentLoader.loadCatalog(languageCode: storedLanguage.contentLanguageCode)
     }

@@ -294,6 +294,21 @@ enum L10n {
         }
     }
 
+    /// TikTok/Reels/Shorts'a paylaşırken açıklama kutusuna yapıştırmaya hazır
+    /// bir metin — paket adı + sonuç + moda göre birkaç genel hashtag.
+    /// İçerik üreticinin her videoda elle caption yazmasına gerek kalmasın diye.
+    static func suggestedCaption(packTitle: String, resultSummary: String, mode: GameMode, locale: Locale) -> String {
+        let turkish = isTurkish(locale)
+        let hashtags: String
+        switch mode {
+        case .prediction: hashtags = turkish ? "#Duello #BilgiYarışması #TahminEt" : "#Duello #Trivia #GuessIt"
+        case .draft: hashtags = turkish ? "#Duello #BütçeliDraft #Draft" : "#Duello #BudgetDraft #Draft"
+        case .thisOrThat: hashtags = turkish ? "#Duello #BuMuOMu #WouldYouRather" : "#Duello #ThisOrThat #WouldYouRather"
+        }
+        let hook = turkish ? "Sonucu görmek için izle 👀" : "Watch to see the result 👀"
+        return "\(packTitle) — \(resultSummary)\n\(hook)\n\(hashtags)"
+    }
+
     /// Draft paketi oluştururken bütçe/kadro tutarlılığını canlı gösteren ipucu —
     /// en ucuz `rosterSize` öğenin toplamı bütçeyi aşarsa oyun hiç bitirilemez
     /// (bkz. içerik JSON'larındaki aynı invaryant, `BudgetValidator`).

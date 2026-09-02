@@ -33,7 +33,7 @@ struct ProcessingView: View {
                     .padding(.horizontal, 32)
                 Button("Tekrar Dene") {
                     session.exportedVideoURL = nil
-                    session.startExportIfNeeded(watermarkText: appState.resolvedWatermarkText)
+                    session.startExportIfNeeded(watermarkText: appState.resolvedWatermarkText, watermarkLogoData: appState.watermarkLogoData)
                 }
                 .buttonStyle(.borderedProminent)
             } else {

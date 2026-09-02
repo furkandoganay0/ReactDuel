@@ -1672,6 +1672,166 @@
           }
         }
       }
+    },
+    "Logo Ekle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add Logo"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logo Ekle"
+          }
+        }
+      }
+    },
+    "Logoyu Değiştir": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change Logo"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logoyu Değiştir"
+          }
+        }
+      }
+    },
+    "Kaldır": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kaldır"
+          }
+        }
+      }
+    },
+    "Açıklamayı Kopyala": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy Caption"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Açıklamayı Kopyala"
+          }
+        }
+      }
+    },
+    "Kopyalandı": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copied"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kopyalandı"
+          }
+        }
+      }
+    },
+    "Hızlı Oyna": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick Play"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hızlı Oyna"
+          }
+        }
+      }
+    },
+    "· 3 soru, rastgele paket": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "· 3 questions, random pack"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "· 3 soru, rastgele paket"
+          }
+        }
+      }
+    },
+    "Marka Rengi": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brand Color"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marka Rengi"
+          }
+        }
+      }
+    },
+    "Uygulama genelindeki vurgu rengi — kendi marka rengini seç.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The app's accent color throughout — pick your own brand color."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uygulama genelindeki vurgu rengi — kendi marka rengini seç."
+          }
+        }
+      }
+    },
+    "Paylaştığın videonun köşesinde kendi rumuzun (ve istersen logon/profil fotoğrafın) görünsün. Boş bırakırsan Duello markası kullanılır.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your handle (and, if you add one, your logo/photo) will show in the corner of the video you share. Leave it blank to use the Duello brand instead."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paylaştığın videonun köşesinde kendi rumuzun (ve istersen logon/profil fotoğrafın) görünsün. Boş bırakırsan Duello markası kullanılır."
+          }
+        }
+      }
     }
   },
   "version": "1.1"

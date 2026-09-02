@@ -21,7 +21,7 @@ struct RootView: View {
         }
         .environment(\.locale, appState.language.localeOverride ?? .autoupdatingCurrent)
         .preferredColorScheme(appState.appearance.colorScheme)
-        .tint(.indigo)
+        .tint(appState.accentColorChoice.color)
     }
 
     @ViewBuilder

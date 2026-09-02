@@ -25,6 +25,7 @@ enum VideoExporter {
         overlayEvents: [OverlayEvent],
         outputURL: URL,
         watermarkText: String = "⚡ Duello",
+        watermarkLogoData: Data? = nil,
         progressHandler: ((Float) -> Void)? = nil,
         completion: @escaping (Result<URL, VideoExportError>) -> Void
     ) {
@@ -88,7 +89,8 @@ enum VideoExporter {
                     events: overlayEvents,
                     totalDuration: CMTimeGetSeconds(duration),
                     renderSize: renderSize,
-                    watermarkText: watermarkText
+                    watermarkText: watermarkText,
+                    watermarkLogo: watermarkLogoData.flatMap(UIImage.init(data:))
                 )
 
                 let parentLayer = CALayer()

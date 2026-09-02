@@ -44,6 +44,8 @@ struct HomeView: View {
                     featuredPackBanner(featuredPack)
                 }
 
+                quickPlayButton
+
                 VStack(spacing: 16) {
                     ModeCard(
                         title: "Tahmin Et",
@@ -100,6 +102,44 @@ struct HomeView: View {
         .sheet(isPresented: $isShowingSettings) {
             SettingsView()
         }
+    }
+
+    /// Tek dokunuşla, hiç menüde gezinmeden 3 soruluk rastgele bir pakete
+    /// kayda başlar — içerik üreticinin "hızlıca bir klip daha çekeyim"
+    /// anındaki sürtünmeyi (mod seç → paket seç → ayarları seç) tamamen kaldırır.
+    private var quickPlayButton: some View {
+        Button {
+            startQuickPlay()
+        } label: {
+            HStack(spacing: 10) {
+                Image(systemName: "bolt.fill")
+                Text("Hızlı Oyna")
+                    .fontWeight(.bold)
+                Text("· 3 soru, rastgele paket")
+                    .font(.caption)
+                    .opacity(0.85)
+            }
+            .font(.subheadline)
+            .foregroundStyle(.white)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 12)
+            .background(LinearGradient(colors: [.indigo, .purple], startPoint: .leading, endPoint: .trailing))
+            .clipShape(Capsule())
+            .shadow(color: .indigo.opacity(0.35), radius: 10, y: 4)
+        }
+        .buttonStyle(.plain)
+        .padding(.horizontal, 8)
+    }
+
+    private func startQuickPlay() {
+        guard let pack = appState.catalog.predictionPacks.randomElement() else { return }
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.impactOccurred()
+        let quickPack = PredictionTemplate(
+            id: pack.id, mode: pack.mode, title: pack.title, coverImage: pack.coverImage,
+            questions: Array(pack.questions.shuffled().prefix(3))
+        )
+        path.append(.predictionRecording(quickPack, recordingEnabled: true, playerCount: 1))
     }
 
     private func featuredPackBanner(_ pack: PredictionTemplate) -> some View {

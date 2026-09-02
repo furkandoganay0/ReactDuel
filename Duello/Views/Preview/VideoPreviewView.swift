@@ -8,12 +8,23 @@ import UIKit
 struct VideoPreviewView: View {
     @Binding var path: [AppRoute]
     @EnvironmentObject private var session: RecordingSessionStore
+    @EnvironmentObject private var playHistoryStore: PlayHistoryStore
+    @Environment(\.locale) private var locale
     @State private var player: AVPlayer?
     @State private var isShowingShareSheet = false
     @State private var saveState: SaveState = .idle
+    @State private var didCopyCaption = false
 
     enum SaveState: Equatable {
         case idle, saving, saved, failed
+    }
+
+    /// Videoya bağlı geçmiş kaydı — paylaşım yazısı için paket adı/sonuç/mod
+    /// buradan gelir. Kayıt bulunamazsa (teorik olarak olmamalı) caption
+    /// butonu hiç gösterilmez.
+    private var linkedRecord: PlaySessionRecord? {
+        guard let id = session.pendingHistoryRecordID else { return nil }
+        return playHistoryStore.records.first { $0.id == id }
     }
 
     var body: some View {
@@ -37,6 +48,20 @@ struct VideoPreviewView: View {
                         .background(Color.accentColor)
                         .foregroundStyle(.white)
                         .clipShape(RoundedRectangle(cornerRadius: 14))
+                }
+
+                if let linkedRecord {
+                    Button {
+                        copyCaption(for: linkedRecord)
+                    } label: {
+                        Label(
+                            didCopyCaption ? "Kopyalandı" : "Açıklamayı Kopyala",
+                            systemImage: didCopyCaption ? "checkmark" : "doc.on.doc"
+                        )
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(didCopyCaption ? .green : .secondary)
+                    }
+                    .animation(.easeInOut(duration: 0.15), value: didCopyCaption)
                 }
 
                 HStack(spacing: 16) {
@@ -97,6 +122,20 @@ struct VideoPreviewView: View {
             Label("Kaydedildi", systemImage: "checkmark.circle.fill")
         case .failed:
             Label("Tekrar Dene", systemImage: "exclamationmark.triangle.fill")
+        }
+    }
+
+    /// Videoyu TikTok/Reels/Shorts'a atarken açıklama kutusuna yapıştırılabilecek
+    /// hazır bir metin (paket adı + sonuç + moda göre hashtag'ler) panoya
+    /// kopyalar — içerik üreticinin her seferinde elle yazmasına gerek kalmasın diye.
+    private func copyCaption(for record: PlaySessionRecord) {
+        UIPasteboard.general.string = L10n.suggestedCaption(
+            packTitle: record.packTitle, resultSummary: record.resultSummary, mode: record.mode, locale: locale
+        )
+        didCopyCaption = true
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            didCopyCaption = false
         }
     }
 
