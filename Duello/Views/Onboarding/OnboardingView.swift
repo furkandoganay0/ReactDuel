@@ -13,7 +13,7 @@ struct OnboardingView: View {
                 .font(.system(size: 72))
                 .foregroundStyle(.tint)
 
-            Text("Duello'ya Hoş Geldin")
+            Text("ReactDuel'e Hoş Geldin")
                 .font(.largeTitle.bold())
                 .multilineTextAlignment(.center)
 

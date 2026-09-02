@@ -24,7 +24,7 @@ enum VideoExporter {
         rawVideoURL: URL,
         overlayEvents: [OverlayEvent],
         outputURL: URL,
-        watermarkText: String = "⚡ Duello",
+        watermarkText: String = "⚡ ReactDuel",
         watermarkLogoData: Data? = nil,
         progressHandler: ((Float) -> Void)? = nil,
         completion: @escaping (Result<URL, VideoExportError>) -> Void

@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Duello</string>
+	<string>ReactDuel</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -23,7 +23,7 @@
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>NSCameraUsageDescription</key>
-	<string>Duello, tepkini kaydedip video oluşturman için ön kameraya ihtiyaç duyar. Kayıt sadece sen başlattığında yapılır ve cihazından hiçbir yere otomatik gönderilmez.</string>
+	<string>ReactDuel, tepkini kaydedip video oluşturman için ön kameraya ihtiyaç duyar. Kayıt sadece sen başlattığında yapılır ve cihazından hiçbir yere otomatik gönderilmez.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Kaydettiğin videoya sesini eklemek için mikrofona ihtiyaç duyarız.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>

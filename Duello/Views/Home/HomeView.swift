@@ -29,7 +29,7 @@ struct HomeView: View {
                     .foregroundStyle(.white, Color.indigo.gradient)
                     .padding(.top, 20)
 
-                Text("Duello")
+                Text("ReactDuel")
                     .font(.system(size: 40, weight: .black, design: .rounded))
 
                 Text("Modunu seç, tepkini kaydet")

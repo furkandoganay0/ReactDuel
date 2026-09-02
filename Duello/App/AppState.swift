@@ -26,7 +26,7 @@ final class AppState: ObservableObject {
     }
 
     /// Paylaşılan videonun köşesindeki filigrana yazılacak, kullanıcının kendi
-    /// rumuzu — boşsa varsayılan "⚡ Duello" markası kullanılır (bkz.
+    /// rumuzu — boşsa varsayılan "⚡ ReactDuel" markası kullanılır (bkz.
     /// `OverlayCompositionBuilder.makeWatermarkLayer`). İçerik üreticilerin
     /// kendi videolarını kendi hesaplarıyla imzalayabilmesi için.
     @Published var creatorHandle: String {
@@ -55,7 +55,7 @@ final class AppState: ObservableObject {
     /// "@" eklemeyi unutsa bile).
     var resolvedWatermarkText: String {
         let trimmed = creatorHandle.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmed.isEmpty else { return "⚡ Duello" }
+        guard !trimmed.isEmpty else { return "⚡ ReactDuel" }
         return trimmed.hasPrefix("@") ? trimmed : "@\(trimmed)"
     }
 

@@ -1832,6 +1832,54 @@
           }
         }
       }
+    },
+    "ReactDuel": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ReactDuel"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ReactDuel"
+          }
+        }
+      }
+    },
+    "ReactDuel'e Hoş Geldin": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome to ReactDuel"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ReactDuel'e Hoş Geldin"
+          }
+        }
+      }
+    },
+    "Paylaştığın videonun köşesinde kendi rumuzun (ve istersen logon/profil fotoğrafın) görünsün. Boş bırakırsan ReactDuel markası kullanılır.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your handle (and, if you add one, your logo/photo) will show in the corner of the video you share. Leave it blank to use the ReactDuel brand instead."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paylaştığın videonun köşesinde kendi rumuzun (ve istersen logon/profil fotoğrafın) görünsün. Boş bırakırsan ReactDuel markası kullanılır."
+          }
+        }
+      }
     }
   },
   "version": "1.1"

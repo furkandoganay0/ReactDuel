@@ -98,7 +98,7 @@ struct SettingsView: View {
                 } header: {
                     Text("Video Filigranı")
                 } footer: {
-                    Text("Paylaştığın videonun köşesinde kendi rumuzun (ve istersen logon/profil fotoğrafın) görünsün. Boş bırakırsan Duello markası kullanılır.")
+                    Text("Paylaştığın videonun köşesinde kendi rumuzun (ve istersen logon/profil fotoğrafın) görünsün. Boş bırakırsan ReactDuel markası kullanılır.")
                 }
 
                 Section {

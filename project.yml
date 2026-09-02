@@ -36,7 +36,7 @@ targets:
     info:
       path: Duello/Info.plist
       properties:
-        CFBundleDisplayName: Duello
+        CFBundleDisplayName: ReactDuel
         CFBundleShortVersionString: "$(MARKETING_VERSION)"
         CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
         ITSAppUsesNonExemptEncryption: false
@@ -45,7 +45,7 @@ targets:
           - UIInterfaceOrientationPortrait
         UIRequiresFullScreen: true
         NSCameraUsageDescription: >-
-          Duello, tepkini kaydedip video oluşturman için ön kameraya ihtiyaç duyar.
+          ReactDuel, tepkini kaydedip video oluşturman için ön kameraya ihtiyaç duyar.
           Kayıt sadece sen başlattığında yapılır ve cihazından hiçbir yere otomatik
           gönderilmez.
         NSMicrophoneUsageDescription: >-

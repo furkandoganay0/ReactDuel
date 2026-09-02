@@ -27,7 +27,7 @@ enum OverlayCompositionBuilder {
     ///   - totalDuration: Videonun toplam süresi (saniye) — son event'in ne zaman kaybolacağını belirler.
     ///   - renderSize: Composition'ın piksel boyutu (preferredTransform uygulanmış natural size).
     ///   - watermarkText: Köşedeki filigranda gösterilecek metin — kullanıcı Ayarlar'dan kendi
-    ///     rumuzunu girdiyse onu, girmediyse varsayılan "⚡ Duello" markasını taşır
+    ///     rumuzunu girdiyse onu, girmediyse varsayılan "⚡ ReactDuel" markasını taşır
     ///     (bkz. `AppState.creatorHandle`). Boş string verilmesi durumunda çağıran taraf
     ///     zaten varsayılanı doldurmuş olmalı — burada tekrar dile göre seçim YAPILMAZ
     ///     (export zamanının `Locale` erişimi yok, bkz. dosya başı NOT).

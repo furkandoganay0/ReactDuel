@@ -34,7 +34,7 @@ final class RecordingSessionStore: ObservableObject {
         reset()
     }
 
-    func startExportIfNeeded(watermarkText: String = "⚡ Duello", watermarkLogoData: Data? = nil) {
+    func startExportIfNeeded(watermarkText: String = "⚡ ReactDuel", watermarkLogoData: Data? = nil) {
         guard let rawVideoURL, exportedVideoURL == nil else { return }
         exportErrorMessage = nil
         exportProgress = 0

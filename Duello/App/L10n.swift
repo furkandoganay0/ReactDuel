@@ -301,9 +301,9 @@ enum L10n {
         let turkish = isTurkish(locale)
         let hashtags: String
         switch mode {
-        case .prediction: hashtags = turkish ? "#Duello #BilgiYarışması #TahminEt" : "#Duello #Trivia #GuessIt"
-        case .draft: hashtags = turkish ? "#Duello #BütçeliDraft #Draft" : "#Duello #BudgetDraft #Draft"
-        case .thisOrThat: hashtags = turkish ? "#Duello #BuMuOMu #WouldYouRather" : "#Duello #ThisOrThat #WouldYouRather"
+        case .prediction: hashtags = turkish ? "#ReactDuel #BilgiYarışması #TahminEt" : "#ReactDuel #Trivia #GuessIt"
+        case .draft: hashtags = turkish ? "#ReactDuel #BütçeliDraft #Draft" : "#ReactDuel #BudgetDraft #Draft"
+        case .thisOrThat: hashtags = turkish ? "#ReactDuel #BuMuOMu #WouldYouRather" : "#ReactDuel #ThisOrThat #WouldYouRather"
         }
         let hook = turkish ? "Sonucu görmek için izle 👀" : "Watch to see the result 👀"
         return "\(packTitle) — \(resultSummary)\n\(hook)\n\(hashtags)"
