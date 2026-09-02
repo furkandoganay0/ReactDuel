@@ -32,8 +32,11 @@ struct CategorySelectionView: View {
             if showsSharedPickers {
                 playerCountPicker
                 itemCountPicker
-                recordingToggle
             }
+            // Draft da dahil her modda gösterilir — önceden sadece Tahmin Et/Bu mu O mu'da
+            // vardı, Draft'ta kamera her zaman zorunluydu; kamera açılamazsa (izin reddi,
+            // kamerasız cihaz) Draft modu tamamen oynanamaz hâle geliyordu.
+            recordingToggle
 
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
                 createPackCard
@@ -60,7 +63,7 @@ struct CategorySelectionView: View {
                 case .draft:
                     ForEach(userContentStore.draftPacks + appState.catalog.draftPacks) { pack in
                         Button {
-                            path.append(.draftRecording(pack))
+                            path.append(.draftRecording(pack, recordingEnabled: recordingEnabled))
                         } label: {
                             CategoryCard(
                                 imageName: pack.coverImage,
@@ -202,6 +205,8 @@ private struct CategoryCard: View {
     let subtitle: String
     var isUserPack: Bool = false
 
+    @Environment(\.locale) private var locale
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             ZStack(alignment: .topTrailing) {
@@ -217,6 +222,10 @@ private struct CategoryCard: View {
                         .background(Color.black.opacity(0.45))
                         .clipShape(Circle())
                         .padding(6)
+                        // Kişi ikonu tek başına VoiceOver'a bağlamsız "Person" olarak
+                        // okunuyordu — bunun yerine tüm kart için birleşik, anlamlı bir
+                        // etiket kuruyoruz (aşağıdaki accessibilityLabel).
+                        .accessibilityHidden(true)
                 }
             }
 
@@ -228,6 +237,8 @@ private struct CategoryCard: View {
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(L10n.categoryCardAccessibilityLabel(title: title, subtitle: subtitle, isUserPack: isUserPack, locale: locale))
     }
 }
 

@@ -6,6 +6,7 @@ import UIKit
 /// sonuç birkaç saniye gösterilir (hâlâ kayıttayken), sonra kayıt durur.
 struct DraftRecordingView: View {
     let template: DraftTemplate
+    let recordingEnabled: Bool
     @Binding var path: [AppRoute]
     @EnvironmentObject private var session: RecordingSessionStore
     @EnvironmentObject private var playHistoryStore: PlayHistoryStore
@@ -16,6 +17,7 @@ struct DraftRecordingView: View {
     @State private var lifecycle: Lifecycle = .preparingCamera
     @State private var pendingPick: DraftPoolItem?
     @State private var pickSecondsRemaining: Int
+    @State private var recBlinkVisible = true
 
     private let resultDisplaySeconds = 4
     private let introDisplaySeconds = 2
@@ -31,8 +33,9 @@ struct DraftRecordingView: View {
         case done
     }
 
-    init(template: DraftTemplate, path: Binding<[AppRoute]>) {
+    init(template: DraftTemplate, recordingEnabled: Bool, path: Binding<[AppRoute]>) {
         self.template = template
+        self.recordingEnabled = recordingEnabled
         self._path = path
         self._draftState = State(initialValue: DraftStateMachine.initialState(template: template))
         self._pickSecondsRemaining = State(initialValue: 8)
@@ -40,8 +43,13 @@ struct DraftRecordingView: View {
 
     var body: some View {
         ZStack {
-            CameraPreviewView(session: cameraController.cameraSession.session)
-                .ignoresSafeArea()
+            if recordingEnabled {
+                CameraPreviewView(session: cameraController.cameraSession.session)
+                    .ignoresSafeArea()
+            } else {
+                LinearGradient(colors: [.black, .orange], startPoint: .top, endPoint: .bottom)
+                    .ignoresSafeArea()
+            }
 
             if lifecycle == .picking || isPickModalShown {
                 topTurnBar
@@ -69,6 +77,10 @@ struct DraftRecordingView: View {
                 )
             }
 
+            if hasActiveRecording {
+                recIndicator
+            }
+
             if case .countdown(let n) = lifecycle {
                 Color.black.opacity(0.5).ignoresSafeArea()
                 Text("\(n)")
@@ -78,7 +90,11 @@ struct DraftRecordingView: View {
 
             if lifecycle == .preparingCamera {
                 if let configurationError = cameraController.configurationError {
-                    CameraErrorView(error: configurationError, onRetry: { cameraController.prepare() })
+                    CameraErrorView(
+                        error: configurationError,
+                        onRetry: { cameraController.prepare() },
+                        onContinueWithoutRecording: recordingEnabled ? switchToNoRecordingMode : nil
+                    )
                 } else {
                     ProgressView("Kamera hazırlanıyor…")
                         .tint(.white)
@@ -92,23 +108,66 @@ struct DraftRecordingView: View {
         }
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .navigationBar)
-        .onAppear { cameraController.prepare() }
+        .onAppear {
+            if recordingEnabled {
+                cameraController.prepare()
+            } else {
+                lifecycle = .countdown(3)
+            }
+        }
         .onChange(of: cameraController.isReady) { ready in
             if ready, lifecycle == .preparingCamera {
                 lifecycle = .countdown(3)
             }
         }
         .onReceive(ticker) { _ in handleTick() }
-        .onDisappear { cameraController.teardown() }
+        .onDisappear {
+            if recordingEnabled {
+                cameraController.teardown()
+            }
+        }
     }
 
     private var isPickModalShown: Bool { pendingPick != nil }
 
     private var hasActiveRecording: Bool {
+        guard recordingEnabled else { return false }
         switch lifecycle {
         case .picking, .showingResult, .showingIntro: return true
         case .preparingCamera, .countdown, .done: return false
         }
+    }
+
+    /// Bkz. `PredictionRecordingView.recIndicator` — Draft ekranında bu gösterge
+    /// hiç yoktu, kullanıcı kayıtta olup olmadığını göremiyordu.
+    private var recIndicator: some View {
+        VStack {
+            HStack {
+                Spacer()
+                HStack(spacing: 6) {
+                    Circle().fill(Color.red).frame(width: 10, height: 10)
+                    Text("REC")
+                        .font(.caption.weight(.bold))
+                        .foregroundStyle(.white)
+                }
+                .padding(.horizontal, 10)
+                .padding(.vertical, 6)
+                .background(Color.black.opacity(0.6))
+                .clipShape(Capsule())
+                .opacity(recBlinkVisible ? 1 : 0.35)
+                .animation(.easeInOut(duration: 0.5), value: recBlinkVisible)
+                .padding(.trailing, 16)
+                .padding(.top, 12)
+            }
+            Spacer()
+        }
+    }
+
+    /// Kamera açılamadığında (izin reddi vb.) sunulan çıkış yolu — bkz.
+    /// `PredictionRecordingView.switchToNoRecordingMode`.
+    private func switchToNoRecordingMode() {
+        path.removeLast()
+        path.append(.draftRecording(template, recordingEnabled: false))
     }
 
     private var currentRoster: [DraftPoolItem] {
@@ -261,15 +320,19 @@ struct DraftRecordingView: View {
                 lifecycle = .countdown(n - 1)
             }
         case .showingIntro(let secondsLeft):
+            recBlinkVisible.toggle()
             if secondsLeft <= 1 {
                 lifecycle = .picking
-                cameraController.recorder.logOverlayEvent(
-                    .showTurn(text: turnOverlayText(for: draftState.currentPlayer, budgetRemaining: template.budget), playerIndex: nil)
-                )
+                if recordingEnabled {
+                    cameraController.recorder.logOverlayEvent(
+                        .showTurn(text: turnOverlayText(for: draftState.currentPlayer, budgetRemaining: template.budget), playerIndex: nil)
+                    )
+                }
             } else {
                 lifecycle = .showingIntro(secondsLeft: secondsLeft - 1)
             }
         case .picking:
+            recBlinkVisible.toggle()
             guard pendingPick == nil else { return } // onay modalı açıkken saat durur
             if pickSecondsRemaining <= 1 {
                 autoPickForTimeout()
@@ -277,6 +340,7 @@ struct DraftRecordingView: View {
                 pickSecondsRemaining -= 1
             }
         case .showingResult(let secondsLeft):
+            recBlinkVisible.toggle()
             if secondsLeft <= 1 {
                 finishRecording()
             } else {
@@ -292,8 +356,10 @@ struct DraftRecordingView: View {
     private func startRecording() {
         lifecycle = .showingIntro(secondsLeft: introDisplaySeconds)
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-        cameraController.recorder.startRecording()
-        cameraController.recorder.logOverlayEvent(.showIntro(text: template.title))
+        if recordingEnabled {
+            cameraController.recorder.startRecording()
+            cameraController.recorder.logOverlayEvent(.showIntro(text: template.title))
+        }
     }
 
     /// Seçim süresi dolunca çağrılır: sırası gelen oyuncu için uygun (bütçeye
@@ -321,26 +387,30 @@ struct DraftRecordingView: View {
         pendingPick = nil
         pickSecondsRemaining = pickTimerSeconds
 
-        let playerLabel = L10n.playerLabel(playerBeforePick, locale: locale)
-        let pickText = isAutoPick ? L10n.autoPickLabel(playerName: playerLabel, itemName: item.name, locale: locale)
-            : "\(playerLabel): \(item.name) (\(item.cost))"
-        cameraController.recorder.logOverlayEvent(.showPick(text: pickText, playerIndex: nil))
+        if recordingEnabled {
+            let playerLabel = L10n.playerLabel(playerBeforePick, locale: locale)
+            let pickText = isAutoPick ? L10n.autoPickLabel(playerName: playerLabel, itemName: item.name, locale: locale)
+                : "\(playerLabel): \(item.name) (\(item.cost))"
+            cameraController.recorder.logOverlayEvent(.showPick(text: pickText, playerIndex: nil))
+        }
 
         if draftState.isFinished {
             let result = DraftScoreCalculator.winner(rosterA: draftState.rosterA, rosterB: draftState.rosterB)
-            // Canlı ekranda kayıt bitince görünen `DraftResultView` her iki rosterı
-            // da (isim + toplam maliyet) karşılaştırmalı gösteriyor — video da aynısını
-            // yakmalı, önceden sadece kazananın adı yazıyordu.
-            let summary = L10n.draftResultVideoSummary(
-                resultText: L10n.resultLabel(result, locale: locale),
-                rosterA: draftState.rosterA.map(\.name), costA: DraftScoreCalculator.totalCost(of: draftState.rosterA),
-                rosterB: draftState.rosterB.map(\.name), costB: DraftScoreCalculator.totalCost(of: draftState.rosterB),
-                locale: locale
-            )
-            cameraController.recorder.logOverlayEvent(.showResult(text: summary, playerIndex: nil))
+            if recordingEnabled {
+                // Canlı ekranda kayıt bitince görünen `DraftResultView` her iki rosterı
+                // da (isim + toplam maliyet) karşılaştırmalı gösteriyor — video da aynısını
+                // yakmalı, önceden sadece kazananın adı yazıyordu.
+                let summary = L10n.draftResultVideoSummary(
+                    resultText: L10n.resultLabel(result, locale: locale),
+                    rosterA: draftState.rosterA.map(\.name), costA: DraftScoreCalculator.totalCost(of: draftState.rosterA),
+                    rosterB: draftState.rosterB.map(\.name), costB: DraftScoreCalculator.totalCost(of: draftState.rosterB),
+                    locale: locale
+                )
+                cameraController.recorder.logOverlayEvent(.showResult(text: summary, playerIndex: nil))
+            }
             UINotificationFeedbackGenerator().notificationOccurred(.success)
             lifecycle = .showingResult(secondsLeft: resultDisplaySeconds)
-        } else {
+        } else if recordingEnabled {
             cameraController.recorder.logOverlayEvent(
                 .showTurn(
                     text: turnOverlayText(
@@ -359,13 +429,21 @@ struct DraftRecordingView: View {
 
     private func finishRecording() {
         lifecycle = .done
+        let result = DraftScoreCalculator.winner(rosterA: draftState.rosterA, rosterB: draftState.rosterB)
+
+        guard recordingEnabled else {
+            playHistoryStore.addRecord(
+                mode: .draft, packTitle: template.title, resultSummary: L10n.resultLabel(result, locale: locale), playerCount: 2
+            )
+            path.append(.draftResult(template: template, rosterA: draftState.rosterA, rosterB: draftState.rosterB, result: result))
+            return
+        }
         cameraController.recorder.stopRecording()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
             session.reset()
             session.rawVideoURL = cameraController.recorder.lastRecordedURL
             session.overlayEvents = cameraController.recorder.overlayEvents
 
-            let result = DraftScoreCalculator.winner(rosterA: draftState.rosterA, rosterB: draftState.rosterB)
             let record = playHistoryStore.addRecord(
                 mode: .draft, packTitle: template.title, resultSummary: L10n.resultLabel(result, locale: locale), playerCount: 2
             )

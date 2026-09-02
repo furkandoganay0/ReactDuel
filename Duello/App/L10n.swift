@@ -265,6 +265,14 @@ enum L10n {
         return turkish ? "\(current)/\(minimum) \(unitWord) — en az \(minimum) gerekli" : "\(current)/\(minimum) \(unitWord) — at least \(minimum) required"
     }
 
+    /// `CategoryCard`'ın VoiceOver etiketi — kullanıcı paketiyse bunu da belirtir
+    /// (kart üzerindeki küçük "person.fill" rozeti tek başına bağlamsız okunuyordu).
+    static func categoryCardAccessibilityLabel(title: String, subtitle: String, isUserPack: Bool, locale: Locale) -> String {
+        guard isUserPack else { return "\(title), \(subtitle)" }
+        let suffix = isTurkish(locale) ? "kullanıcı paketi" : "your pack"
+        return "\(title), \(subtitle), \(suffix)"
+    }
+
     static func questionNumberLabel(_ n: Int, locale: Locale) -> String {
         isTurkish(locale) ? "Soru \(n)" : "Question \(n)"
     }

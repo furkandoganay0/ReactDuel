@@ -290,7 +290,7 @@ struct ThisOrThatRecordingView: View {
 
         guard recordingEnabled else {
             playHistoryStore.addRecord(mode: .thisOrThat, packTitle: template.title, resultSummary: summary, playerCount: playerCount)
-            path.removeAll()
+            path.append(.thisOrThatResult(template: template, pickedLabels: state.pickedLabels, playerCount: playerCount))
             return
         }
         cameraController.recorder.stopRecording()

@@ -51,13 +51,21 @@ struct RootView: View {
         case .predictionResult(let template, let scoreByPlayer):
             PredictionResultView(template: template, scoreByPlayer: scoreByPlayer, path: $path)
 
-        case .draftRecording(let template):
-            DraftRecordingView(template: template, path: $path)
+        case .draftRecording(let template, let recordingEnabled):
+            // Aynı gerekçe: bkz. `.predictionRecording` üstündeki yorum.
+            DraftRecordingView(template: template, recordingEnabled: recordingEnabled, path: $path)
+                .id("draft-\(template.id)-\(recordingEnabled)")
+
+        case .draftResult(let template, let rosterA, let rosterB, let result):
+            DraftFinalResultView(template: template, rosterA: rosterA, rosterB: rosterB, result: result, path: $path)
 
         case .thisOrThatRecording(let template, let recordingEnabled, let playerCount):
             // Aynı gerekçe: bkz. `.predictionRecording` üstündeki yorum.
             ThisOrThatRecordingView(template: template, recordingEnabled: recordingEnabled, playerCount: playerCount, path: $path)
                 .id("thisOrThat-\(template.id)-\(recordingEnabled)-\(playerCount)")
+
+        case .thisOrThatResult(let template, let pickedLabels, let playerCount):
+            ThisOrThatFinalResultView(template: template, pickedLabels: pickedLabels, playerCount: playerCount, path: $path)
 
         case .saveDecision:
             SaveDecisionView(path: $path)

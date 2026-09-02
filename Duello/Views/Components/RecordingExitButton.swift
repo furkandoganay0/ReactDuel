@@ -28,6 +28,7 @@ struct RecordingExitButton: View {
                         .background(Color.black.opacity(0.5))
                         .clipShape(Circle())
                 }
+                .accessibilityLabel(Text("Çıkış"))
                 .padding(.leading, 16)
                 .padding(.top, 12)
 

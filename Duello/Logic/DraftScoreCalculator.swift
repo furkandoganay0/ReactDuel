@@ -1,11 +1,11 @@
 import Foundation
 
-enum DraftPlayer: String, Codable, Equatable {
+enum DraftPlayer: String, Codable, Hashable {
     case playerA
     case playerB
 }
 
-enum DraftResult: Equatable {
+enum DraftResult: Hashable {
     case winner(DraftPlayer)
     case tie
 }
