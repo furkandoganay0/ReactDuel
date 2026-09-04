@@ -14,7 +14,7 @@ final class CameraSession: NSObject, ObservableObject {
     @Published private(set) var isRunning = false
     @Published private(set) var configurationError: CameraConfigurationError?
 
-    private let sessionQueue = DispatchQueue(label: "com.duello.app.camera.session")
+    private let sessionQueue = DispatchQueue(label: "com.reactduel.app.camera.session")
 
     enum CameraConfigurationError: Error, Equatable {
         case noFrontCamera

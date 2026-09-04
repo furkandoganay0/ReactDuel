@@ -29,8 +29,10 @@ targets:
     settings:
       base:
         # Bundle ID: İLK App Store Connect kaydından sonra ASLA değiştirme
-        # (playbook Bölüm 1). Şu an henüz gönderilmedi, bu değeri kilitliyoruz.
-        PRODUCT_BUNDLE_IDENTIFIER: com.duello.app
+        # (playbook Bölüm 1). `com.duello.app` Apple Developer'da zaten alınmış
+        # çıktı (bundle ID'ler tüm geliştirici hesapları arasında global olarak
+        # benzersiz) — marka adıyla eşleşen `com.reactduel.app`'e geçildi.
+        PRODUCT_BUNDLE_IDENTIFIER: com.reactduel.app
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ENABLE_PREVIEWS: true
     info:

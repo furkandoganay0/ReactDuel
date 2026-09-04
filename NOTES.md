@@ -49,9 +49,10 @@ regresyon testi/debug adımı ile ilerle.
   taramasının içinde. XcodeGen bunu normalde otomatik hariç tutuyor; ilk build'de
   "multiple commands produce Info.plist" hatası çıkarsa `sources` altına
   `excludes: ["Info.plist"]` ekle.
-- **Bundle ID**: `com.duello.app` olarak sabitlendi (henüz App Store Connect'e
-  hiç gönderilmedi). İlk gönderimden SONRA bunu asla değiştirme (playbook
-  Bölüm 1).
+- **Bundle ID**: `com.reactduel.app` olarak sabitlendi (`com.duello.app`
+  Apple Developer'da zaten alınmış çıktığı için değiştirildi; henüz App Store
+  Connect'e hiç gönderilmedi). İlk gönderimden SONRA bunu asla değiştirme
+  (playbook Bölüm 1).
 
 ## İçerik durumu (Bölüm 14'teki açık soru)
 
