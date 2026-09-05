@@ -18,6 +18,12 @@ settings:
     CURRENT_PROJECT_VERSION: "1"
     # DEVELOPMENT_TEAM burada YOK — Xcode'da Signing & Capabilities'den elle
     # seçilmeli (playbook Bölüm 4 checklist), CLI/XcodeGen headless yapamaz.
+  configs:
+    Debug:
+      # XcodeGen'in ürettiği "Debug" konfigürasyonu Xcode'un yeni-proje
+      # şablonunun aksine bunu OTOMATİK eklemiyor — eklenmeden `#if DEBUG` ile
+      # sarılmış hiçbir kod (ör. ekran görüntüsü otomasyonu, RootView) derlenmiyordu.
+      SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG
 
 targets:
   Duello:

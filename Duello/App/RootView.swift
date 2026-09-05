@@ -22,7 +22,50 @@ struct RootView: View {
         .environment(\.locale, appState.language.localeOverride ?? .autoupdatingCurrent)
         .preferredColorScheme(appState.appearance.colorScheme)
         .tint(appState.accentColorChoice.color)
+        #if DEBUG
+        .onAppear(perform: applyScreenshotRouteIfNeeded)
+        #endif
     }
+
+    #if DEBUG
+    /// App Store ekran görüntüsü üretimi için: `simctl launch --env SCREENSHOT_ROUTE=...`
+    /// ile başlatılırsa, hiç dokunmadan doğrudan istenen ekrana atlar (bkz.
+    /// `fastlane snapshot`'ın kullandığı desenin aynısı — otomasyon aracı kullanıcının
+    /// faresine/klavyesine hiç dokunmadan ekran görüntüsü alabilsin diye). Normal
+    /// kullanımda bu ortam değişkeni hiç set edilmediği için tamamen etkisiz;
+    /// sadece DEBUG build'de derlenir, Release'e hiç girmez.
+    private func applyScreenshotRouteIfNeeded() {
+        guard let route = ProcessInfo.processInfo.environment["SCREENSHOT_ROUTE"] else { return }
+        appState.hasCompletedOnboarding = true
+
+        switch route {
+        case "home":
+            path = []
+        case "categoryPrediction":
+            path = [.categorySelection(.prediction)]
+        case "categoryDraft":
+            path = [.categorySelection(.draft)]
+        case "categoryThisOrThat":
+            path = [.categorySelection(.thisOrThat)]
+        case "predictionGameplay":
+            if let pack = appState.catalog.predictionPacks.first {
+                path = [.categorySelection(.prediction), .predictionRecording(pack, recordingEnabled: false, playerCount: 2)]
+            }
+        case "draftGameplay":
+            if let pack = appState.catalog.draftPacks.first {
+                path = [.categorySelection(.draft), .draftRecording(pack, recordingEnabled: false)]
+            }
+        case "thisOrThatGameplay":
+            if let pack = appState.catalog.thisOrThatPacks.first {
+                path = [.categorySelection(.thisOrThat), .thisOrThatRecording(pack, recordingEnabled: false, playerCount: 2)]
+            }
+        case "history":
+            path = [.history]
+        default:
+            break
+        }
+    }
+    #endif
 
     @ViewBuilder
     private func destination(for route: AppRoute) -> some View {
