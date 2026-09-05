@@ -39,6 +39,15 @@ targets:
         # çıktı (bundle ID'ler tüm geliştirici hesapları arasında global olarak
         # benzersiz) — marka adıyla eşleşen `com.reactduel.app`'e geçildi.
         PRODUCT_BUNDLE_IDENTIFIER: com.reactduel.app
+        # Üstteki `settings.base.TARGETED_DEVICE_FAMILY: "1"` (proje/dosyanın
+        # başı) sadece PROJE seviyesinde uygulanıyor — XcodeGen, application
+        # tipi bir target oluştururken burada AÇIKÇA verilmediği sürece kendi
+        # varsayılanı olan "1,2" (iPhone+iPad, universal) değerini TARGET
+        # seviyesinde yazıyor ve bu, App Store Connect'in gördüğü asıl değer.
+        # Bu yüzden App Store Connect "13-inch iPad ekran görüntüsü yükle"
+        # diye tutturuyordu — uygulama iPad'de de çalışır görünüyordu, oysa
+        # tek yönlü (portrait) kamera deneyimi hiç iPad için tasarlanmadı.
+        TARGETED_DEVICE_FAMILY: "1"
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ENABLE_PREVIEWS: true
     info:
