@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>ReactDuel Policies</title>
+<style>
+  :root {
+    --bg: #FAFAFC;
+    --bg-raised: #FFFFFF;
+    --text: #1A1B2E;
+    --text-muted: #5B5D78;
+    --text-faint: #9294AC;
+    --accent: #5B4FE8;
+    --accent-2: #A855F7;
+    --border: #E4E4F0;
+    --border-strong: #D2D2E4;
+    --mono-bg: #F0F0F8;
+    --focus: #5B4FE8;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #131320;
+      --bg-raised: #191928;
+      --text: #EDEDF5;
+      --text-muted: #A6A8C4;
+      --text-faint: #6C6E8C;
+      --accent: #9B92FF;
+      --accent-2: #D19BFF;
+      --border: #2A2A40;
+      --border-strong: #38385450;
+      --mono-bg: #1E1E30;
+      --focus: #9B92FF;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Figtree", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 6rem;
+  }
+
+  header.masthead {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 3rem;
+  }
+
+  .mark {
+    width: 44px;
+    height: 44px;
+    border-radius: 13px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .mark svg { width: 22px; height: 22px; }
+
+  .masthead-text .name {
+    font-family: "Sora", -apple-system, sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
+  }
+
+  .masthead-text .tagline {
+    font-size: 0.85rem;
+    color: var(--text-faint);
+  }
+
+  nav.tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 3.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  nav.tabs a {
+    font-family: "Sora", sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 0.75rem 0.25rem;
+    margin-right: 1.5rem;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  nav.tabs a:hover,
+  nav.tabs a:focus-visible { color: var(--accent); }
+  nav.tabs a:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 2px; }
+
+  section { scroll-margin-top: 2rem; }
+  section + section {
+    margin-top: 4.5rem;
+    padding-top: 3.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .eyebrow {
+    font-family: "Sora", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 0.6rem;
+  }
+
+  h1 {
+    font-family: "Sora", sans-serif;
+    font-size: clamp(1.7rem, 4vw, 2.1rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.5rem;
+    text-wrap: balance;
+  }
+
+  .updated {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.78rem;
+    color: var(--text-faint);
+    margin: 0 0 2rem;
+  }
+
+  h2 {
+    font-family: "Sora", sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 2.2rem 0 0.75rem;
+  }
+
+  h2:first-of-type { margin-top: 0; }
+
+  p { color: var(--text-muted); margin: 0 0 1rem; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--text); font-weight: 600; }
+
+  ul { margin: 0 0 1rem; padding-left: 1.2rem; color: var(--text-muted); }
+  li { margin-bottom: 0.45rem; }
+  li:last-child { margin-bottom: 0; }
+  li::marker { color: var(--accent); }
+
+  a.inline { color: var(--accent); text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent); text-underline-offset: 2px; }
+  a.inline:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 2px; }
+
+  .card {
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem 1.6rem;
+    margin: 1.5rem 0;
+  }
+
+  .contact-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-row .label {
+    font-family: "Sora", sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .contact-row .value {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.88rem;
+    color: var(--accent);
+  }
+
+  .faq-item + .faq-item { margin-top: 1.6rem; }
+  .faq-q {
+    font-family: "Sora", sans-serif;
+    font-weight: 600;
+    font-size: 0.98rem;
+    margin: 0 0 0.4rem;
+    color: var(--text);
+  }
+  .faq-a { color: var(--text-muted); margin: 0; }
+
+  .badge-row { display: flex; gap: 0.6rem; flex-wrap: wrap; margin: 1.5rem 0; }
+  .badge {
+    font-family: "Sora", sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text);
+    background: var(--mono-bg);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.4rem 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .badge svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+  footer.page-footer {
+    margin-top: 4.5rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--text-faint);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  @media (max-width: 480px) {
+    .page { padding: 2.75rem 1.25rem 4rem; }
+    nav.tabs a { margin-right: 1rem; }
+  }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="page">
+  <header class="masthead">
+    <div class="mark">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" fill="white"/>
+      </svg>
+    </div>
+    <div class="masthead-text">
+      <div class="name">ReactDuel</div>
+      <div class="tagline">Record reactions, go viral</div>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Sections">
+    <a href="#privacy">Privacy Policy</a>
+    <a href="#support">Support</a>
+  </nav>
+
+  <section id="privacy">
+    <p class="eyebrow">Legal</p>
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated September 5, 2026</p>
+
+    <p>ReactDuel is built so that the answer to "where does my data go" is <strong>nowhere</strong>. This page explains exactly what the app touches on your device and why — there is no server to send anything to, because ReactDuel doesn't have one.</p>
+
+    <div class="badge-row">
+      <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>No data collection</span>
+      <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M4.9 4.9l14.2 14.2"/></svg>No tracking or ads</span>
+      <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>No account required</span>
+    </div>
+
+    <h2>What stays on your device</h2>
+    <p>Everything ReactDuel creates or remembers is stored locally, using standard iOS app storage (UserDefaults and your device's Application Support folder):</p>
+    <ul>
+      <li><strong>Recorded videos</strong> — only saved permanently if you explicitly choose to; a session you don't save is deleted, not uploaded anywhere.</li>
+      <li><strong>Play history and streaks</strong> — which packs you played and your results, kept so History and streak badges work.</li>
+      <li><strong>Custom packs</strong> — any questions or rounds you write yourself stay on your device; they are never shared with other users or with us.</li>
+      <li><strong>Preferences</strong> — language, appearance, your chosen accent color, and your watermark handle/logo.</li>
+    </ul>
+
+    <h2>Camera, microphone, and photo access</h2>
+    <p>ReactDuel asks for camera and microphone access to record your reaction, and photo library access only to save a finished video when you tap Save. None of these permissions are used to read anything already on your device — only to write what you create.</p>
+
+    <h2>Third parties</h2>
+    <p>ReactDuel doesn't use analytics SDKs, ad networks, or crash-reporting services, and makes no network requests of its own. The only way your video ever leaves your device is if you personally share it through iOS's own share sheet — at that point, whatever app or service you chose to share to governs what happens next.</p>
+
+    <h2>Children's privacy</h2>
+    <p>ReactDuel does not knowingly collect information from anyone, including children, because it does not collect information from anyone. There is no account system and no data leaves the device.</p>
+
+    <h2>Changes to this policy</h2>
+    <p>If this policy ever changes — for example, if a future version adds an optional online feature — this page will be updated and the "last updated" date above will change accordingly.</p>
+
+    <div class="card">
+      <div class="contact-row">
+        <span class="label">Privacy questions</span>
+        <span class="value">furkando01@gmail.com</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="support">
+    <p class="eyebrow">Help</p>
+    <h1>Support</h1>
+    <p class="updated">Last updated September 5, 2026</p>
+
+    <p>Something not working, or have a question about ReactDuel? Start with the FAQ below — if that doesn't cover it, reach out directly.</p>
+
+    <div class="card">
+      <div class="contact-row">
+        <span class="label">Email support</span>
+        <span class="value">furkando01@gmail.com</span>
+      </div>
+    </div>
+
+    <h2>Frequently asked questions</h2>
+
+    <div class="faq-item">
+      <p class="faq-q">The camera won't open, or shows "Couldn't open camera."</p>
+      <p class="faq-a">Check Settings → ReactDuel on your device and make sure Camera access is turned on. If you'd rather not grant it, tap "Continue Without Recording" on that screen to play without the camera — your score and history still get saved either way.</p>
+    </div>
+
+    <div class="faq-item">
+      <p class="faq-q">Why didn't my video save automatically?</p>
+      <p class="faq-a">It's intentional — ReactDuel never saves a video without asking first. After a round ends, you'll be asked whether to keep it; choose Save and it's written to your Photos library.</p>
+    </div>
+
+    <div class="faq-item">
+      <p class="faq-q">Can I write my own questions?</p>
+      <p class="faq-a">Yes — every mode has a "Create Pack" option where you can write your own prompts, draft pool, or This-or-That rounds. They're saved on your device and show up alongside the built-in packs.</p>
+    </div>
+
+    <div class="faq-item">
+      <p class="faq-q">How do I put my own logo on my videos?</p>
+      <p class="faq-a">Open Settings → Video Watermark, add your handle and optionally a logo photo, and it'll appear on every video you export from then on.</p>
+    </div>
+
+    <div class="faq-item">
+      <p class="faq-q">I found a bug, or have a feature idea.</p>
+      <p class="faq-a">Email the address above with what you were doing and what happened — screen recordings help a lot if you can include one.</p>
+    </div>
+  </section>
+
+  <footer class="page-footer">
+    <span>© 2026 Furkan Doğanay</span>
+    <span>ReactDuel</span>
+  </footer>
+</div>
+</body>
+</html>
