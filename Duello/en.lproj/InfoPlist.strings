@@ -1,0 +1,9 @@
+/* Text shown in the system's own permission dialogs — selected automatically
+   based on the device's system language (unrelated to the app's in-app
+   language picker; this is purely iOS's own InfoPlist.strings localization
+   mechanism). See Apple review note: previously this text only existed once,
+   in Turkish, as a plain Info.plist value — it showed up in Turkish even on
+   an English-language device. */
+"NSCameraUsageDescription" = "ReactDuel needs access to your front camera to record your reaction and create a video. Recording only starts when you choose to, and nothing is sent off your device automatically.";
+"NSMicrophoneUsageDescription" = "We need microphone access to add your voice to the video you record.";
+"NSPhotoLibraryAddUsageDescription" = "Photo library access is needed to save the video you create to your library.";

@@ -1,0 +1,9 @@
+/* Sistemin kendi izin diyaloglarında gösterilen metinler — cihazın dil
+   ayarına göre otomatik seçilir (uygulama içi dil seçiciyle İLGİSİZ,
+   bu tamamen iOS'un kendi InfoPlist.strings yerelleştirme mekanizması).
+   Bkz. Apple review notu: önceden bu metinler sadece burada, tek dilde
+   (proje ayarlarındaki düz Info.plist değeri olarak) vardı — İngilizce
+   cihazda bile Türkçe çıkıyordu. */
+"NSCameraUsageDescription" = "ReactDuel, tepkini kaydedip video oluşturman için ön kameraya ihtiyaç duyar. Kayıt sadece sen başlattığında yapılır ve cihazından hiçbir yere otomatik gönderilmez.";
+"NSMicrophoneUsageDescription" = "Kaydettiğin videoya sesini eklemek için mikrofona ihtiyaç duyarız.";
+"NSPhotoLibraryAddUsageDescription" = "Oluşturduğun videoyu fotoğraf kütüphanene kaydedebilmek için izin gerekir.";

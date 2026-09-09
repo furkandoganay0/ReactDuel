@@ -40,7 +40,10 @@ struct OnboardingView: View {
                     appState.hasCompletedOnboarding = true
                 }
             } label: {
-                Text(isRequesting ? "İzinler isteniyor…" : "İzinleri Ver ve Başla")
+                // Apple review (Guideline 5.1.1(iv)): buton metni izin isteğine
+                // yönlendirmemeli, nötr bir "devam et" ifadesi olmalı — asıl izin
+                // isteği zaten sistemin kendi diyaloglarında ayrı ayrı çıkıyor.
+                Text(isRequesting ? "Devam ediliyor…" : "Devam Et")
                     .font(.headline)
                     .frame(maxWidth: .infinity)
                     .padding()
