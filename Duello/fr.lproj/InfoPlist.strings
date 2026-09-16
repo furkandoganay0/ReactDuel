@@ -1,0 +1,4 @@
+/* Bkz. tr.lproj/InfoPlist.strings ve en.lproj/InfoPlist.strings üstündeki yorum. */
+"NSCameraUsageDescription" = "ReactDuel a besoin d'accéder à votre caméra frontale pour enregistrer votre réaction et créer une vidéo. L'enregistrement ne démarre que lorsque vous le décidez, et rien n'est envoyé automatiquement depuis votre appareil.";
+"NSMicrophoneUsageDescription" = "Nous avons besoin d'accéder au microphone pour ajouter votre voix à la vidéo que vous enregistrez.";
+"NSPhotoLibraryAddUsageDescription" = "L'accès à la photothèque est nécessaire pour enregistrer la vidéo que vous créez dans votre bibliothèque.";

@@ -20,6 +20,10 @@ struct RootView: View {
             }
         }
         .environment(\.locale, appState.language.localeOverride ?? .autoupdatingCurrent)
+        // `.environment(\.locale)` override'ı TEK BAŞINA layout yönünü değiştirmez
+        // (bkz. `AppLanguage.isRightToLeft` yorumu) — Arapça seçiliyken bunu elle
+        // sağlıyoruz, aksi halde metin Arapça ama düzen soldan sağa kalırdı.
+        .environment(\.layoutDirection, appState.language.isRightToLeft ? .rightToLeft : .leftToRight)
         .preferredColorScheme(appState.appearance.colorScheme)
         .tint(appState.accentColorChoice.color)
         #if DEBUG

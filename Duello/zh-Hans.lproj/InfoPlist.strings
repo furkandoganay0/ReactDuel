@@ -1,0 +1,4 @@
+/* Bkz. tr.lproj/InfoPlist.strings ve en.lproj/InfoPlist.strings üstündeki yorum. */
+"NSCameraUsageDescription" = "ReactDuel 需要访问你的前置摄像头以录制你的反应并生成视频。只有在你主动开始时才会录制，任何内容都不会自动离开你的设备。";
+"NSMicrophoneUsageDescription" = "我们需要访问麦克风，以便将你的声音添加到你录制的视频中。";
+"NSPhotoLibraryAddUsageDescription" = "需要访问照片图库权限，才能将你创建的视频保存到你的图库中。";
