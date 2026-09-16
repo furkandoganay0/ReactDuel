@@ -6,9 +6,14 @@ import Foundation
 /// gerektirmiyor.
 enum AppRoute: Hashable {
     case categorySelection(GameMode)
-    case createPredictionPack
-    case createDraftPack
-    case createThisOrThatPack
+    /// `editing` doluysa ekran "yeni paket" yerine mevcut paketi düzenleme
+    /// modunda açılır (bkz. `CreatePredictionPackView` vb.'nin `existingPack`
+    /// parametresi) — önceden özel paketler sadece sil/yeniden yaz ile
+    /// değiştirilebiliyordu, küçük bir yazım hatası bile tüm paketi silip
+    /// baştan yazmayı gerektiriyordu.
+    case createPredictionPack(editing: PredictionTemplate?)
+    case createDraftPack(editing: DraftTemplate?)
+    case createThisOrThatPack(editing: ThisOrThatTemplate?)
     case predictionRecording(PredictionTemplate, recordingEnabled: Bool, playerCount: Int)
     case predictionResult(template: PredictionTemplate, scoreByPlayer: [Int])
     case draftRecording(DraftTemplate, recordingEnabled: Bool)

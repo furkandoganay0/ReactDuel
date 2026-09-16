@@ -66,6 +66,27 @@ final class UserContentStore: ObservableObject {
         return pack
     }
 
+    /// Var olan bir kullanıcı paketini YERİNDE günceller — id/coverImage aynı
+    /// kalır (listede yer değiştirmez, `PlaceholderCoverView`'ın rengi bozulmaz).
+    /// Önceden özel paketler sadece sil+yeniden-yaz ile değiştirilebiliyordu.
+    func updatePredictionPack(id: String, title: String, questions: [PredictionQuestion]) {
+        guard let index = predictionPacks.firstIndex(where: { $0.id == id }) else { return }
+        predictionPacks[index] = PredictionTemplate(id: id, mode: "prediction", title: title, coverImage: id, questions: questions)
+        persist()
+    }
+
+    func updateDraftPack(id: String, title: String, budget: Int, rosterSize: Int, pool: [DraftPoolItem]) {
+        guard let index = draftPacks.firstIndex(where: { $0.id == id }) else { return }
+        draftPacks[index] = DraftTemplate(id: id, mode: "draft", title: title, coverImage: id, budget: budget, rosterSize: rosterSize, pool: pool)
+        persist()
+    }
+
+    func updateThisOrThatPack(id: String, title: String, rounds: [ThisOrThatRound]) {
+        guard let index = thisOrThatPacks.firstIndex(where: { $0.id == id }) else { return }
+        thisOrThatPacks[index] = ThisOrThatTemplate(id: id, mode: "thisOrThat", title: title, coverImage: id, rounds: rounds)
+        persist()
+    }
+
     func deletePredictionPack(_ pack: PredictionTemplate) {
         predictionPacks.removeAll { $0.id == pack.id }
         persist()

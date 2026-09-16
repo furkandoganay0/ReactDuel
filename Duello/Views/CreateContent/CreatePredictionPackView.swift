@@ -3,13 +3,18 @@ import SwiftUI
 /// Kullanıcının kendi "Tahmin Et" paketini yazabildiği ekran — önceden tüm
 /// içerik sadece bundled JSON'dan geliyordu, kullanıcı kendi sorularını
 /// (ör. arkadaş grubuna özel bilgi yarışması) hiç ekleyemiyordu.
+///
+/// `existingPack` doluysa ekran düzenleme modunda açılır (bkz. `AppRoute`
+/// üzerindeki yorum) — önceden özel paketlerde tek yazım hatası bile tüm
+/// paketi silip baştan yazmayı gerektiriyordu.
 struct CreatePredictionPackView: View {
+    let existingPack: PredictionTemplate?
     @Binding var path: [AppRoute]
     @EnvironmentObject private var userContentStore: UserContentStore
     @Environment(\.locale) private var locale
 
-    @State private var title = ""
-    @State private var questions: [QuestionInput] = [QuestionInput(), QuestionInput(), QuestionInput()]
+    @State private var title: String
+    @State private var questions: [QuestionInput]
 
     private static let minimumQuestions = 3
 
@@ -28,6 +33,27 @@ struct CreatePredictionPackView: View {
             guard trimmedFields.allSatisfy({ !$0.isEmpty }) else { return false }
             let choices = Set(trimmedFields.dropFirst())
             return choices.count == 4
+        }
+    }
+
+    init(existingPack: PredictionTemplate? = nil, path: Binding<[AppRoute]>) {
+        self.existingPack = existingPack
+        self._path = path
+        if let existingPack {
+            _title = State(initialValue: existingPack.title)
+            _questions = State(initialValue: existingPack.questions.map { question in
+                let distractors = question.choices.filter { $0 != question.answer }
+                return QuestionInput(
+                    prompt: question.prompt,
+                    answer: question.answer,
+                    distractor1: distractors.count > 0 ? distractors[0] : "",
+                    distractor2: distractors.count > 1 ? distractors[1] : "",
+                    distractor3: distractors.count > 2 ? distractors[2] : ""
+                )
+            })
+        } else {
+            _title = State(initialValue: "")
+            _questions = State(initialValue: [QuestionInput(), QuestionInput(), QuestionInput()])
         }
     }
 
@@ -77,7 +103,7 @@ struct CreatePredictionPackView: View {
                 Text(L10n.addedProgress(current: validQuestionCount, minimum: Self.minimumQuestions, unit: .question, locale: locale))
             }
         }
-        .navigationTitle(Text("Yeni Tahmin Paketi"))
+        .navigationTitle(Text(existingPack == nil ? "Yeni Tahmin Paketi" : "Paketi Düzenle"))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
@@ -121,7 +147,11 @@ struct CreatePredictionPackView: View {
                 choices: choices
             )
         }
-        userContentStore.addPredictionPack(title: trimmedTitle, questions: builtQuestions)
+        if let existingPack {
+            userContentStore.updatePredictionPack(id: existingPack.id, title: trimmedTitle, questions: builtQuestions)
+        } else {
+            userContentStore.addPredictionPack(title: trimmedTitle, questions: builtQuestions)
+        }
         path.removeLast()
     }
 }

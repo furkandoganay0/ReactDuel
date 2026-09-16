@@ -5,14 +5,15 @@ import SwiftUI
 /// bütçe/kadro boyutu/maliyet tutarlılığını (en ucuz `rosterSize` öğenin toplamı
 /// bütçeyi aşmamalı — aksi halde kadro asla tamamlanamaz) canlı doğrulaması gerekiyor.
 struct CreateDraftPackView: View {
+    let existingPack: DraftTemplate?
     @Binding var path: [AppRoute]
     @EnvironmentObject private var userContentStore: UserContentStore
     @Environment(\.locale) private var locale
 
-    @State private var title = ""
-    @State private var budget = 20
-    @State private var rosterSize = 5
-    @State private var pool: [PoolItemInput] = (1...8).map { _ in PoolItemInput() }
+    @State private var title: String
+    @State private var budget: Int
+    @State private var rosterSize: Int
+    @State private var pool: [PoolItemInput]
 
     struct PoolItemInput: Identifiable {
         let id = UUID()
@@ -21,6 +22,24 @@ struct CreateDraftPackView: View {
 
         var trimmedName: String { name.trimmingCharacters(in: .whitespacesAndNewlines) }
         var isValid: Bool { !trimmedName.isEmpty && cost >= 1 }
+    }
+
+    init(existingPack: DraftTemplate? = nil, path: Binding<[AppRoute]>) {
+        self.existingPack = existingPack
+        self._path = path
+        if let existingPack {
+            _title = State(initialValue: existingPack.title)
+            _budget = State(initialValue: existingPack.budget)
+            _rosterSize = State(initialValue: existingPack.rosterSize)
+            _pool = State(initialValue: existingPack.pool.map { item in
+                PoolItemInput(name: item.name, cost: item.cost)
+            })
+        } else {
+            _title = State(initialValue: "")
+            _budget = State(initialValue: 20)
+            _rosterSize = State(initialValue: 5)
+            _pool = State(initialValue: (1...8).map { _ in PoolItemInput() })
+        }
     }
 
     private var minimumPoolCount: Int { rosterSize + 3 }
@@ -113,7 +132,7 @@ struct CreateDraftPackView: View {
                 }
             }
         }
-        .navigationTitle(Text("Yeni Draft Paketi"))
+        .navigationTitle(Text(existingPack == nil ? "Yeni Draft Paketi" : "Paketi Düzenle"))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
@@ -139,7 +158,11 @@ struct CreateDraftPackView: View {
         let builtPool: [DraftPoolItem] = pool.enumerated().map { index, input in
             DraftPoolItem(id: "p\(index + 1)", name: input.trimmedName, cost: input.cost, image: "")
         }
-        userContentStore.addDraftPack(title: trimmedTitle, budget: budget, rosterSize: rosterSize, pool: builtPool)
+        if let existingPack {
+            userContentStore.updateDraftPack(id: existingPack.id, title: trimmedTitle, budget: budget, rosterSize: rosterSize, pool: builtPool)
+        } else {
+            userContentStore.addDraftPack(title: trimmedTitle, budget: budget, rosterSize: rosterSize, pool: builtPool)
+        }
         path.removeLast()
     }
 }

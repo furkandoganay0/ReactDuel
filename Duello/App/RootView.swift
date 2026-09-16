@@ -73,14 +73,14 @@ struct RootView: View {
         case .categorySelection(let mode):
             CategorySelectionView(mode: mode, path: $path)
 
-        case .createPredictionPack:
-            CreatePredictionPackView(path: $path)
+        case .createPredictionPack(let editing):
+            CreatePredictionPackView(existingPack: editing, path: $path)
 
-        case .createDraftPack:
-            CreateDraftPackView(path: $path)
+        case .createDraftPack(let editing):
+            CreateDraftPackView(existingPack: editing, path: $path)
 
-        case .createThisOrThatPack:
-            CreateThisOrThatPackView(path: $path)
+        case .createThisOrThatPack(let editing):
+            CreateThisOrThatPackView(existingPack: editing, path: $path)
 
         case .predictionRecording(let template, let recordingEnabled, let playerCount):
             // `.id` şart: `switchToNoRecordingMode` aynı yığın derinliğinde

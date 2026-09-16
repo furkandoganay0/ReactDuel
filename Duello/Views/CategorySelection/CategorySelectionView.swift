@@ -56,9 +56,11 @@ struct CategorySelectionView: View {
                             )
                         }
                         .buttonStyle(.plain)
-                        .modifier(UserPackDeleteContextMenu(isUserPack: UserContentStore.isUserPack(id: pack.id)) {
-                            userContentStore.deletePredictionPack(pack)
-                        })
+                        .modifier(UserPackContextMenu(
+                            isUserPack: UserContentStore.isUserPack(id: pack.id),
+                            onEdit: { path.append(.createPredictionPack(editing: pack)) },
+                            onDelete: { userContentStore.deletePredictionPack(pack) }
+                        ))
                     }
                 case .draft:
                     ForEach(userContentStore.draftPacks + appState.catalog.draftPacks) { pack in
@@ -73,9 +75,11 @@ struct CategorySelectionView: View {
                             )
                         }
                         .buttonStyle(.plain)
-                        .modifier(UserPackDeleteContextMenu(isUserPack: UserContentStore.isUserPack(id: pack.id)) {
-                            userContentStore.deleteDraftPack(pack)
-                        })
+                        .modifier(UserPackContextMenu(
+                            isUserPack: UserContentStore.isUserPack(id: pack.id),
+                            onEdit: { path.append(.createDraftPack(editing: pack)) },
+                            onDelete: { userContentStore.deleteDraftPack(pack) }
+                        ))
                     }
                 case .thisOrThat:
                     ForEach(userContentStore.thisOrThatPacks + appState.catalog.thisOrThatPacks) { pack in
@@ -91,9 +95,11 @@ struct CategorySelectionView: View {
                             )
                         }
                         .buttonStyle(.plain)
-                        .modifier(UserPackDeleteContextMenu(isUserPack: UserContentStore.isUserPack(id: pack.id)) {
-                            userContentStore.deleteThisOrThatPack(pack)
-                        })
+                        .modifier(UserPackContextMenu(
+                            isUserPack: UserContentStore.isUserPack(id: pack.id),
+                            onEdit: { path.append(.createThisOrThatPack(editing: pack)) },
+                            onDelete: { userContentStore.deleteThisOrThatPack(pack) }
+                        ))
                     }
                 }
             }
@@ -172,9 +178,9 @@ struct CategorySelectionView: View {
     private var createPackCard: some View {
         Button {
             switch mode {
-            case .prediction: path.append(.createPredictionPack)
-            case .draft: path.append(.createDraftPack)
-            case .thisOrThat: path.append(.createThisOrThatPack)
+            case .prediction: path.append(.createPredictionPack(editing: nil))
+            case .draft: path.append(.createDraftPack(editing: nil))
+            case .thisOrThat: path.append(.createThisOrThatPack(editing: nil))
             }
         } label: {
             VStack(alignment: .leading, spacing: 8) {
@@ -246,13 +252,17 @@ private struct CategoryCard: View {
 /// basınca "Sil" seçeneği sunan context menu — `HistoryView`'daki swipe-to-delete
 /// ile aynı ruhta (onay istemeden direkt siler), ama `LazyVGrid` kartları
 /// `List` satırı olmadığı için `swipeActions` yerine `contextMenu` kullanıyor.
-private struct UserPackDeleteContextMenu: ViewModifier {
+private struct UserPackContextMenu: ViewModifier {
     let isUserPack: Bool
+    let onEdit: () -> Void
     let onDelete: () -> Void
 
     func body(content: Content) -> some View {
         if isUserPack {
             content.contextMenu {
+                Button(action: onEdit) {
+                    Label("Düzenle", systemImage: "pencil")
+                }
                 Button(role: .destructive, action: onDelete) {
                     Label("Sil", systemImage: "trash")
                 }

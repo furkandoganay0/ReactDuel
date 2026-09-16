@@ -1,14 +1,16 @@
 import SwiftUI
 
 /// Kullanıcının kendi "Bu mu O mu" paketini yazabildiği ekran — bkz.
-/// `CreatePredictionPackView` üstündeki genel gerekçe.
+/// `CreatePredictionPackView` üstündeki genel gerekçe (`existingPack` ile
+/// düzenleme modu dahil).
 struct CreateThisOrThatPackView: View {
+    let existingPack: ThisOrThatTemplate?
     @Binding var path: [AppRoute]
     @EnvironmentObject private var userContentStore: UserContentStore
     @Environment(\.locale) private var locale
 
-    @State private var title = ""
-    @State private var rounds: [RoundInput] = [RoundInput(), RoundInput(), RoundInput()]
+    @State private var title: String
+    @State private var rounds: [RoundInput]
 
     private static let minimumRounds = 3
 
@@ -21,6 +23,20 @@ struct CreateThisOrThatPackView: View {
             let a = optionA.trimmingCharacters(in: .whitespacesAndNewlines)
             let b = optionB.trimmingCharacters(in: .whitespacesAndNewlines)
             return !a.isEmpty && !b.isEmpty && a != b
+        }
+    }
+
+    init(existingPack: ThisOrThatTemplate? = nil, path: Binding<[AppRoute]>) {
+        self.existingPack = existingPack
+        self._path = path
+        if let existingPack {
+            _title = State(initialValue: existingPack.title)
+            _rounds = State(initialValue: existingPack.rounds.map { round in
+                RoundInput(optionA: round.optionA, optionB: round.optionB)
+            })
+        } else {
+            _title = State(initialValue: "")
+            _rounds = State(initialValue: [RoundInput(), RoundInput(), RoundInput()])
         }
     }
 
@@ -67,7 +83,7 @@ struct CreateThisOrThatPackView: View {
                 Text(L10n.addedProgress(current: validRoundCount, minimum: Self.minimumRounds, unit: .round, locale: locale))
             }
         }
-        .navigationTitle(Text("Yeni Bu mu O mu Paketi"))
+        .navigationTitle(Text(existingPack == nil ? "Yeni Bu mu O mu Paketi" : "Paketi Düzenle"))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
@@ -102,7 +118,11 @@ struct CreateThisOrThatPackView: View {
                 timerSeconds: 5
             )
         }
-        userContentStore.addThisOrThatPack(title: trimmedTitle, rounds: builtRounds)
+        if let existingPack {
+            userContentStore.updateThisOrThatPack(id: existingPack.id, title: trimmedTitle, rounds: builtRounds)
+        } else {
+            userContentStore.addThisOrThatPack(title: trimmedTitle, rounds: builtRounds)
+        }
         path.removeLast()
     }
 }
