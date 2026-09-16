@@ -14,8 +14,16 @@ struct PlaySessionRecord: Codable, Identifiable, Equatable {
     /// Kaç kişi oynadı — Bütçeli Draft her zaman 2, Tahmin Et/Bu mu O mu 1 ya da 2
     /// olabilir (bkz. `CategorySelectionView`'daki "Kaç kişi oynayacak?" seçici).
     let playerCount: Int
+    /// Kaydedilen videonun ilk karesinden üretilen küçük önizleme görseli —
+    /// `videosDirectory` içinde, video ile aynı ada sahip bir `.jpg` dosyası
+    /// (bkz. `ProcessingView.saveToGalleryIfNeeded`). `savedVideoFileName` gibi
+    /// video kaydedilmediyse `nil` kalır.
+    var thumbnailFileName: String?
 
-    init(id: UUID, date: Date, mode: GameMode, packTitle: String, resultSummary: String, savedVideoFileName: String?, playerCount: Int) {
+    init(
+        id: UUID, date: Date, mode: GameMode, packTitle: String, resultSummary: String,
+        savedVideoFileName: String?, playerCount: Int, thumbnailFileName: String? = nil
+    ) {
         self.id = id
         self.date = date
         self.mode = mode
@@ -23,16 +31,16 @@ struct PlaySessionRecord: Codable, Identifiable, Equatable {
         self.resultSummary = resultSummary
         self.savedVideoFileName = savedVideoFileName
         self.playerCount = playerCount
+        self.thumbnailFileName = thumbnailFileName
     }
 
     private enum CodingKeys: String, CodingKey {
-        case id, date, mode, packTitle, resultSummary, savedVideoFileName, playerCount
+        case id, date, mode, packTitle, resultSummary, savedVideoFileName, playerCount, thumbnailFileName
     }
 
-    /// Bu alan eklenmeden önce diskte kaydedilmiş geçmiş kayıtlarında `playerCount`
-    /// yok — `decodeIfPresent` ile yoksa moda göre makul bir varsayılana düşülüyor
-    /// (Draft zaten her zaman 2 kişilik). Bu olmadan tek bir eski kayıt bile TÜM
-    /// geçmişin sessizce boşalmasına (decode hatasıyla) yol açardı.
+    /// Bu alanlar eklenmeden önce diskte kaydedilmiş geçmiş kayıtlarında yoklar —
+    /// `decodeIfPresent` ile yoksa makul bir varsayılana düşülüyor. Bu olmadan tek
+    /// bir eski kayıt bile TÜM geçmişin sessizce boşalmasına (decode hatasıyla) yol açardı.
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(UUID.self, forKey: .id)
@@ -42,6 +50,7 @@ struct PlaySessionRecord: Codable, Identifiable, Equatable {
         resultSummary = try container.decode(String.self, forKey: .resultSummary)
         savedVideoFileName = try container.decodeIfPresent(String.self, forKey: .savedVideoFileName)
         playerCount = try container.decodeIfPresent(Int.self, forKey: .playerCount) ?? (mode == .draft ? 2 : 1)
+        thumbnailFileName = try container.decodeIfPresent(String.self, forKey: .thumbnailFileName)
     }
 }
 
@@ -82,18 +91,23 @@ final class PlayHistoryStore: ObservableObject {
         )
         records.insert(record, at: 0)
         persist()
+        NotificationScheduler.rescheduleIfEnabled()
         return record
     }
 
-    func attachSavedVideo(to recordID: UUID, fileName: String) {
+    func attachSavedVideo(to recordID: UUID, fileName: String, thumbnailFileName: String? = nil) {
         guard let index = records.firstIndex(where: { $0.id == recordID }) else { return }
         records[index].savedVideoFileName = fileName
+        records[index].thumbnailFileName = thumbnailFileName
         persist()
     }
 
     func deleteRecord(_ record: PlaySessionRecord) {
         if let fileName = record.savedVideoFileName {
             try? FileManager.default.removeItem(at: videosDirectory.appendingPathComponent(fileName))
+        }
+        if let thumbnailFileName = record.thumbnailFileName {
+            try? FileManager.default.removeItem(at: videosDirectory.appendingPathComponent(thumbnailFileName))
         }
         records.removeAll { $0.id == record.id }
         persist()

@@ -1,5 +1,6 @@
 import SwiftUI
 import UIKit
+import StoreKit
 
 /// Ana Ekran — tek ekran, derin gezinme yok (teknik prompt Bölüm 7).
 /// `ScrollView` içinde: 3 mod kartı + üst içerik küçük ekranlarda taşabiliyordu,
@@ -9,6 +10,7 @@ struct HomeView: View {
     @EnvironmentObject private var playHistoryStore: PlayHistoryStore
     @EnvironmentObject private var appState: AppState
     @Environment(\.locale) private var locale
+    @Environment(\.requestReview) private var requestReview
     @State private var isShowingSettings = false
 
     /// Güne göre deterministik seçilen bir paket — her gün aynı, cihazlar
@@ -101,6 +103,19 @@ struct HomeView: View {
         }
         .sheet(isPresented: $isShowingSettings) {
             SettingsView()
+        }
+        .onAppear {
+            // Her oyundan sonra kullanıcı buraya geri dönüyor — puan isteme için
+            // doğal, tekrarlanan bir tetik noktası. `ReviewPrompter` sadece belirli
+            // oturum eşiklerinde (ve bir daha aynı eşikte değil) bir milestone döner;
+            // StoreKit'in kendi yıllık gösterim sınırı da ayrıca geçerli.
+            let lastMilestone = UserDefaults.standard.integer(forKey: ReviewPrompter.lastMilestoneKey)
+            if let milestone = ReviewPrompter.newlyReachedMilestone(
+                sessionCount: playHistoryStore.records.count, lastMilestone: lastMilestone
+            ) {
+                UserDefaults.standard.set(milestone, forKey: ReviewPrompter.lastMilestoneKey)
+                requestReview()
+            }
         }
     }
 

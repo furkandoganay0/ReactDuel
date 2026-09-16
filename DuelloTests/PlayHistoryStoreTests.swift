@@ -101,4 +101,37 @@ struct PlayHistoryStoreTests {
         #expect(store.records.first(where: { $0.packTitle == "Eski Kayıt" })?.playerCount == 1)
         #expect(store.records.first(where: { $0.packTitle == "Eski Draft" })?.playerCount == 2)
     }
+
+    @Test("thumbnailFileName alanı olmayan eski kayıtlar nil ile yüklenir")
+    func legacyRecordsWithoutThumbnailDecodeAsNil() throws {
+        let directory = makeTempDirectory()
+        let appDir = directory.appendingPathComponent("Duello", isDirectory: true)
+        try FileManager.default.createDirectory(at: appDir, withIntermediateDirectories: true)
+
+        let legacyJSON = """
+        [
+          {
+            "id": "\(UUID().uuidString)",
+            "date": 700000000.0,
+            "mode": "prediction",
+            "packTitle": "Eski Kayıt",
+            "resultSummary": "4/5",
+            "playerCount": 1
+          }
+        ]
+        """
+        try legacyJSON.data(using: .utf8)!.write(to: appDir.appendingPathComponent("history.json"))
+
+        let store = PlayHistoryStore(baseDirectory: directory)
+        #expect(store.records.first?.thumbnailFileName == nil)
+    }
+
+    @Test("attachSavedVideo thumbnail dosya adını da iliştirir")
+    func attachSavedVideoUpdatesThumbnail() {
+        let store = PlayHistoryStore(baseDirectory: makeTempDirectory())
+        let record = store.addRecord(mode: .prediction, packTitle: "Test", resultSummary: "3/5", playerCount: 1)
+        store.attachSavedVideo(to: record.id, fileName: "abc.mp4", thumbnailFileName: "abc.jpg")
+        #expect(store.records.first?.savedVideoFileName == "abc.mp4")
+        #expect(store.records.first?.thumbnailFileName == "abc.jpg")
+    }
 }

@@ -77,7 +77,17 @@ struct ProcessingView: View {
         try? FileManager.default.removeItem(at: destination)
         do {
             try FileManager.default.copyItem(at: exportedURL, to: destination)
-            playHistoryStore.attachSavedVideo(to: recordID, fileName: fileName)
+
+            // Thumbnail üretimi kozmetik — başarısız olsa bile (bozuk kare, decode
+            // hatası vb.) video kaydı yine de tamamlanmalı, `HistoryView` o zaman
+            // sadece genel mod ikonuna düşer.
+            let thumbnailFileName = "\(recordID.uuidString).jpg"
+            let thumbnailDestination = playHistoryStore.videosDirectory.appendingPathComponent(thumbnailFileName)
+            let didGenerateThumbnail = VideoThumbnailGenerator.generateThumbnail(from: destination, to: thumbnailDestination)
+
+            playHistoryStore.attachSavedVideo(
+                to: recordID, fileName: fileName, thumbnailFileName: didGenerateThumbnail ? thumbnailFileName : nil
+            )
         } catch {
             // Kopyalama başarısız olursa bu oturumdaki önizleme/paylaşım yine de
             // çalışır (tmp dosyası duruyor) — sadece galeriye düşmez.

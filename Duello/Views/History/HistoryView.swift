@@ -1,5 +1,6 @@
 import SwiftUI
 import AVKit
+import UIKit
 
 /// "Geçmiş" — oynanan tüm oturumların (skor + varsa kaydedilen video) listesi.
 /// Önceden hiçbir oturumun izi kalmıyordu; kullanıcı ekrandan çıkınca video da
@@ -103,9 +104,7 @@ struct HistoryView: View {
             playingRecord = record
         } label: {
             HStack(spacing: 12) {
-                Image(systemName: modeIcon(record.mode))
-                    .font(.system(size: 30))
-                    .foregroundStyle(modeColor(record.mode))
+                recordThumbnail(record)
 
                 VStack(alignment: .leading, spacing: 4) {
                     HStack(spacing: 6) {
@@ -135,6 +134,26 @@ struct HistoryView: View {
         }
         .buttonStyle(.plain)
         .disabled(record.savedVideoFileName == nil)
+    }
+
+    /// Video kaydedildiyse ve bir kare çıkarılabildiyse gerçek bir önizleme
+    /// gösterir — önceden burada her satırda hep aynı genel mod ikonu vardı,
+    /// listede hangi kaydın hangi video olduğunu ayırt etmek zordu.
+    @ViewBuilder
+    private func recordThumbnail(_ record: PlaySessionRecord) -> some View {
+        if let thumbnailFileName = record.thumbnailFileName,
+           let uiImage = UIImage(contentsOfFile: playHistoryStore.videosDirectory.appendingPathComponent(thumbnailFileName).path) {
+            Image(uiImage: uiImage)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 44, height: 44)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+        } else {
+            Image(systemName: modeIcon(record.mode))
+                .font(.system(size: 30))
+                .foregroundStyle(modeColor(record.mode))
+                .frame(width: 44, height: 44)
+        }
     }
 }
 

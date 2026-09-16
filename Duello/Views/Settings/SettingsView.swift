@@ -8,6 +8,25 @@ struct SettingsView: View {
     @EnvironmentObject private var appState: AppState
     @Environment(\.dismiss) private var dismiss
     @State private var selectedLogoItem: PhotosPickerItem?
+    @State private var streakRemindersEnabled = NotificationScheduler.isEnabled
+
+    /// Anahtarı açmak sistemin bildirim izin diyaloğunu tetikler — kullanıcı
+    /// reddederse anahtar otomatik olarak kapalıya döner (izin gerçekte yok).
+    private var streakReminderBinding: Binding<Bool> {
+        Binding(
+            get: { streakRemindersEnabled },
+            set: { newValue in
+                if newValue {
+                    NotificationScheduler.enable { granted in
+                        streakRemindersEnabled = granted
+                    }
+                } else {
+                    NotificationScheduler.disable()
+                    streakRemindersEnabled = false
+                }
+            }
+        )
+    }
 
     var body: some View {
         NavigationStack {
@@ -107,6 +126,14 @@ struct SettingsView: View {
                     }
                 } footer: {
                     Text("Tahmin Et modunda cevap sonrası kısa bir ses efekti çalar.")
+                }
+
+                Section {
+                    Toggle(isOn: streakReminderBinding) {
+                        Label("Seri Hatırlatması", systemImage: "bell.badge.fill")
+                    }
+                } footer: {
+                    Text("Açıksa, bugün henüz oynamadıysan akşam kısa bir hatırlatma bildirimi alırsın.")
                 }
             }
             .navigationTitle(Text("Ayarlar"))

@@ -248,6 +248,16 @@ enum L10n {
         isTurkish(locale) ? "\(days) gündür oynuyorsun!" : "\(days)-day streak!"
     }
 
+    static func streakReminderTitle(locale: Locale) -> String {
+        isTurkish(locale) ? "Serini kaybetme! 🔥" : "Don't lose your streak! 🔥"
+    }
+
+    static func streakReminderBody(locale: Locale) -> String {
+        isTurkish(locale)
+            ? "Bugün henüz oynamadın — serini korumak için hızlı bir tur at."
+            : "You haven't played today — jump in for a quick round to keep it going."
+    }
+
     static func exportErrorMessage(locale: Locale) -> String {
         isTurkish(locale)
             ? "Video işlenirken bir sorun oluştu. Lütfen tekrar dene."
